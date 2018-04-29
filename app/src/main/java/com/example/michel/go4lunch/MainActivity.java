@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+
     // 1.menu implement menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements
         setSupportActionBar(toolbar);
     }
 
+
     //1.TabLayout create method for implement ViewPager and TabLayout
     private void configureViewPagerAndTabs(){
         //Get ViewPager from layout
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements
         tabs.getTabAt(2).setIcon(tabIcons[2]);
     }
 
+
     // implement button in toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -113,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     //implement button DrawerLayout
     @Override
@@ -137,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements
         return true;
     }
 
+
     // 2 - Configure Drawer Layout
     private void configureDrawerLayout(){
         this.drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer_layout);
@@ -145,11 +150,13 @@ public class MainActivity extends AppCompatActivity implements
         toggle.syncState();
     }
 
+
     // 3 - Configure NavigationView
     private void configureNavigationView(){
         this.navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
 
     // METHOD ASK IF AUTHENTICATION
 
