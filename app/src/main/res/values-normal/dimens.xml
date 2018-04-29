@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_bol">200dp</dimen>
+    <dimen name="size_text_auth">56sp</dimen>
+    <dimen name="size_text_auth_restaurant">10sp</dimen>
+
+</resources>

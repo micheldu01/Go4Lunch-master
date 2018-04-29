@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AuthActivity">
+
+
+
+    <ImageView
+        android:src="@drawable/imagerestaurantok"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <ImageView
+        android:id="@+id/boltestok"
+        android:src="@drawable/boltestok"
+        android:layout_marginTop="20dp"
+        android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true"
+        android:layout_width="@dimen/size_bol"
+        android:layout_height="200dp" />
+
+    <TextView
+        android:id="@+id/go_4_lunch"
+        android:text="@string/go_4_lucnh"
+        android:textStyle="bold"
+        android:layout_below="@+id/boltestok"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_text_auth"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/find_nice_restaurant"
+        android:text="@string/find_a_nice_restaurant"
+        android:textStyle="italic"
+        android:layout_below="@+id/go_4_lunch"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_text_auth_restaurant"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

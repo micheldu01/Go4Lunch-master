@@ -6,4 +6,10 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    // AuthActivity
+    <string name="go_4_lucnh">Go4Lunch</string>
+    <string name="find_a_nice_restaurant">Find a nice restaurant and invite
+    your co-workers for lunch</string>
+
 </resources>
