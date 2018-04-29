@@ -1,5 +1,6 @@
 package com.example.michel.go4lunch;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -22,11 +23,19 @@ public class MainActivity extends AppCompatActivity implements
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private int[] tabIcons = {R.drawable.ic_map_black_24dp,R.drawable.ic_view_list_black_24dp,R.drawable.ic_group_black_24dp};
+
+    // ADD ARRAY ICONS
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // START METHOD ASK IF AUTH
+        //this.authAskConnect();
 
         // 1.toolbar add toolbar method
         this.configureToolbar();
@@ -84,6 +93,11 @@ public class MainActivity extends AppCompatActivity implements
         tabs.setupWithViewPager(pager);
         // 3 - Design purpose. Tabs have the same width
         tabs.setTabMode(TabLayout.MODE_FIXED);
+
+        // ADD ICONS
+        tabs.getTabAt(0).setIcon(tabIcons[0]);
+        tabs.getTabAt(1).setIcon(tabIcons[1]);
+        tabs.getTabAt(2).setIcon(tabIcons[2]);
     }
 
     // implement button in toolbar
@@ -136,5 +150,53 @@ public class MainActivity extends AppCompatActivity implements
         this.navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    // METHOD ASK IF AUTHENTICATION
+
+    private void authAskConnect(){
+
+        // METHOD FOR GET AUTH
+        int m = 1;
+
+        // INTENT FOR GO AUTH ACTIVITY
+        if (m == 1){
+            startActivity(new Intent(MainActivity.this, AuthActivity.class));
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
