@@ -10,5 +10,7 @@
     // AuthActivity
     <string name="go_4_lucnh">Go4Lunch</string>
     <string name="find_a_nice_restaurant">Trouver un bon restaurant et inviter vos collègues pour le déjeuner</string>
+    <string name="the_connecte_is_ok">La connexion est ok</string>
+
 
 </resources>

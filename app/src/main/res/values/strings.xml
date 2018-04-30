@@ -11,6 +11,7 @@
     <string name="go_4_lucnh">Go4Lunch</string>
     <string name="find_a_nice_restaurant">Find a nice restaurant and invite
     your co-workers for lunch</string>
+    <string name="the_connecte_is_ok">The connection is ok</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">2030167200556616</string>

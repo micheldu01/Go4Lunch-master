@@ -18,22 +18,34 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.michel.go4lunch.adapter.PageAdapter;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener{
+import java.util.Arrays;
+import java.util.List;
 
+public class MainActivity extends AppCompatActivity {
 
-    // DECLARE TOOLBAR
-    private Toolbar toolbar;
-    // DECLARE DRAWER LAYOUT
-    private DrawerLayout drawerLayout;
-    // DECLARE NAVIGATION VIEW
-    private NavigationView navigationView;
+    // DECLARE VALUE FOR FIRE BASE AUTH
+    private static final int RC_SIGN_IN = 23;
 
-    // ADD ARRAY ICONS
-    private int[] tabIcons = {R.drawable.ic_map_black_24dp,R.drawable.ic_view_list_black_24dp,R.drawable.ic_group_black_24dp};
+    // DECLARE COLLBACK MANAGER
+    private CallbackManager callbackManager;
 
+    // BUTTON
+    private LoginButton button_facebook;
 
+    // CHOOSE AUTHENTIFICATION PROVIDERS
+    List<AuthUI.IdpConfig> providers = Arrays.asList(
+            //new AuthUI.IdpConfig.GoogleBuilder().build(),
+            new AuthUI.IdpConfig.FacebookBuilder().build());
 
 
     @Override
@@ -41,160 +53,98 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // test
+        callbackManager = CallbackManager.Factory.create();
 
-        // START METHOD ASK IF AUTH
-        this.authAskConnect();
 
-        // 1.toolbar add toolbar method
-        this.configureToolbar();
 
-        //TabLayout execute tabLayout
-        this.configureViewPagerAndTabs();
 
-        //NavigationView call method
-        this.configureNavigationView();
+        button_facebook = (LoginButton) findViewById(R.id.login_button_facebook);
+        button_facebook.setReadPermissions("email");
+        // If using in a fragment
+        //button_facebook.setFragment(this);
 
-        //DrawerLayout call method
-        this.configureDrawerLayout();
+        // Callback registration
+        button_facebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // App code
+                Toast.makeText( MainActivity.this,"connect OK", Toast.LENGTH_SHORT).show();
+                // START INTENT
+                startActivity(new Intent(MainActivity.this, ScreenActivity.class));
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+            }
+        });
+
+
+        // METHOD FOR LAUNCH SIGN IN INTENT
+        //this.launchSingInIntent();
+
+
+
 
 
     }
 
-
-    // 1.menu implement menu
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //2 - Inflate the menu and add it to the Toolbar
-        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
-        return true;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 
-    //method drawerLayout open close
+    // CREATE AND LAUNCH SIGN IN INTENT
+    private void launchSingInIntent(){
+
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .build(),
+                RC_SIGN_IN);
+    }
+
+/*
+    // WHEN THE SIGN IN FLOW IS COMPLETE, WE RECEIVE THE RESULT IN ON ACTIVITY RESULT
     @Override
-    public void onBackPressed() {
-        // 5 - Handle back click to close menu
-        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            this.drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            if (resultCode == RESULT_OK) {
+                // Successfully signed in
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+
+                // START INTENT
+                //startActivity(new Intent(AuthActivity.this,MainActivity.class));
+                Toast.makeText(this,"La connection est établie", Toast.LENGTH_SHORT).show();
+
+                // INTENT
+                startActivity(new Intent(MainActivity.this,ScreenActivity.class));
+
+                // ...
+            } else {
+                // Sign in failed, check response for error code
+                // ...
+                Toast.makeText(this,"La connection n'a pu être établie", Toast.LENGTH_SHORT).show();
+            }
         }
-    }
-
-
-    // 2.toolbar implement toolbar method
-    private void configureToolbar(){
-        // Get the toolbar view inside the activity layout
-        toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
-        // Sets the Toolbar
-        setSupportActionBar(toolbar);
-    }
-
-
-    //1.TabLayout create method for implement ViewPager and TabLayout
-    private void configureViewPagerAndTabs(){
-        //Get ViewPager from layout
-        ViewPager pager = (ViewPager)findViewById(R.id.activity_main_viewpager);
-        //Set Adapter PageAdapter and glue it together
-        pager.setAdapter(new PageAdapter(getSupportFragmentManager()));
-        // 1 - Get TabLayout from layout
-        TabLayout tabs= (TabLayout)findViewById(R.id.activity_main_tabs);
-        // 2 - Glue TabLayout and ViewPager together
-        tabs.setupWithViewPager(pager);
-        // 3 - Design purpose. Tabs have the same width
-        tabs.setTabMode(TabLayout.MODE_FIXED);
-
-        // ADD ICONS
-        tabs.getTabAt(0).setIcon(tabIcons[0]);
-        tabs.getTabAt(1).setIcon(tabIcons[1]);
-        tabs.getTabAt(2).setIcon(tabIcons[2]);
-
-
-        // GET CURRENT ITEM FOR CHANGE COLOR
-        int i = pager.getCurrentItem();
-        Log.e("MainActivity","recup current item ////////////////////////////////////////" + i);
-
-        // ARRAY COLORS ORANGE AND BLACK
-        String[][] arrayIcon = {{"#ff8a50","#000000","#000000"},{"#000000","#ff8a50","#000000"},{"#000000","#000000","#ff8a50"}};
-
-        // CHANGE COLOR ICONS
-        tabs.getTabAt(i).getIcon().setColorFilter(Color.parseColor(arrayIcon[i][0]), PorterDuff.Mode.SRC_IN);
-        tabs.getTabAt(i).getIcon().setColorFilter(Color.parseColor(arrayIcon[i][1]), PorterDuff.Mode.SRC_IN);
-        tabs.getTabAt(i).getIcon().setColorFilter(Color.parseColor(arrayIcon[i][2]), PorterDuff.Mode.SRC_IN);
-
-    }
-
-
-    // implement button in toolbar
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        //3 - Handle actions on menu items
-        switch (item.getItemId()) {
-            case R.id.menu_activity_main_search:
-                //add toast for click response
-                Toast.makeText(this, "Recherche indisponible, demandez plutôt l'avis de Google, c'est mieux et plus rapide.", Toast.LENGTH_LONG).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
-    //implement button DrawerLayout
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-
-        // 4 - Handle Navigation Item Click
-        int id = item.getItemId();
-
-        switch (id){
-            case R.id.activity_main_drawer_news :
-                break;
-            case R.id.activity_main_drawer_profile:
-                break;
-            case R.id.activity_main_drawer_settings:
-                break;
-            default:
-                break;
-        }
-
-        this.drawerLayout.closeDrawer(GravityCompat.START);
-
-        return true;
-    }
-
-
-    // 2 - Configure Drawer Layout
-    private void configureDrawerLayout(){
-        this.drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-    }
-
-
-    // 3 - Configure NavigationView
-    private void configureNavigationView(){
-        this.navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
-
-    // METHOD ASK IF AUTHENTICATION
-
-    private void authAskConnect(){
-
-        // METHOD FOR GET AUTH
-        int m = 1;
-
-        // INTENT FOR GO AUTH ACTIVITY
-        if (m == 1){
-            startActivity(new Intent(MainActivity.this, AuthActivity.class));
-        }
-    }
-
-
+    }*/
 }
+
+
 
 
 

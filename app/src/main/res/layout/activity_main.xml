@@ -1,88 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start"
-    tools:context="com.example.michel.go4lunch.MainActivity">
+    tools:context=".MainActivity">
 
-    //create drawerLayout
 
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/activity_main_drawer_layout"
+
+    <ImageView
+        android:src="@drawable/imagerestaurantok"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:openDrawer="start">
-
-        <!-- 1 | MainActivity RootView -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        android:layout_height="match_parent" />
 
 
-            //create toolbar
+    <ImageView
+        android:id="@+id/boltestok"
+        android:src="@drawable/boltestok"
+        android:layout_marginTop="20dp"
+        android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true"
+        android:layout_width="@dimen/size_bol"
+        android:layout_height="200dp" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/activity_main_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:theme="@style/ToolBarStyle" />
+    <TextView
+        android:id="@+id/go_4_lunch"
+        android:text="@string/go_4_lucnh"
+        android:textStyle="bold"
+        android:layout_below="@+id/boltestok"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_text_auth"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/find_nice_restaurant"
+        android:text="@string/find_a_nice_restaurant"
+        android:textStyle="italic"
+        android:layout_below="@+id/go_4_lunch"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_text_auth_restaurant"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-                //create TabLayout
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/activity_main_tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    app:tabIndicatorColor="@color/white"
-                    app:tabSelectedTextColor="@color/colorPrimary"
-                    app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-                    app:tabTextColor="@color/black" />
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button_facebook"
+        android:layout_below="@+id/find_nice_restaurant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
 
-            </RelativeLayout>
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button_google"
+        android:layout_below="@id/login_button_facebook"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-            // create viewpager
 
-            <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/activity_main_viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
-            <!-- FrameLayout for our fragments -->
-            <FrameLayout
-                android:id="@+id/activity_main_frame_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-
-        <!-- 2 | NavigationView -->
-        <android.support.design.widget.NavigationView
-            android:id="@+id/activity_main_nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="@color/colorAccent"
-            android:fitsSystemWindows="true"
-
-            android:theme="@style/NavigationViewStyle"
-            app:headerLayout="@layout/activity_main_nav_header"
-            app:itemIconTint="@android:color/white"
-            app:menu="@menu/activity_main_menu_drawer" />
-
-    </android.support.v4.widget.DrawerLayout>
-
-</LinearLayout>
+</RelativeLayout>
