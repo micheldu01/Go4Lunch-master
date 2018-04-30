@@ -1,6 +1,8 @@
 package com.example.michel.go4lunch;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -100,6 +103,20 @@ public class MainActivity extends AppCompatActivity implements
         tabs.getTabAt(0).setIcon(tabIcons[0]);
         tabs.getTabAt(1).setIcon(tabIcons[1]);
         tabs.getTabAt(2).setIcon(tabIcons[2]);
+
+
+        // GET CURRENT ITEM FOR CHANGE COLOR
+        int i = pager.getCurrentItem();
+        Log.e("MainActivity","recup current item ////////////////////////////////////////" + i);
+
+        // ARRAY COLORS ORANGE AND BLACK
+        String[][] arrayIcon = {{"#ff8a50","#000000","#000000"},{"#000000","#ff8a50","#000000"},{"#000000","#000000","#ff8a50"}};
+
+        // CHANGE COLOR ICONS
+        tabs.getTabAt(i).getIcon().setColorFilter(Color.parseColor(arrayIcon[i][0]), PorterDuff.Mode.SRC_IN);
+        tabs.getTabAt(i).getIcon().setColorFilter(Color.parseColor(arrayIcon[i][1]), PorterDuff.Mode.SRC_IN);
+        tabs.getTabAt(i).getIcon().setColorFilter(Color.parseColor(arrayIcon[i][2]), PorterDuff.Mode.SRC_IN);
+
     }
 
 
@@ -170,6 +187,8 @@ public class MainActivity extends AppCompatActivity implements
             startActivity(new Intent(MainActivity.this, AuthActivity.class));
         }
     }
+
+
 }
 
 
