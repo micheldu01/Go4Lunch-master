@@ -1,6 +1,5 @@
 package com.example.michel.go4lunch;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.design.widget.NavigationView;
@@ -19,8 +18,10 @@ import android.widget.Toast;
 
 import com.example.michel.go4lunch.adapter.PageAdapter;
 
-public class MainActivity extends AppCompatActivity implements
+public class ScreenActivity extends AppCompatActivity
+        implements
         NavigationView.OnNavigationItemSelectedListener{
+
 
 
     // DECLARE TOOLBAR
@@ -35,15 +36,12 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_screen);
 
 
-        // START METHOD ASK IF AUTH
-        this.authAskConnect();
 
         // 1.toolbar add toolbar method
         this.configureToolbar();
@@ -179,55 +177,4 @@ public class MainActivity extends AppCompatActivity implements
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-
-    // METHOD ASK IF AUTHENTICATION
-
-    private void authAskConnect(){
-
-        // METHOD FOR GET AUTH
-        int m = 1;
-
-        // INTENT FOR GO AUTH ACTIVITY
-        if (m == 1){
-            startActivity(new Intent(MainActivity.this, AuthActivity.class));
-        }
-    }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

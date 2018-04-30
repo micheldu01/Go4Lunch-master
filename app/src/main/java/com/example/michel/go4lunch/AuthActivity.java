@@ -23,12 +23,10 @@ public class AuthActivity extends AppCompatActivity {
 
     // CHOOSE AUTHENTIFICATION PROVIDERS
     List<AuthUI.IdpConfig> providers = Arrays.asList(
-            new AuthUI.IdpConfig.GoogleBuilder().build());
-            //new AuthUI.IdpConfig.FacebookBuilder().build());
+            new AuthUI.IdpConfig.GoogleBuilder().build(),
+            new AuthUI.IdpConfig.FacebookBuilder().build());
 
-    // BUTTON
-    private Button button_deconnexion;
-    private Button button_delete;
+
 
 
 
@@ -74,7 +72,9 @@ public class AuthActivity extends AppCompatActivity {
 
 
                 // START INTENT
-                startActivity(new Intent(AuthActivity.this,MainActivity.class));
+                //startActivity(new Intent(AuthActivity.this,MainActivity.class));
+                Toast.makeText(this,"La connection est établie", Toast.LENGTH_SHORT).show();
+
 
                 // ...
             } else {
