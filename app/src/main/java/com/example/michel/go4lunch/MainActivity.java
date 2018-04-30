@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
         // START METHOD ASK IF AUTH
-        //this.authAskConnect();
+        this.authAskConnect();
 
         // 1.toolbar add toolbar method
         this.configureToolbar();
