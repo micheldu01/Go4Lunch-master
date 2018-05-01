@@ -22,7 +22,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.michel.go4lunch.adapter.PageAdapter;
@@ -67,6 +69,15 @@ public class MainActivity extends AppCompatActivity
 
     // ADD ARRAY ICONS
     private int[] tabIcons = {R.drawable.ic_map_black_24dp,R.drawable.ic_view_list_black_24dp,R.drawable.ic_group_black_24dp};
+
+
+    // MENU DRAWER
+    // DECLARE IMAGE USER
+    @BindView(R.id.drawer_image)ImageView imageViewProfile;
+    // DECLARE NOM
+    @BindView(R.id.drawer_nom)TextView textViewNom;
+    // DECLARE EMAIL
+    @BindView(R.id.drawer_email)TextView textViewEmail;
 
 
 
@@ -246,6 +257,9 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
+
+    // METHOD FOR IMPLEMENT MENU DRAWER
+    
 
 }
 
