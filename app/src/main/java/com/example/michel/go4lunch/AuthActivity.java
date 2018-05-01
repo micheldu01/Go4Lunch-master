@@ -14,6 +14,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -51,6 +52,7 @@ public class AuthActivity extends AppCompatActivity {
 
     // LOGIN BUTTON FACEBOOK
     private LoginButton loginButtonFacebook;
+
     //-----------------------------------------
 
 
@@ -84,17 +86,45 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth);
 
 
+
+
         // SHARED PREFERENCES
         preferences =  getSharedPreferences(MYSHARED,MODE_PRIVATE);
 
         //----------------------------------------------------
         //           F A C E B O O K
         // FACEBOOK
+
+        AppEventsLogger.activateApp(this);
+
         callbackManager = CallbackManager.Factory.create();
 
         // FACEBOOK
         loginButtonFacebook = (LoginButton) findViewById(R.id.login_button_facebook);
         loginButtonFacebook.setReadPermissions("email");
+
+        // Callback registration FACEBOOK
+        loginButtonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+
+
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+
+
+            }
+        });
+
 
         // FACEBOOK
         callbackManager = CallbackManager.Factory.create();
@@ -106,7 +136,7 @@ public class AuthActivity extends AppCompatActivity {
                         // App code
                         // START INTENT
                         startActivity(new Intent(AuthActivity.this,MainActivity.class));
-
+                        Toast.makeText(AuthActivity.this,"Facebook est connecté ", Toast.LENGTH_SHORT).show();
 
                         // CHANGE SHARED CONNECT FOR BACK TO MAIN ACTIVITY
                         preferences.edit().putString(CONNECT, "yes").commit();
@@ -167,7 +197,7 @@ public class AuthActivity extends AppCompatActivity {
 
         // FACEBOOK
         // IF THE REQUEST CODE IS THE GOOGLE SIGN IN THAT WE DEFINED AT STARTING
-        if (requestCode == RC_SIGN_I){
+        if (requestCode == RC_SIGN_IN){
             // GETTING THE GOOGLE SIGN IN TASK
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try{

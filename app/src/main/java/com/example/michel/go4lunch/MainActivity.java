@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.michel.go4lunch.adapter.PageAdapter;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -39,11 +40,21 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +62,6 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity
         implements
         NavigationView.OnNavigationItemSelectedListener{
-
 
 
 
@@ -75,17 +85,12 @@ public class MainActivity extends AppCompatActivity
     public static final String MYSHARED = "myshared";
     public static final String CONNECT = "connect";
 
-/*
-    // MENU DRAWER
-    // DECLARE IMAGE USER
-    @BindView(R.id.drawer_image)ImageView imageViewProfile;
-    // DECLARE NOM
-    @BindView(R.id.drawer_nom)TextView textViewNom;
-    // DECLARE EMAIL
-    @BindView(R.id.drawer_email)TextView textViewEmail;
-*/
 
+    private NavigationView navView;
+    private TextView textViewName;
 
+    // FIRE BASE
+    private FirebaseFirestore db;
 
 
     @Override
@@ -96,9 +101,6 @@ public class MainActivity extends AppCompatActivity
         // DECLARE BUTTER KNIFE
         ButterKnife.bind(this);
 
-
-
-        //startActivity(new Intent(MainActivity.this, AuthActivity.class));
 
 
         // METHOD FOR AUTH
@@ -118,8 +120,6 @@ public class MainActivity extends AppCompatActivity
 
         // DRAWER MENU PROFILE
         this.methodDrawerMenu();
-
-
 
 
 
@@ -274,6 +274,10 @@ public class MainActivity extends AppCompatActivity
     // METHOD FOR IMPLEMENT MENU DRAWER
     private void methodDrawerMenu(){
 
+        View headerView = navigationView.getHeaderView(0);
+        TextView textViewName = (TextView)headerView.findViewById(R.id.drawer_nom);
+        textViewName.setText("laurent");
+
 
     }
 
@@ -293,6 +297,8 @@ public class MainActivity extends AppCompatActivity
 
            // IF NOT CONNECT START INTENT FOR GO TO AUTH ACTIVITY
             startActivity(new Intent(MainActivity.this, AuthActivity.class));
+
+
 
         }
 
