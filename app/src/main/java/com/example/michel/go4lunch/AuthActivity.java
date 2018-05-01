@@ -1,6 +1,7 @@
 package com.example.michel.go4lunch;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.example.michel.go4lunch.MainActivity.CONNECT;
+import static com.example.michel.go4lunch.MainActivity.MYSHARED;
+
 public class AuthActivity extends AppCompatActivity {
 
 
@@ -66,6 +70,12 @@ public class AuthActivity extends AppCompatActivity {
     //----------------------------------------------------
 
 
+    // SHARED PREFERENCES
+    private SharedPreferences preferences;
+
+
+
+
 
 
     @Override
@@ -73,6 +83,9 @@ public class AuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
+
+        // SHARED PREFERENCES
+        preferences =  getSharedPreferences(MYSHARED,MODE_PRIVATE);
 
         //----------------------------------------------------
         //           F A C E B O O K
@@ -83,26 +96,6 @@ public class AuthActivity extends AppCompatActivity {
         loginButtonFacebook = (LoginButton) findViewById(R.id.login_button_facebook);
         loginButtonFacebook.setReadPermissions("email");
 
-        // Callback registration FACEBOOK
-        loginButtonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // START INTENT
-                startActivity(new Intent(AuthActivity.this,MainActivity.class));
-
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-            }
-        });
-
         // FACEBOOK
         callbackManager = CallbackManager.Factory.create();
 
@@ -111,6 +104,12 @@ public class AuthActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         // App code
+                        // START INTENT
+                        startActivity(new Intent(AuthActivity.this,MainActivity.class));
+
+
+                        // CHANGE SHARED CONNECT FOR BACK TO MAIN ACTIVITY
+                        preferences.edit().putString(CONNECT, "yes").commit();
                     }
 
                     @Override
@@ -204,6 +203,7 @@ public class AuthActivity extends AppCompatActivity {
                             Toast.makeText(AuthActivity.this, "User Signed In", Toast.LENGTH_SHORT).show();
                             // START INTENT
                             startActivity(new Intent(AuthActivity.this, MainActivity.class));
+                            preferences.edit().putString(CONNECT, "").commit();
 
 
 

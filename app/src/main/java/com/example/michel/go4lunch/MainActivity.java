@@ -2,6 +2,7 @@ package com.example.michel.go4lunch;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.nfc.Tag;
@@ -35,6 +36,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.SignInButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,8 +51,6 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity
         implements
         NavigationView.OnNavigationItemSelectedListener{
-
-
 
 
 
@@ -70,7 +70,12 @@ public class MainActivity extends AppCompatActivity
     // ADD ARRAY ICONS
     private int[] tabIcons = {R.drawable.ic_map_black_24dp,R.drawable.ic_view_list_black_24dp,R.drawable.ic_group_black_24dp};
 
+    // SHARED PREFERENCES
+    protected SharedPreferences preferences;
+    public static final String MYSHARED = "myshared";
+    public static final String CONNECT = "connect";
 
+/*
     // MENU DRAWER
     // DECLARE IMAGE USER
     @BindView(R.id.drawer_image)ImageView imageViewProfile;
@@ -78,6 +83,8 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.drawer_nom)TextView textViewNom;
     // DECLARE EMAIL
     @BindView(R.id.drawer_email)TextView textViewEmail;
+*/
+
 
 
 
@@ -91,10 +98,11 @@ public class MainActivity extends AppCompatActivity
 
 
 
+        //startActivity(new Intent(MainActivity.this, AuthActivity.class));
 
-        //startActivity(new Intent(MainActivity.this,AuthActivity.class));
 
-
+        // METHOD FOR AUTH
+        this.methodLogged();
 
         // 1.toolbar add toolbar method
         this.configureToolbar();
@@ -110,6 +118,7 @@ public class MainActivity extends AppCompatActivity
 
         // DRAWER MENU PROFILE
         this.methodDrawerMenu();
+
 
 
 
@@ -261,9 +270,31 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
     // METHOD FOR IMPLEMENT MENU DRAWER
     private void methodDrawerMenu(){
 
+
+    }
+
+
+    // METHOD FOR LOGGED OR NOT
+    private void methodLogged(){
+
+        // IMPLEMENT SHARED
+        preferences = getSharedPreferences(MYSHARED,MODE_PRIVATE);
+
+        // GET SHARED
+        String logg = preferences.getString(CONNECT,"");
+
+
+        // ASK IF IS IT NOT LOGGED
+        if (logg.equals("")){
+
+           // IF NOT CONNECT START INTENT FOR GO TO AUTH ACTIVITY
+            startActivity(new Intent(MainActivity.this, AuthActivity.class));
+
+        }
 
     }
 
