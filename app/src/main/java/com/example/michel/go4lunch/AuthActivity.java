@@ -87,7 +87,9 @@ public class AuthActivity extends AppCompatActivity {
         loginButtonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                // App code
+                // START INTENT
+                startActivity(new Intent(AuthActivity.this,MainActivity.class));
+
             }
 
             @Override
@@ -193,11 +195,18 @@ public class AuthActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if (task.isSuccessful()){
+                            // IF GOOGLE IS CONNECT
                             Log.e(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-
+                            // MAKE TOAST
                             Toast.makeText(AuthActivity.this, "User Signed In", Toast.LENGTH_SHORT).show();
+                            // START INTENT
+                            startActivity(new Intent(AuthActivity.this, MainActivity.class));
+
+
+
                         }else {
                             // IF SIGN IN FAILS, DISPLAY A MESSAGE TO THE USER
                             Log.e(TAG, "signInWithCredential:failure", task.getException());
