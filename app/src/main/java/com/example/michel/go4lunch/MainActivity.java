@@ -4,10 +4,13 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.nfc.Tag;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.Toast;
@@ -94,6 +98,10 @@ public class MainActivity extends AppCompatActivity
         this.configureDrawerLayout();
 
 
+
+
+
+
     }
 
 
@@ -139,23 +147,8 @@ public class MainActivity extends AppCompatActivity
         tabs.getTabAt(1).setIcon(tabIcons[1]);
         tabs.getTabAt(2).setIcon(tabIcons[2]);
 
-
-        //tabs.getTabAt(0).getIcon().setColorFilter(Color.parseColor("#ff8a50"), PorterDuff.Mode.SRC_IN);
-
-
-
-
-        // GET CURRENT ITEM FOR CHANGE COLOR
-        int i = pager.getCurrentItem();
-        Log.e("MainActivity","recup current item ////////////////////////////////////////" + i);
-
-        // ARRAY COLORS ORANGE AND BLACK
-        String[][] arrayIcon = {{"#ff8a50","#000000","#000000"},{"#000000","#ff8a50","#000000"},{"#000000","#000000","#ff8a50"}};
-
-        // CHANGE COLOR ICONS
-        //tabs.getTabAt(i).getIcon().setColorFilter(Color.parseColor(arrayIcon[i][0]), PorterDuff.Mode.SRC_IN);
-        //tabs.getTabAt(i).getIcon().setColorFilter(Color.parseColor(arrayIcon[i][1]), PorterDuff.Mode.SRC_IN);
-        //tabs.getTabAt(i).getIcon().setColorFilter(Color.parseColor(arrayIcon[i][2]), PorterDuff.Mode.SRC_IN);
+        // CHANGE COLOR ICON TAB LAYOUT
+        this.changeColorIconTabLayout();
 
     }
 
@@ -212,9 +205,45 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    // CHANGE COLOR ICON INTO TAB LAYOUT
+
+    // METHOD FOR CHANGE COLOR OF ICON TAB LAYOUT
     private void changeColorIconTabLayout(){
 
+        // IN START ACTIVITY GET CURRENT COLOR FOR ICON
+        tabs.getTabAt(0).getIcon().setColorFilter(Color.parseColor("#ff8a50"), PorterDuff.Mode.SRC_IN);
+
+
+        // GET CHANGE LISTENER FOR GET PAGE SELECT
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+
+            // CURRENT POSITION VIEW PAGER
+            @Override
+            public void onPageSelected(int position) {
+
+                // IN START ACTIVITY GET CURRENT COLOR FOR ICON
+                tabs.getTabAt(0).getIcon().setColorFilter(Color.parseColor("#ff8a50"), PorterDuff.Mode.SRC_IN);
+
+
+                // CREATE ARRAY WITH COLOR FOR ICON
+                String[][] arrayIcon = {{"#ff8a50","#000000","#000000"},{"#000000","#ff8a50","#000000"},{"#000000","#000000","#ff8a50"}};
+
+                // GET COLOR ICONS WITH POSITION VIEW PAGER
+                tabs.getTabAt(0).getIcon().setColorFilter(Color.parseColor(arrayIcon[position][0]), PorterDuff.Mode.SRC_IN);
+                tabs.getTabAt(1).getIcon().setColorFilter(Color.parseColor(arrayIcon[position][1]), PorterDuff.Mode.SRC_IN);
+                tabs.getTabAt(2).getIcon().setColorFilter(Color.parseColor(arrayIcon[position][2]), PorterDuff.Mode.SRC_IN);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
