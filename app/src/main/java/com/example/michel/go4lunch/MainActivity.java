@@ -108,6 +108,9 @@ public class MainActivity extends AppCompatActivity
         //DrawerLayout call method
         this.configureDrawerLayout();
 
+        // DRAWER MENU PROFILE
+        this.methodDrawerMenu();
+
 
 
 
@@ -259,7 +262,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     // METHOD FOR IMPLEMENT MENU DRAWER
-    
+    private void methodDrawerMenu(){
+
+
+    }
 
 }
 
