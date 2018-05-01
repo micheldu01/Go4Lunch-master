@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AuthActivity">
 
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
 
 
     <ImageView
@@ -45,4 +56,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-</RelativeLayout>
+
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button_facebook"
+        android:layout_below="@id/find_nice_restaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:textSize="15dp"
+        android:paddingBottom="18dp"
+        android:paddingTop="18dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginRight="44dp"/>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button_google"
+        android:layout_below="@+id/login_button_facebook"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"/>
+
+     </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

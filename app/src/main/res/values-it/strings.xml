@@ -12,6 +12,9 @@
     <string name="find_a_nice_restaurant">Trova un buon ristorante e invita
      i tuoi colleghi di lavoro per il pranzo</string>
     <string name="the_connecte_is_ok">la conexión está establecida</string>
+    <string name="dont_connected">Non connesso</string>
+
+
 
 
 </resources>
