@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.michel.go4lunch.adapter.PageAdapter;
 import com.example.michel.go4lunch.auth.AuthActivity;
+import com.example.michel.go4lunch.base.BaseActivity;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements
         NavigationView.OnNavigationItemSelectedListener{
 
