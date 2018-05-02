@@ -3,17 +3,21 @@ package com.example.michel.go4lunch;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
@@ -33,6 +37,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
@@ -93,49 +100,44 @@ public class AuthActivity extends AppCompatActivity {
 
         //----------------------------------------------------
         //           F A C E B O O K
-        // FACEBOOK
-
-        AppEventsLogger.activateApp(this);
-
-        callbackManager = CallbackManager.Factory.create();
-
-        // FACEBOOK
-        loginButtonFacebook = (LoginButton) findViewById(R.id.login_button_facebook);
-        loginButtonFacebook.setReadPermissions("email");
-
-        // Callback registration FACEBOOK
-        loginButtonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-
-
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-
-
-            }
-        });
-
-
-        // FACEBOOK
+        //
         callbackManager = CallbackManager.Factory.create();
 
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+
+                        // IMPLEMENT MENU WHIT LOGIN
+
+                        GraphRequest request = GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                        Log.v("AuthActivity", response.toString());
+                                        Log.e("AuthActivity","reponse FACEBOOK = " + response.toString());
+
+                                        // GET USER PROFILE
+                                        try {
+                                            String name = object.getString("name");
+                                            String email = object.getString("email");
+                                            Log.e("AuthActivity","reponse FACEBOOK = "+ name + email);
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,email,gender,birthday");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+
                         // App code
                         // START INTENT
-                        startActivity(new Intent(AuthActivity.this,MainActivity.class));
+                        //startActivity(new Intent(AuthActivity.this,MainActivity.class));
                         Toast.makeText(AuthActivity.this,"Facebook est connecté ", Toast.LENGTH_SHORT).show();
 
                         // CHANGE SHARED CONNECT FOR BACK TO MAIN ACTIVITY
@@ -150,6 +152,8 @@ public class AuthActivity extends AppCompatActivity {
                     @Override
                     public void onError(FacebookException exception) {
                         // App code
+                        Log.v("LoginActivity", exception.getCause().toString());
+
                     }
                 });
         //----------------------------------------------------------------
@@ -213,6 +217,9 @@ public class AuthActivity extends AppCompatActivity {
 
     }
 
+    //-------------------------------------------------------------------------------------------------------------------
+    //                   G  O  O  G  L  E
+    //
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct){
         Log.e(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 

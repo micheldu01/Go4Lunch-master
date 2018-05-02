@@ -33,6 +33,9 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.firebase.ui.auth.AuthUI;
@@ -50,6 +53,9 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -86,11 +92,14 @@ public class MainActivity extends AppCompatActivity
     public static final String CONNECT = "connect";
 
 
+    // MENU DRAWER
     private NavigationView navView;
     private TextView textViewName;
 
     // FIRE BASE
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+
 
 
     @Override
@@ -102,9 +111,10 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
 
+        startActivity(new Intent(MainActivity.this,AuthActivity.class));
 
         // METHOD FOR AUTH
-        this.methodLogged();
+        //this.methodLogged();
 
         // 1.toolbar add toolbar method
         this.configureToolbar();
@@ -123,9 +133,8 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
-
     }
+
 
 
     // 1.menu implement menu
