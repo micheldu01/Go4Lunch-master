@@ -36,6 +36,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.firebase.ui.auth.AuthUI;
@@ -86,12 +87,6 @@ public class MainActivity extends AppCompatActivity
     // ADD ARRAY ICONS
     private int[] tabIcons = {R.drawable.ic_map_black_24dp,R.drawable.ic_view_list_black_24dp,R.drawable.ic_group_black_24dp};
 
-    // SHARED PREFERENCES
-    protected SharedPreferences preferences;
-    public static final String MYSHARED = "myshared";
-    public static final String CONNECT = "connect";
-
-
     // MENU DRAWER
     private NavigationView navView;
     private TextView textViewName;
@@ -111,10 +106,9 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
 
-        startActivity(new Intent(MainActivity.this,AuthActivity.class));
 
         // METHOD FOR AUTH
-        //this.methodLogged();
+        this.methodLogged();
 
         // 1.toolbar add toolbar method
         this.configureToolbar();
@@ -208,11 +202,18 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id){
+            // ASK RESTAURANT
             case R.id.activity_main_drawer_news :
                 break;
-            case R.id.activity_main_drawer_profile:
-                break;
+                // ASK SETTING
             case R.id.activity_main_drawer_settings:
+                break;
+                // ASK LOGOUT
+            case R.id.activity_main_drawer_logout:
+                Log.e("MainActivity","Logout");
+                LoginManager.getInstance().logOut();
+                startActivity(new Intent(MainActivity.this,AuthActivity.class));
+
                 break;
             default:
                 break;
@@ -294,23 +295,14 @@ public class MainActivity extends AppCompatActivity
     // METHOD FOR LOGGED OR NOT
     private void methodLogged(){
 
-        // IMPLEMENT SHARED
-        preferences = getSharedPreferences(MYSHARED,MODE_PRIVATE);
-
-        // GET SHARED
-        String logg = preferences.getString(CONNECT,"");
-
-
         // ASK IF IS IT NOT LOGGED
-        if (logg.equals("")){
+        // WITH FACEBOOK
+        if (AccessToken.getCurrentAccessToken() == null){
 
            // IF NOT CONNECT START INTENT FOR GO TO AUTH ACTIVITY
             startActivity(new Intent(MainActivity.this, AuthActivity.class));
 
-
-
         }
-
     }
 
 }

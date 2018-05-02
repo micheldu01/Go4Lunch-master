@@ -44,8 +44,6 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.example.michel.go4lunch.MainActivity.CONNECT;
-import static com.example.michel.go4lunch.MainActivity.MYSHARED;
 
 public class AuthActivity extends AppCompatActivity {
 
@@ -79,11 +77,6 @@ public class AuthActivity extends AppCompatActivity {
     //----------------------------------------------------
 
 
-    // SHARED PREFERENCES
-    private SharedPreferences preferences;
-
-
-
 
 
 
@@ -94,9 +87,6 @@ public class AuthActivity extends AppCompatActivity {
 
 
 
-
-        // SHARED PREFERENCES
-        preferences =  getSharedPreferences(MYSHARED,MODE_PRIVATE);
 
         //----------------------------------------------------
         //           F A C E B O O K
@@ -135,13 +125,12 @@ public class AuthActivity extends AppCompatActivity {
                         request.setParameters(parameters);
                         request.executeAsync();
 
-                        // App code
-                        // START INTENT
-                        //startActivity(new Intent(AuthActivity.this,MainActivity.class));
-                        Toast.makeText(AuthActivity.this,"Facebook est connecté ", Toast.LENGTH_SHORT).show();
 
-                        // CHANGE SHARED CONNECT FOR BACK TO MAIN ACTIVITY
-                        preferences.edit().putString(CONNECT, "yes").commit();
+
+                        // START INTENT
+                        startActivity(new Intent(AuthActivity.this,MainActivity.class));
+
+
                     }
 
                     @Override
@@ -240,7 +229,6 @@ public class AuthActivity extends AppCompatActivity {
                             Toast.makeText(AuthActivity.this, "User Signed In", Toast.LENGTH_SHORT).show();
                             // START INTENT
                             startActivity(new Intent(AuthActivity.this, MainActivity.class));
-                            preferences.edit().putString(CONNECT, "").commit();
 
 
 
@@ -261,6 +249,13 @@ public class AuthActivity extends AppCompatActivity {
 
         // STARTING THE ACTIVITY FOR RESULT
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    // METHOD FOR LOG OUT
+    private void logOut(){
+
+        // IMPLEMENT BUTTON LOG OUT
+
     }
 
 }
