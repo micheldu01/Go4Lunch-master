@@ -22,7 +22,9 @@ public class UserHelper {
 
         User userToCreate = new User(uid, username, email, urlPicture);
 
-        return UserHelper.getUsersCollection().document(uid).set(userToCreate);
+        return UserHelper.getUsersCollection()
+                .document(uid)
+                .set(userToCreate);
     }
 
     // GET

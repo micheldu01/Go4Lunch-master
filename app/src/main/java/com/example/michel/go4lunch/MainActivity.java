@@ -3,6 +3,8 @@ package com.example.michel.go4lunch;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.nfc.Tag;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -24,11 +26,20 @@ import com.example.michel.go4lunch.auth.AuthActivity;
 import com.example.michel.go4lunch.base.BaseActivity;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.firebase.ui.auth.ui.email.CheckEmailFragment.TAG;
 
 public class MainActivity extends BaseActivity
         implements
@@ -56,7 +67,6 @@ public class MainActivity extends BaseActivity
     private TextView textViewName;
 
     // FIRE BASE
-    private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
 
@@ -268,7 +278,6 @@ public class MainActivity extends BaseActivity
 
         }
     }
-
 }
 
 

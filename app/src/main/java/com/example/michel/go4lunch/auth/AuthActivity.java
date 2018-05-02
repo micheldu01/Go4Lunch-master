@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import com.example.michel.go4lunch.MainActivity;
 import com.example.michel.go4lunch.R;
+import com.example.michel.go4lunch.api.UserHelper;
+import com.example.michel.go4lunch.base.BaseActivity;
+import com.example.michel.go4lunch.models.User;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -24,18 +27,24 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 
-public class AuthActivity extends AppCompatActivity {
+
+public class AuthActivity extends BaseActivity {
 
 
     // F A C E B O O K --------------------
@@ -77,6 +86,10 @@ public class AuthActivity extends AppCompatActivity {
 
 
 
+        // TEST DATABASE
+        this.testDatabase();
+
+
 
         //----------------------------------------------------
         //           F A C E B O O K
@@ -100,9 +113,13 @@ public class AuthActivity extends AppCompatActivity {
 
                                         // GET USER PROFILE
                                         try {
+                                            String id = object.getString("id");
                                             String name = object.getString("name");
                                             String email = object.getString("email");
                                             Log.e("AuthActivity","reponse FACEBOOK = "+ name + email);
+
+                                            // CALL METHOD FOR GET DATA FROM PROFILE FACEBOOK INTO DATABASE
+                                            createUsersDatabase(id,name,email,"https://graph.facebook.com/"+id+"/picture?type=large");
 
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -231,6 +248,7 @@ public class AuthActivity extends AppCompatActivity {
                 });
     }
 
+
     // THIS METHOD IS CALLED ON CLICK
     private void signIn(){
 
@@ -241,11 +259,52 @@ public class AuthActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    // METHOD FOR LOG OUT
-    private void logOut(){
 
-        // IMPLEMENT BUTTON LOG OUT
+    // METHOD FOR GET PROFILE FACEBOOK
+    private void createUsersDatabase(String uid, String username, String email, String urlPicture){
+
+        // IMPLEMENT FIREBASE STORE
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+
+
+            // GET USER PROFILE
+            User user = new User(uid, username, email, urlPicture);
+            db.collection("users").document().set(user)
+
+                    // SEND MESSAGE IN LOGCAT IF FAILED
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("USERS","FAILED");
+
+                        }
+                    });
+        }
 
     }
 
+    // TEST DATABASE
+    private void testDatabase(){
+
+        // IMPLEMENT FIREBASE STORE
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+            // SET CHAT PROFILE
+            Map<String, Object> chat = new HashMap<>();
+            chat.put("name", "POUPOUNE");
+            db.collection("CAT").document().set(chat)
+
+                    // SEND MESSAGE IN LOGCAT IF FAILED
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("USERS","FAILED");
+
+                        }
+                    });
+
+        }
 }
