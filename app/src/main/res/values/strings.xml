@@ -16,8 +16,8 @@
 
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
-    <string name="facebook_application_id" translatable="false">2030167200556616</string>
-    <string name="facebook_login_protocol_scheme" translatable="false">fb2030167200556616</string>
+    <string name="facebook_application_id" translatable="false">239593013283202</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb239593013283202</string>
     <string name="info_no_username_found">no</string>
 
 

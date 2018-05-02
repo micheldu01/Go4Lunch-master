@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.michel.go4lunch.adapter.PageAdapter;
 import com.example.michel.go4lunch.auth.AuthActivity;
 import com.example.michel.go4lunch.base.BaseActivity;
+import com.example.michel.go4lunch.models.User;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -258,14 +259,13 @@ public class MainActivity extends BaseActivity
     // METHOD FOR IMPLEMENT MENU DRAWER
     private void methodDrawerMenu(){
 
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+        User user = new User();
+
         View headerView = navigationView.getHeaderView(0);
         TextView textViewName = (TextView)headerView.findViewById(R.id.drawer_nom);
         textViewName.setText("laurent");
-
-        // TEST READ DATE FROM FIREBASE
-        //Log.e("DATABASE ", "ID" + FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-
 
     }
 

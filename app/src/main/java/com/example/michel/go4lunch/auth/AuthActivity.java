@@ -1,6 +1,7 @@
 package com.example.michel.go4lunch.auth;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -83,6 +84,7 @@ public class AuthActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+
 
 
 
@@ -229,10 +231,33 @@ public class AuthActivity extends BaseActivity {
                             // IF GOOGLE IS CONNECT
                             Log.e(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            // MAKE TOAST
-                            Toast.makeText(AuthActivity.this, "User Signed In", Toast.LENGTH_SHORT).show();
-                            // START INTENT
-                            startActivity(new Intent(AuthActivity.this, MainActivity.class));
+
+                            // GET DATE FROM GOOGLE
+                            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(AuthActivity.this);
+                            if (acct != null) {
+                                String personName = acct.getDisplayName();
+                                String personGivenName = acct.getGivenName();
+                                String personFamilyName = acct.getFamilyName();
+                                String personEmail = acct.getEmail();
+                                String personId = acct.getId();
+                                Uri personPhoto = acct.getPhotoUrl();
+
+                                // CHANGE URI TO STRING
+                                Uri uri = personPhoto;
+                                String stringUri;
+                                stringUri = uri.toString();
+
+                                // CALL METHOD FOR PUT PROFILE GOOGLE INTO DATABASE
+                                createUsersDatabase(personId,personName,personEmail,stringUri);
+
+                                // MAKE TOAST
+                                Toast.makeText(AuthActivity.this, "User Signed In", Toast.LENGTH_SHORT).show();
+                                // START INTENT
+                                startActivity(new Intent(AuthActivity.this, MainActivity.class));
+                            }
+
+
+
 
 
 
@@ -256,6 +281,8 @@ public class AuthActivity extends BaseActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
 
     }
+
+
 
 
     // METHOD FOR GET PROFILE FACEBOOK
