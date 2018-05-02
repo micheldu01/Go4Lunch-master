@@ -1,6 +1,5 @@
-package com.example.michel.go4lunch.chat;
+package com.example.michel.go4lunch.models;
 
-import com.example.michel.go4lunch.auth.User;
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
