@@ -262,6 +262,10 @@ public class MainActivity extends BaseActivity
         TextView textViewName = (TextView)headerView.findViewById(R.id.drawer_nom);
         textViewName.setText("laurent");
 
+        // TEST READ DATE FROM FIREBASE
+        //Log.e("DATABASE ", "ID" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
 
     }
 

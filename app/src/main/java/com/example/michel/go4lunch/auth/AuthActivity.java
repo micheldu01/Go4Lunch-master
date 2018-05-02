@@ -86,9 +86,6 @@ public class AuthActivity extends BaseActivity {
 
 
 
-        // TEST DATABASE
-        this.testDatabase();
-
 
 
         //----------------------------------------------------
@@ -257,6 +254,7 @@ public class AuthActivity extends BaseActivity {
 
         // STARTING THE ACTIVITY FOR RESULT
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
     }
 
 
@@ -266,12 +264,10 @@ public class AuthActivity extends BaseActivity {
         // IMPLEMENT FIREBASE STORE
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        if (FirebaseAuth.getInstance().getCurrentUser() != null){
-
 
             // GET USER PROFILE
             User user = new User(uid, username, email, urlPicture);
-            db.collection("users").document().set(user)
+            db.collection("users").document("user1").set(user)
 
                     // SEND MESSAGE IN LOGCAT IF FAILED
                     .addOnFailureListener(new OnFailureListener() {
@@ -281,30 +277,6 @@ public class AuthActivity extends BaseActivity {
 
                         }
                     });
-        }
-
     }
 
-    // TEST DATABASE
-    private void testDatabase(){
-
-        // IMPLEMENT FIREBASE STORE
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-
-            // SET CHAT PROFILE
-            Map<String, Object> chat = new HashMap<>();
-            chat.put("name", "POUPOUNE");
-            db.collection("CAT").document().set(chat)
-
-                    // SEND MESSAGE IN LOGCAT IF FAILED
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.e("USERS","FAILED");
-
-                        }
-                    });
-
-        }
 }
