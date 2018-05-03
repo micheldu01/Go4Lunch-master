@@ -11,6 +11,7 @@
     tools:openDrawer="start"
     tools:context="com.example.michel.go4lunch.MainActivity">
 
+
     //create drawerLayout
 
     <android.support.v4.widget.DrawerLayout
@@ -20,6 +21,7 @@
         android:fitsSystemWindows="true"
         tools:openDrawer="start">
 
+
         <!-- 1 | MainActivity RootView -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,7 +30,6 @@
 
 
             //create toolbar
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/activity_main_toolbar"
                 android:layout_width="match_parent"
@@ -36,12 +37,20 @@
                 android:background="?attr/colorPrimary"
                 app:theme="@style/ToolBarStyle" />
 
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
-                //create TabLayout
 
+                // create viewpager
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/activity_main_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+                //create TabLayout
                 <android.support.design.widget.TabLayout
                     android:id="@+id/activity_main_tabs"
                     android:layout_width="match_parent"
@@ -54,12 +63,7 @@
 
             </RelativeLayout>
 
-            // create viewpager
 
-            <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/activity_main_viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
             <!-- FrameLayout for our fragments -->
             <FrameLayout
@@ -95,6 +99,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_width="130dp"
                     android:layout_height="130dp" />
+
 
             </LinearLayout>
 

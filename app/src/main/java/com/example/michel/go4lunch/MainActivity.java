@@ -259,13 +259,26 @@ public class MainActivity extends BaseActivity
     // METHOD FOR IMPLEMENT MENU DRAWER
     private void methodDrawerMenu(){
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        // IMPLEMENT FIRE BASE STORE
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        // IMPLEMENT USER
         User user = new User();
 
+        // GET PROFILE FROM FIREBASE INTO USER
+        //db.collection("users").document("user1").set("username");
+
+        Log.e("USERS","FAILED" + db.collection("users").document("user1"));
+
+
+        // IMPLEMENT NAVIGATION VIEW
         View headerView = navigationView.getHeaderView(0);
+        // IMPLEMENT TEXT VIEW NAME
         TextView textViewName = (TextView)headerView.findViewById(R.id.drawer_nom);
-        textViewName.setText("laurent");
+        //textViewName.setText(user.getUsername());
+
+
+
 
     }
 

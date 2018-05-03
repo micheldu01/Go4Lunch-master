@@ -12,6 +12,12 @@ public class User {
     public User() {
     }
 
+    public User(String uid, String username, String urlPicture) {
+        this.uid = uid;
+        this.username = username;
+        this.urlPicture = urlPicture;
+    }
+
     public User(String uid, String username, String email, String urlPicture) {
         this.uid = uid;
         this.username = username;

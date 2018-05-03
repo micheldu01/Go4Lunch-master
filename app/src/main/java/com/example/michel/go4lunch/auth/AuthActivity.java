@@ -118,7 +118,12 @@ public class AuthActivity extends BaseActivity {
                                             Log.e("AuthActivity","reponse FACEBOOK = "+ name + email);
 
                                             // CALL METHOD FOR GET DATA FROM PROFILE FACEBOOK INTO DATABASE
-                                            createUsersDatabase(id,name,email,"https://graph.facebook.com/"+id+"/picture?type=large");
+                                            //createUsersDatabase(id,name,email,"https://graph.facebook.com/"+id+"/picture?type=large");
+                                            //-------------------------------
+                                            //      T E S T
+                                            createUsersDatabase2(id,name,"https://graph.facebook.com/"+id+"/picture?type=large");
+
+
 
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -284,7 +289,6 @@ public class AuthActivity extends BaseActivity {
 
 
 
-
     // METHOD FOR GET PROFILE FACEBOOK
     private void createUsersDatabase(String uid, String username, String email, String urlPicture){
 
@@ -306,4 +310,64 @@ public class AuthActivity extends BaseActivity {
                     });
     }
 
+    //----------------------------------
+    //        T E S T
+    // METHOD FOR GET PROFILE FACEBOOK
+    private void createUsersDatabase2(String uid, String username, String urlPicture){
+
+        // IMPLEMENT FIREBASE STORE
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        // GET USER PROFILE
+        User user = new User(uid, username, urlPicture);
+        db.collection("users").document("user1").set(user)
+
+                // SEND MESSAGE IN LOGCAT IF FAILED
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("USERS","FAILED");
+
+                    }
+                });
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
