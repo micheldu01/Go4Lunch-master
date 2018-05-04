@@ -1,6 +1,7 @@
 package com.example.michel.go4lunch.adapter;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
@@ -27,12 +28,15 @@ public class PageAdapter extends FragmentPagerAdapter {
         return (3);
     }
 
+
     // implement page adapter
     @Override
     public Fragment getItem(int position) {
+
         switch (position) {
             case 0: //Page number 1
-                return MapViewFragment.newInstance();
+                 return new MapViewFragment();
+                        break;
             case 1: //Page number 2
                 return ListViewFragment.newInstance();
             case 2: //Page number 3

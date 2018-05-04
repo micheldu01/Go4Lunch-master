@@ -2,12 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.michel.go4lunch.fragments.MapViewFragment">
+    tools:context=".MainActivity">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/map"
+        tools:context=".MapViewFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
 
 </FrameLayout>

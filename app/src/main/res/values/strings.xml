@@ -4,6 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    // STRING DRAWER LAYOUT MENU
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -20,6 +21,8 @@
     <string name="facebook_login_protocol_scheme" translatable="false">fb239593013283202</string>
     <string name="info_no_username_found">no</string>
 
+    // GOOGLE MAPS KEY
+    <string name="google_maps_key"></string>
 
 
 </resources>
