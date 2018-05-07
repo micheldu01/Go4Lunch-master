@@ -2,6 +2,7 @@ package com.example.michel.go4lunch;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.provider.ContactsContract;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -10,19 +11,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.michel.go4lunch.adapter.PageAdapter;
 import com.example.michel.go4lunch.base.BaseActivity;
 import com.example.michel.go4lunch.models.User;
 import com.facebook.login.LoginManager;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
@@ -45,6 +51,8 @@ public class MainActivity extends BaseActivity
             new AuthUI.IdpConfig.GoogleBuilder().build());
 
 
+
+
     // DECLARE TOOLBAR
     @BindView(R.id.activity_main_toolbar) Toolbar toolbar;
     // DECLARE DRAWER LAYOUT
@@ -57,15 +65,23 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.activity_main_tabs) TabLayout tabs;
 
 
+
+
+
     // ADD ARRAY ICONS
     private int[] tabIcons = {R.drawable.ic_map_black_24dp,R.drawable.ic_view_list_black_24dp,R.drawable.ic_group_black_24dp};
 
     // MENU DRAWER
     private NavigationView navView;
-    private TextView textViewName;
 
     // FIRE BASE
     private FirebaseAuth mAuth;
+
+    // FIRE BASE USER
+    private FirebaseUser firebaseUser;
+
+
+
 
 
 
@@ -257,6 +273,11 @@ public class MainActivity extends BaseActivity
         // IMPLEMENT FIRE BASE STORE
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        // TEST NAME
+        FirebaseAuth.getInstance().getCurrentUser();
+        Log.e("USERS","FAILED" + FirebaseAuth.getInstance().getCurrentUser());
+
+
         // IMPLEMENT USER
         User user = new User();
 
@@ -267,9 +288,34 @@ public class MainActivity extends BaseActivity
 
         // IMPLEMENT NAVIGATION VIEW
         View headerView = navigationView.getHeaderView(0);
+
         // IMPLEMENT TEXT VIEW NAME
         TextView textViewName = (TextView)headerView.findViewById(R.id.drawer_nom);
-        //textViewName.setText(user.getUsername());
+        // IMPLEMENT TEXT VIEW EMAIL
+        TextView textViewEmail = (TextView) headerView.findViewById(R.id.drawer_email);
+        // IMPLEMENT IMAGE VIEW
+        ImageView imageView = (ImageView) headerView.findViewById(R.id.drawer_image);
+
+        // GET NAME INTO STRING
+        String stringName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        // GET EMAIL INTO STRING
+        String stringEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        // SHOW NAME
+        textViewName.setText(stringName);
+        // SHOW EMAIL
+        textViewEmail.setText(stringEmail);
+
+        // ASK IF IMAGE PROFILE IS NOT NULL
+        if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() != null){
+
+            // USE GLIDE FOR GET IMAGE PROFILE INTO IMAGE VIEW
+            Glide.with(this)
+                    .load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(imageView);
+        }
+
 
 
 
