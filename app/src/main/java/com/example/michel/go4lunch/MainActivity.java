@@ -1,17 +1,13 @@
 package com.example.michel.go4lunch;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.nfc.Tag;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,30 +18,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.michel.go4lunch.adapter.PageAdapter;
-import com.example.michel.go4lunch.auth.AuthActivity;
 import com.example.michel.go4lunch.base.BaseActivity;
 import com.example.michel.go4lunch.models.User;
-import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.firebase.ui.auth.ui.email.CheckEmailFragment.TAG;
 
 public class MainActivity extends BaseActivity
         implements
         NavigationView.OnNavigationItemSelectedListener{
 
+
+    // DECLARE FOR SIGN IN
+    private static final int RC_SIGN_IN = 123;
+
+    // CHOOSE AUTHENTIFICATION PROVIDERS
+    List<AuthUI.IdpConfig> providers = Arrays.asList(
+            new AuthUI.IdpConfig.EmailBuilder().build(),
+            new AuthUI.IdpConfig.FacebookBuilder().build(),
+            new AuthUI.IdpConfig.GoogleBuilder().build());
 
 
     // DECLARE TOOLBAR
@@ -81,9 +79,8 @@ public class MainActivity extends BaseActivity
         ButterKnife.bind(this);
 
 
-
         // METHOD FOR AUTH
-        this.methodLogged();
+        this.launchSignInIntent();
 
         // 1.toolbar add toolbar method
         this.configureToolbar();
@@ -187,8 +184,6 @@ public class MainActivity extends BaseActivity
             case R.id.activity_main_drawer_logout:
                 Log.e("MainActivity","Logout");
                 LoginManager.getInstance().logOut();
-                startActivity(new Intent(MainActivity.this,AuthActivity.class));
-
                 break;
             default:
                 break;
@@ -283,17 +278,16 @@ public class MainActivity extends BaseActivity
     }
 
 
-    // METHOD FOR LOGGED OR NOT
-    private void methodLogged(){
+    // CREATE AND LAUNCH SING IN INTENT
+    private void launchSignInIntent(){
 
-        // ASK IF IS IT NOT LOGGED
-        // WITH FACEBOOK
-        if (AccessToken.getCurrentAccessToken() == null){
-
-           // IF NOT CONNECT START INTENT FOR GO TO AUTH ACTIVITY
-            startActivity(new Intent(MainActivity.this, AuthActivity.class));
-
-        }
+        // START ACTIVITY FOR RESULT
+        startActivityForResult(
+                AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build(),
+                RC_SIGN_IN);
     }
 }
 

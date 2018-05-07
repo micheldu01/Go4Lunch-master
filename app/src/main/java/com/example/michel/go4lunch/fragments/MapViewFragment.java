@@ -20,56 +20,29 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapViewFragment extends FragmentActivity implements OnMapReadyCallback{
+public class MapViewFragment extends Fragment {
 
 
 
-    // MAPS POSITION
-    private static final LatLng PARIS = new LatLng(48.858093, 2.294694);
 
 
-/*
     //create constructor
     public static MapViewFragment newInstance() {
         // Required empty public constructor
         return (new MapViewFragment());
     }
-   */
-
-
-    public MapViewFragment newInstance(){
-        return (new MapViewFragment());
-    }
-
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        View view = inflater.inflate(R.layout.fragment_list_view, container, false);
 
 
 
-        mapFragment.getMapAsync(this);
 
-
-
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-        //ajoute un marker sur Paris
-        googleMap.addMarker(new MarkerOptions().title("Paris").position(PARIS));
-
-        //centre la google map sur Paris (avec animation de zoom)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PARIS, 15));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-
-
+        return view;
     }
 }
 

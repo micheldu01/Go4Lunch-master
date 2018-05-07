@@ -34,9 +34,9 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         switch (position) {
+
             case 0: //Page number 1
-                 return new MapViewFragment();
-                        break;
+                 return MapViewFragment.newInstance();
             case 1: //Page number 2
                 return ListViewFragment.newInstance();
             case 2: //Page number 3
