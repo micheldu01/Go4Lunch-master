@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity
         this.configureDrawerLayout();
 
         // DRAWER MENU PROFILE
-        this.methodDrawerMenu();
+        this.profileIntoDrawerMenu();
 
 
 
@@ -267,16 +267,11 @@ public class MainActivity extends BaseActivity
     }
 
 
-    // METHOD FOR IMPLEMENT MENU DRAWER
-    private void methodDrawerMenu(){
+    // METHOD FOR IMPLEMENT PROFILE INTO MENU DRAWER
+    private void profileIntoDrawerMenu(){
 
         // IMPLEMENT FIRE BASE STORE
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        // TEST NAME
-        FirebaseAuth.getInstance().getCurrentUser();
-        Log.e("USERS","FAILED" + FirebaseAuth.getInstance().getCurrentUser());
-
 
         // IMPLEMENT USER
         User user = new User();
