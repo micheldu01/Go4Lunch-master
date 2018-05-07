@@ -39,9 +39,8 @@ public class MainActivity extends BaseActivity
     // DECLARE FOR SIGN IN
     private static final int RC_SIGN_IN = 123;
 
-    // CHOOSE AUTHENTIFICATION PROVIDERS
+    // CHOOSE AUTHENTIFICATION PROVIDERS FACEBOOK AND GOOGLE
     List<AuthUI.IdpConfig> providers = Arrays.asList(
-            new AuthUI.IdpConfig.EmailBuilder().build(),
             new AuthUI.IdpConfig.FacebookBuilder().build(),
             new AuthUI.IdpConfig.GoogleBuilder().build());
 
@@ -183,7 +182,8 @@ public class MainActivity extends BaseActivity
                 // ASK LOGOUT
             case R.id.activity_main_drawer_logout:
                 Log.e("MainActivity","Logout");
-                LoginManager.getInstance().logOut();
+                FirebaseAuth.getInstance().signOut();
+                this.launchSignInIntent();
                 break;
             default:
                 break;
@@ -265,13 +265,11 @@ public class MainActivity extends BaseActivity
 
         Log.e("USERS","FAILED" + db.collection("users").document("user1"));
 
-
         // IMPLEMENT NAVIGATION VIEW
         View headerView = navigationView.getHeaderView(0);
         // IMPLEMENT TEXT VIEW NAME
         TextView textViewName = (TextView)headerView.findViewById(R.id.drawer_nom);
         //textViewName.setText(user.getUsername());
-
 
 
 
@@ -282,14 +280,35 @@ public class MainActivity extends BaseActivity
     private void launchSignInIntent(){
 
         // START ACTIVITY FOR RESULT
+        // AND ADD LOGO
         startActivityForResult(
+                // GET INSTANCE UI
                 AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
+                        .createSignInIntentBuilder()
+                        // ADD PROVIDERS GOOGLE AND FACEBOOK
+                        .setAvailableProviders(providers)
+                        // ADD LOGO BOL
+                        .setLogo(R.drawable.boltitle)
+                        // ADD THEME WITH PIC RESTAURANT BACKGROUND
+                        .setTheme(R.style.MyThemeUI)
                 .build(),
                 RC_SIGN_IN);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
