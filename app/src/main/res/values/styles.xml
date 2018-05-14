@@ -23,10 +23,6 @@
 
     <style name="MyThemeUI" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/imagerestaurantok</item>
-
-
-
-
     </style>
 
 

@@ -52,7 +52,6 @@ public class MainActivity extends BaseActivity
 
 
 
-
     // DECLARE TOOLBAR
     @BindView(R.id.activity_main_toolbar) Toolbar toolbar;
     // DECLARE DRAWER LAYOUT
