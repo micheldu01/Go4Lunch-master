@@ -23,21 +23,42 @@
             android:layout_height="80dp">
 
 
+            <TextView
+                android:id="@+id/name_restaurant_show_restaurant"
+                android:text="Name of restaurant"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/type_restaurant_show_restaurant"
+                android:text="Type - "
+                android:layout_below="@+id/name_restaurant_show_restaurant"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/adresse_restaurant_show_restaurant"
+                android:text="Type - "
+                android:layout_below="@+id/name_restaurant_show_restaurant"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
 
 
 
         </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
-
-
 
 </LinearLayout>
