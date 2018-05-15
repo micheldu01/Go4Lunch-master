@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    // NAME RESTAURANT
+    <TextView
+        android:text="name test"
+        android:id="@+id/name_recycler_view"
+        style="bold"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    // TYPE OF RESTAURANT
+    <TextView
+        android:text="type test"
+        android:id="@+id/type_recycler_view"
+        android:layout_below="@+id/name_recycler_view"
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    // ADDRESS RESTAURANT
+    <TextView
+        android:text="adresse test"
+        android:id="@+id/address_recycler_view"
+        android:layout_below="@+id/name_recycler_view"
+        android:layout_toRightOf="@+id/type_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    // OPEN HOURS
+    <TextView
+        android:text="heures test"
+        android:id="@+id/hour_recycler_view"
+        android:layout_below="@+id/address_recycler_view"
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    // IMAGE RESTAURANT
+    <ImageView
+        android:id="@+id/image_recycler_view"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="75dp"
+        android:layout_height="75dp" />
+
+    // DISTANCE
+    <TextView
+        android:text="distance test"
+        android:id="@+id/distance_recycler_view"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/image_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    // NUMBER OF WORKMATES
+    <TextView
+        android:text="1 test"
+        android:id="@+id/workmates_recycler_view"
+        android:layout_below="@+id/distance_recycler_view"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/image_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    // ICON WORKMATES
+    <ImageView
+        android:src="@drawable/baseline_perm_identity_white_18dp"
+        android:layout_below="@+id/distance_recycler_view"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/image_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    // START YELLO
+    <ImageView
+        android:src="@drawable/baseline_star_border_white_18dp"
+        android:backgroundTint="@color/yello"
+        android:layout_below="@+id/distance_recycler_view"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/image_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</RelativeLayout>
