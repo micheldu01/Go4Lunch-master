@@ -8,7 +8,7 @@ public class RestaurantObject {
     // CREATE VALUE
     private String name;
 
-    private String Adresse;
+    private String Address;
 
     private String heuresOuverture;
 
@@ -27,12 +27,10 @@ public class RestaurantObject {
     public RestaurantObject() {
     }
 
-    // CONSTRUCTOR FULL
-
-
-    public RestaurantObject(String name, String adresse, String heuresOuverture, String type, int etoile, int workMates, int distance, String urlPhoto) {
+    // CONSTRUCTOR FULL WITH PIC
+    public RestaurantObject(String name, String address, String heuresOuverture, String type, int etoile, int workMates, int distance, String urlPhoto) {
         this.name = name;
-        Adresse = adresse;
+        Address = address;
         this.heuresOuverture = heuresOuverture;
         this.type = type;
         this.etoile = etoile;
@@ -41,6 +39,18 @@ public class RestaurantObject {
         this.urlPhoto = urlPhoto;
     }
 
+    // CONSTRUCTOR WITHOUT PIC
+
+
+    public RestaurantObject(String name, String address, String heuresOuverture, String type, int etoile, int workMates, int distance) {
+        this.name = name;
+        Address = address;
+        this.heuresOuverture = heuresOuverture;
+        this.type = type;
+        this.etoile = etoile;
+        this.workMates = workMates;
+        Distance = distance;
+    }
 
     // GETTER AND SETTER
     public String getName() {
@@ -52,11 +62,11 @@ public class RestaurantObject {
     }
 
     public String getAdresse() {
-        return Adresse;
+        return Address;
     }
 
-    public void setAdresse(String adresse) {
-        Adresse = adresse;
+    public void setAddress(String adresse) {
+        Address = adresse;
     }
 
     public String getHeuresOuverture() {
