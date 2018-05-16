@@ -1,6 +1,9 @@
 package com.example.michel.go4lunch.recyclerview;
 
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,13 +40,34 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
 
     }
 
+
+    @SuppressLint("ResourceAsColor")
     public void restaurantHolderView(RestaurantObject restaurantObject) {
 
         name.setText(restaurantObject.getName());
-        /*
+        name.setTypeface(null, Typeface.BOLD);
+        type.setText(restaurantObject.getType()+" - ");
+        address.setText(restaurantObject.getAdresse());
+
+        // IF RESTAURANT CLOSE RED COLOR
+        if(restaurantObject.getHeuresOuverture().equals("close")){
+            hour.setText(restaurantObject.getHeuresOuverture());
+            hour.setTextColor(Color.RED);
+        }
+        else {
+            hour.setText(restaurantObject.getHeuresOuverture());
+            hour.setTypeface(null, Typeface.ITALIC);
+        }
+
+        distance.setText(String.valueOf(restaurantObject.getDistance()));
+
+
+
+
+
+/*
         address.setText(" - " + restaurantObject.getAdresse());
-        hour.setText(restaurantObject.getHeuresOuverture());
-        type.setText(restaurantObject.getType());
+
         star.setText("2");
         workMates.setText(restaurantObject.getWorkMates());
         distance.setText(restaurantObject.getDistance());

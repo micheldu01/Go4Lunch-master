@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import com.example.michel.go4lunch.recyclerview.ItemClickSupport;
 import com.example.michel.go4lunch.recyclerview.RestaurantObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -77,19 +79,24 @@ public class ListViewFragment extends Fragment {
     // METHOD FOR SET LIST RESTAURANT INTO RECYCLER VIEW
     private void showListRestaurant() {
 
-        // IMPLEMENT RESTAURANT OBJECT
-
 
 
         // ADD DATA INTO OBJECT LIST
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 1"));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 2"));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 3"));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 4"));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 5"));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 6"));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 7"));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 1","french","Mon adresse", "jusqu'à 22h", 150));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 2","french","Mon adresse", "jusqu'à 22h", 140));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 3","french","Mon adresse", "jusqu'à 22h", 300));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 4","french","Mon adresse", "close", 520));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 5","french","Mon adresse", "jusqu'à 22h", 600));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 6","french","Mon adresse", "jusqu'à 22h", 200));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 7","french","Mon adresse", "jusqu'à 22h", 300));
 
+
+        // SORT DISTANCE FROM THE SMALLEST TO THE LARGEST
+        Collections.sort(restaurantObjectList);
+
+
+
+        // ------------------------------
 
         // IMPLEMENT RECYCLER VIEW
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -123,9 +130,6 @@ public class ListViewFragment extends Fragment {
             }
         });
     }
-
-
-
 }
 
 

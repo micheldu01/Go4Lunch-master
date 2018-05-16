@@ -20,6 +20,7 @@
         android:text="type test"
         android:id="@+id/type_recycler_view"
         android:layout_below="@+id/name_recycler_view"
+        android:layout_alignParentLeft="true"
         android:layout_marginLeft="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
