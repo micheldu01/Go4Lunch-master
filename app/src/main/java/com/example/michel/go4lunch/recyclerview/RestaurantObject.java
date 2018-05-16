@@ -27,6 +27,13 @@ public class RestaurantObject {
     public RestaurantObject() {
     }
 
+    // --- T E S T --
+    public RestaurantObject(String name) {
+        this.name = name;
+    }
+
+
+
     // CONSTRUCTOR FULL WITH PIC
     public RestaurantObject(String name, String address, String heuresOuverture, String type, int etoile, int workMates, int distance, String urlPhoto) {
         this.name = name;
@@ -51,6 +58,8 @@ public class RestaurantObject {
         this.workMates = workMates;
         Distance = distance;
     }
+
+
 
     // GETTER AND SETTER
     public String getName() {

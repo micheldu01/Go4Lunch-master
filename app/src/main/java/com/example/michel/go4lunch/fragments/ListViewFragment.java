@@ -1,17 +1,28 @@
 package com.example.michel.go4lunch.fragments;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.michel.go4lunch.R;
+import com.example.michel.go4lunch.recyclerview.AdapterListView;
+import com.example.michel.go4lunch.recyclerview.ItemClickSupport;
+import com.example.michel.go4lunch.recyclerview.RestaurantObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
@@ -25,6 +36,11 @@ public class ListViewFragment extends Fragment {
 
     // IMPLEMENT REFRESH LAYOUT
     @BindView(R.id.list_view_swipe_refresh)SwipeRefreshLayout refreshLayout;
+
+    // DECLARE LIST RESTAURANT OBJECT
+    private List<RestaurantObject> restaurantObjectList = new ArrayList<>();
+
+
 
 
 
@@ -42,11 +58,105 @@ public class ListViewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_view, container, false);
 
+        // DECLARE BUTTER KNIFE
+        ButterKnife.bind(this,view);
 
+        // SWIPE REFRESH
+        this.configureSwipeRefreshLayout();
 
+        // DECLARE THE ONCLICK FOR USE IT FOR SHOW VIEW RESTAUARANT LIST
+        this.configureOnClickRecyclerView();
+
+        // SHOW RESTAURANT LIST
+        this.showListRestaurant();
 
 
         return view;
     }
 
+    // METHOD FOR SET LIST RESTAURANT INTO RECYCLER VIEW
+    private void showListRestaurant() {
+
+        // IMPLEMENT RESTAURANT OBJECT
+
+
+
+        // ADD DATA INTO OBJECT LIST
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 1"));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 2"));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 3"));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 4"));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 5"));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 6"));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 7"));
+
+
+        // IMPLEMENT RECYCLER VIEW
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new AdapterListView(restaurantObjectList));
+
+    }
+
+
+    // MEHTOD CLICK ON RECYCLER VIEW
+    private void configureOnClickRecyclerView() {
+        ItemClickSupport.addTo(recyclerView, R.layout.fragment_list_view)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+
+                        // ON CLICK INTENT
+
+                    }
+                });
+
+    }
+
+
+    // SWIPE REFRESH METHOD
+    private void configureSwipeRefreshLayout() {
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // SHOW LIST RESTAURANT
+                showListRestaurant();
+            }
+        });
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

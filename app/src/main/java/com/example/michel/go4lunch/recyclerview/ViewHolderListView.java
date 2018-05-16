@@ -12,6 +12,7 @@ import com.example.michel.go4lunch.R;
 import java.text.ParseException;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class ViewHolderListView extends RecyclerView.ViewHolder {
@@ -32,11 +33,14 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
     public ViewHolderListView(View itemView) {
         super(itemView);
 
+        ButterKnife.bind(this,itemView);
+
     }
 
     public void restaurantHolderView(RestaurantObject restaurantObject) {
 
         name.setText(restaurantObject.getName());
+        /*
         address.setText(" - " + restaurantObject.getAdresse());
         hour.setText(restaurantObject.getHeuresOuverture());
         type.setText(restaurantObject.getType());
@@ -44,9 +48,9 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
         workMates.setText(restaurantObject.getWorkMates());
         distance.setText(restaurantObject.getDistance());
         Glide.with(itemView.getContext()).load(restaurantObject.getUrlPhoto()).into(image);
+        */
 
     }
-
 
 }
 
