@@ -82,21 +82,18 @@ public class ListViewFragment extends Fragment {
 
 
         // ADD DATA INTO OBJECT LIST
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 1","french","Mon adresse", "jusqu'à 22h", 150));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 2","french","Mon adresse", "jusqu'à 22h", 140));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 3","french","Mon adresse", "jusqu'à 22h", 300));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 4","french","Mon adresse", "close", 520));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 5","french","Mon adresse", "jusqu'à 22h", 600));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 6","french","Mon adresse", "jusqu'à 22h", 200));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 7","french","Mon adresse", "jusqu'à 22h", 300));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 1","french","Mon adresse", "jusqu'à 22h", 150,1,0, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 2","french","Mon adresse", "jusqu'à 22h", 140,1,2, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 3","french","Mon adresse", "jusqu'à 22h", 300,3,1, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 4","french","Mon adresse", "close", 520,0,3, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 5","french","Mon adresse", "jusqu'à 22h", 600,0,2, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 6","french","Mon adresse", "jusqu'à 22h", 200,1,0, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
+        restaurantObjectList.add(new RestaurantObject("Mon restaurant 7","french","Mon adresse", "jusqu'à 22h", 300,4,3, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
 
 
         // SORT DISTANCE FROM THE SMALLEST TO THE LARGEST
         Collections.sort(restaurantObjectList);
 
-
-
-        // ------------------------------
 
         // IMPLEMENT RECYCLER VIEW
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

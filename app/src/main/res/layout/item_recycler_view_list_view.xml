@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="15dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -18,6 +19,7 @@
     // TYPE OF RESTAURANT
     <TextView
         android:text="type test"
+        android:layout_marginTop="5dp"
         android:id="@+id/type_recycler_view"
         android:layout_below="@+id/name_recycler_view"
         android:layout_alignParentLeft="true"
@@ -28,6 +30,7 @@
     // ADDRESS RESTAURANT
     <TextView
         android:text="adresse test"
+        android:layout_marginTop="5dp"
         android:id="@+id/address_recycler_view"
         android:layout_below="@+id/name_recycler_view"
         android:layout_toRightOf="@+id/type_recycler_view"
@@ -37,6 +40,7 @@
     // OPEN HOURS
     <TextView
         android:text="heures test"
+        android:layout_marginTop="5dp"
         android:id="@+id/hour_recycler_view"
         android:layout_below="@+id/address_recycler_view"
         android:layout_marginLeft="5dp"
@@ -50,6 +54,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="5dp"
         android:layout_alignParentRight="true"
+        android:scaleType="center"
         android:layout_width="75dp"
         android:layout_height="75dp" />
 
@@ -67,6 +72,7 @@
     // NUMBER OF WORKMATES
     <TextView
         android:text="1 test"
+        android:layout_marginTop="5dp"
         android:id="@+id/workmates_recycler_view"
         android:layout_below="@+id/distance_recycler_view"
         android:layout_marginRight="5dp"
@@ -75,25 +81,51 @@
         android:layout_height="wrap_content" />
 
     // ICON WORKMATES
-    <TextView
-        android:src="@drawable/baseline_perm_identity_white_18dp"
+    <ImageView
+        android:id="@+id/icon_workmates_recycler_view"
+        android:src="@drawable/baseline_perm_identity_black_36dp"
         android:layout_below="@+id/distance_recycler_view"
-        android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/image_recycler_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_toLeftOf="@+id/workmates_recycler_view"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 
-    // START YELLO
-    <TextView
+
+    // START YELLO 1
+    <ImageView
         android:text="etoile test"
+        android:layout_marginTop="10dp"
         android:id="@+id/star_recycler_view"
-        android:src="@drawable/baseline_star_border_white_18dp"
-        android:backgroundTint="@color/yello"
+        android:src="@drawable/star_gold"
         android:layout_below="@+id/workmates_recycler_view"
         android:layout_marginRight="5dp"
         android:layout_toLeftOf="@+id/image_recycler_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+    // START YELLO 2
+    <ImageView
+        android:text="etoile test"
+        android:layout_marginTop="10dp"
+        android:id="@+id/star_recycler_view2"
+        android:src="@drawable/star_gold"
+        android:layout_below="@+id/workmates_recycler_view"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/star_recycler_view"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+    // STAR YELLO 3
+    <ImageView
+        android:text="etoile test"
+        android:layout_marginTop="10dp"
+        android:id="@+id/star_recycler_view3"
+        android:src="@drawable/star_gold"
+        android:layout_below="@+id/workmates_recycler_view"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/star_recycler_view2"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
 
 
 </RelativeLayout>

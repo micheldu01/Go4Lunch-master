@@ -15,7 +15,7 @@ public class RestaurantObject implements Comparable<RestaurantObject> {
 
     private String type;
 
-    private int etoile;
+    private int star;
 
     private int workMates;
 
@@ -28,48 +28,24 @@ public class RestaurantObject implements Comparable<RestaurantObject> {
     public RestaurantObject(){
     }
 
-    // --- T E S T ----
 
 
-    public RestaurantObject(String name, String type, String address, String heuresOuverture, int distance) {
+
+    public RestaurantObject(String name, String type, String address, String heuresOuverture, int distance, int workMates, int star, String urlPhoto) {
         this.name = name;
         this.type = type;
         this.address = address;
         this.heuresOuverture = heuresOuverture;
         this.distance = distance;
-    }
-
-
-
-
-    //--------------------------------------------------
-
-
-
-    // CONSTRUCTOR FULL WITH PIC
-    public RestaurantObject(String name, String address, String heuresOuverture, String type, int etoile, int workMates, int distance, String urlPhoto) {
-        this.name = name;
-        address = address;
-        this.heuresOuverture = heuresOuverture;
-        this.type = type;
-        this.etoile = etoile;
         this.workMates = workMates;
-        distance = distance;
+        this.star = star;
         this.urlPhoto = urlPhoto;
     }
 
-    // CONSTRUCTOR WITHOUT PIC
 
 
-    public RestaurantObject(String name, String address, String heuresOuverture, String type, int etoile, int workMates, int distance) {
-        this.name = name;
-        address = address;
-        this.heuresOuverture = heuresOuverture;
-        this.type = type;
-        this.etoile = etoile;
-        this.workMates = workMates;
-        distance = distance;
-    }
+
+
 
 
 
@@ -106,12 +82,11 @@ public class RestaurantObject implements Comparable<RestaurantObject> {
         this.type = type;
     }
 
-    public int getEtoile() {
-        return etoile;
+    public int getStar() {
+        return star;
     }
 
-    public void setEtoile(int etoile) {
-        this.etoile = etoile;
+    public void setStar(int star) { this.star = star;
     }
 
     public int getWorkMates() {
