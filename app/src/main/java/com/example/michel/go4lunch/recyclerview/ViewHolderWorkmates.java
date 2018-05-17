@@ -39,16 +39,16 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
     }
 
     // METHOD FOR SET VALUES IN RECYCLER VIEW
-    private void insertDataIntoRecyclerView(RestaurantObject restaurantObject, ProfileActivity profileActivity){
+    public void insertDataIntoRecyclerView(ProfileActivity profileActivity){
 
         // SET IMAGE PROFILE
         Glide.with(itemView.getContext()).load(profileActivity.getUrlImage()).into(imageProfile);
         // SET NAME PROFILE
         nameProfile.setText(profileActivity.getName());
         // SET TYPE FOOD
-        typeFood.setText(restaurantObject.getType());
+        typeFood.setText(profileActivity.getType());
         // SET NAME RESTAURANT
-        nameRestaurant.setText(restaurantObject.getName());
+        nameRestaurant.setText(profileActivity.getName());
 
     }
 }
