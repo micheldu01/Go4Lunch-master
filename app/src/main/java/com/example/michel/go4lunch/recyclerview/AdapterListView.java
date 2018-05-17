@@ -12,7 +12,7 @@ import com.example.michel.go4lunch.R;
 import java.util.List;
 
 
-public class AdapterListView extends RecyclerView.Adapter<ViewHolderListView> {
+public class AdapterListView extends RecyclerView.Adapter<ViewHolderListView>{
 
 
     private List<RestaurantObject> restaurantObjectList;
