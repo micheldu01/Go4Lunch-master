@@ -80,7 +80,6 @@ public class ListViewFragment extends Fragment {
     private void showListRestaurant() {
 
 
-
         // ADD DATA INTO OBJECT LIST
         restaurantObjectList.add(new RestaurantObject("Mon restaurant 1","french","Mon adresse", "jusqu'à 22h", 150,1,0, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
         restaurantObjectList.add(new RestaurantObject("Mon restaurant 2","french","Mon adresse", "jusqu'à 22h", 140,1,2, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));

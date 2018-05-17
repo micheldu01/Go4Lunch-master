@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+    // IMAGE PROFILE WORKMATES
+    <ImageView
+        android:id="@+id/image_recycler_workmates"
+        android:layout_centerInParent="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp" />
+
+    // NAME PROFILE
+    <TextView
+        android:id="@+id/name_workmates_recycler"
+        android:text="name test"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@+id/image_recycler_workmates"
+        android:layout_marginRight="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    // TYPE FOOD
+    <TextView
+        android:id="@+id/type_workmates_recycler"
+        android:text="my type"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@+id/name_workmates_recycler"
+        android:layout_marginRight="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    // NAME RESTAURANT
+    <TextView
+        android:id="@+id/name_restaurant_workmates_recycler"
+        android:text="Name restaurant"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@+id/type_workmates_recycler"
+        android:layout_marginRight="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

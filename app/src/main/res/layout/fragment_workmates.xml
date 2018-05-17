@@ -1,12 +1,30 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.michel.go4lunch.fragments.WorkmatesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/workmatesFragment_text"
+
+
+    // DECLARE SWIPE REFRESH
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/list_view_swipe_refresh"
+        android:layout_marginBottom="70dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="JE SUIS UN FRAGMENT" />
+        android:layout_height="match_parent">
 
-</RelativeLayout>
+        // DECLARE RECYCLER VIEW
+        <android.support.v7.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/list_view_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

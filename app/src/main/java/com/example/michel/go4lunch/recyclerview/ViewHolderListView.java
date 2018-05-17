@@ -96,14 +96,6 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
 
     }
 
-
-/*
-
-        Glide.with(itemView.getContext()).load(restaurantObject.getUrlPhoto()).into(image);
-        */
-
-
-
 }
 
 
