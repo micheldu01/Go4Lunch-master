@@ -18,7 +18,7 @@
 
     // NAME PROFILE
     <TextView
-        android:id="@+id/name_workmates_recycler"
+        android:id="@+id/name_restaurant_show_restaurant"
         android:text="name test"
         android:layout_centerInParent="true"
         android:layout_toRightOf="@+id/image_recycler_show_restaurant"
@@ -28,7 +28,7 @@
 
     // NAME PROFILE
     <TextView
-        android:id="@+id/string_workmates_recycler"
+        android:id="@+id/string_show_restaurant_recycler"
         android:text="name test"
         android:layout_centerInParent="true"
         android:layout_toRightOf="@+id/image_recycler_show_restaurant"
