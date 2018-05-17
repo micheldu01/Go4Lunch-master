@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.michel.go4lunch.ActivityShowRestaurant;
 import com.example.michel.go4lunch.R;
 import com.example.michel.go4lunch.recyclerview.AdapterListView;
 import com.example.michel.go4lunch.recyclerview.ItemClickSupport;
@@ -109,6 +110,7 @@ public class ListViewFragment extends Fragment {
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
                         // ON CLICK INTENT
+                        startActivity(new Intent(getContext(),ActivityShowRestaurant.class));
 
                     }
                 });

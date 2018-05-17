@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        // TITLE GO4LUNCH
         <TextView
             android:text="Go4Lunch"
             android:textSize="30sp"
@@ -33,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            // IMAGE RESTAURANT
             <ImageView
                 android:id="@+id/drawer_image"
                 android:layout_alignParentBottom="true"
@@ -49,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                // NAME PROFILE
                 <TextView
                     android:id="@+id/drawer_nom"
                     android:text="Nom"
@@ -59,6 +62,7 @@
                     android:textColor="@color/white"
                     android:layout_height="match_parent" />
 
+                // EMAIL
                 <TextView
                     android:id="@+id/drawer_email"
                     android:text="email"

@@ -84,12 +84,10 @@ public class ProfileWorkmates extends BaseActivity implements Comparable<Profile
         this.choice = choice;
     }
 
+    // METHOD FOR SORT TYPE FOOD
     @Override
     public int compareTo(@NonNull ProfileWorkmates profileWorkmates) {
 
-
-
-        //return type.compareTo(profileWorkmates.getType());
         return profileWorkmates.getType().compareTo(type);
 
     }

@@ -1,6 +1,7 @@
 package com.example.michel.go4lunch.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.michel.go4lunch.ActivityShowRestaurant;
 import com.example.michel.go4lunch.R;
 import com.example.michel.go4lunch.recyclerview.ProfileWorkmates;
 import com.example.michel.go4lunch.recyclerview.AdapterWorkmates;
@@ -88,8 +90,6 @@ public class WorkmatesFragment extends Fragment {
         Collections.sort(profileActivities);
 
 
-
-
         // IMPLEMENT RECYCLER VIEW
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new AdapterWorkmates(profileActivities));
@@ -104,8 +104,11 @@ public class WorkmatesFragment extends Fragment {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
-                        // ON CLICK INTENT
-
+                        // IF CHOICE OF RESTAURANT IS READY GET INTENT
+                        if(profileActivities.get(position).isChoice()==true){
+                            // ON CLICK INTENT
+                            startActivity(new Intent(getContext(),ActivityShowRestaurant.class));
+                        }
                     }
                 });
 

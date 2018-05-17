@@ -8,7 +8,12 @@
     tools:context=".ActivityShowRestaurant">
 
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+
+        // IMAGE RESTAURANT
         <ImageView
             android:id="@+id/image_view_show_restaurant"
             android:src="@drawable/imagerestaurantok"
@@ -16,24 +21,60 @@
             android:layout_width="match_parent"
             android:layout_height="230dp" />
 
-
-        <RelativeLayout
-            android:background="@color/colorPrimary"
+        <TextView
+            android:id="@+id/colorOrange"
+            android:layout_marginTop="230dp"
+            android:background="@color/colorAccent"
             android:layout_width="match_parent"
-            android:layout_height="80dp">
+            android:layout_height="80dp" />
 
 
+            // NAME RESTAURANT
             <TextView
                 android:id="@+id/name_restaurant_show_restaurant"
                 android:text="Name of restaurant"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/image_view_show_restaurant"
                 android:layout_marginTop="10dp"
+                android:textSize="18sp"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+            // START YELLO 1
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:id="@+id/star_show_restaurant"
+                android:src="@drawable/startgold"
+                android:layout_below="@+id/image_view_show_restaurant"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/name_restaurant_show_restaurant"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+            // START YELLO 2
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:id="@+id/star_show_restaurant2"
+                android:src="@drawable/startgold"
+                android:layout_below="@+id/image_view_show_restaurant"
+                android:layout_toRightOf="@+id/star_show_restaurant"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+            // START YELLO 3
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:id="@+id/star_show_restaurant3"
+                android:src="@drawable/startgold"
+                android:layout_below="@+id/image_view_show_restaurant"
+                android:layout_toRightOf="@+id/star_show_restaurant2"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+
+            // TYPE FOOD
             <TextView
                 android:id="@+id/type_restaurant_show_restaurant"
                 android:text="Type - "
@@ -45,16 +86,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+            // ADDRESS RESTAURANT
             <TextView
-                android:id="@+id/adresse_restaurant_show_restaurant"
-                android:text="Type - "
+                android:id="@+id/address_restaurant_show_restaurant"
+                android:text="Address"
                 android:layout_below="@+id/name_restaurant_show_restaurant"
                 android:layout_marginTop="10dp"
-                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@id/type_restaurant_show_restaurant"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+
+            // DECLARE RECYCLER VIEW
+            <android.support.v7.widget.RecyclerView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/workmates_recycler_view"
+                android:layout_below="@+id/colorOrange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
 
 
