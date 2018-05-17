@@ -51,5 +51,4 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
         nameRestaurant.setText(restaurantObject.getName());
 
     }
-
 }
