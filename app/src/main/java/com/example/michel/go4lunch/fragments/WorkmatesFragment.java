@@ -4,16 +4,19 @@ package com.example.michel.go4lunch.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.michel.go4lunch.R;
+import com.example.michel.go4lunch.recyclerview.ProfileWorkmates;
+import com.example.michel.go4lunch.recyclerview.AdapterWorkmates;
 import com.example.michel.go4lunch.recyclerview.ItemClickSupport;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,11 +30,13 @@ public class WorkmatesFragment extends Fragment {
 
 
     // IMPLEMENT RECYCLER VIEW
-    @BindView(R.id.list_view_recyclerView)RecyclerView recyclerView;
+    @BindView(R.id.workmates_recycler_view)RecyclerView recyclerView;
 
     // IMPLEMENT REFRESH LAYOUT
-    @BindView(R.id.list_view_swipe_refresh)SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.workmates_swipe_refresh)SwipeRefreshLayout refreshLayout;
 
+    // DECLARE LIST RESTAURANT OBJECT
+    private List<ProfileWorkmates> profileActivities = new ArrayList<>();
 
 
     //create constructor
@@ -47,10 +52,17 @@ public class WorkmatesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_workmates, container, false);
 
-        // IMPLEMENT VALUES WITH BUTTER KNIFE
+        // DECLARE BUTTER KNIFE
         ButterKnife.bind(this,view);
 
+        // SWIPE REFRESH
+        this.configureSwipeRefreshLayout();
 
+        // DECLARE THE ONCLICK FOR USE IT FOR SHOW VIEW RESTAUARANT LIST
+        this.configureOnClickRecyclerView();
+
+        // SHOW LIST PROFILES
+        this.showProfileWithChoice();
 
 
 
@@ -62,12 +74,21 @@ public class WorkmatesFragment extends Fragment {
     private void showProfileWithChoice(){
 
 
+        profileActivities.add(new ProfileWorkmates("robert","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","auvergnat","c'est ouvert"));
+        profileActivities.add(new ProfileWorkmates("robert","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","auvergnat","c'est ouvert"));
+        profileActivities.add(new ProfileWorkmates("robert","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","auvergnat","c'est ouvert"));
+
+
+        // IMPLEMENT RECYCLER VIEW
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new AdapterWorkmates(profileActivities));
+
 
     }
 
     // MEHTOD CLICK ON RECYCLER VIEW
     private void configureOnClickRecyclerView() {
-        ItemClickSupport.addTo(recyclerView, R.layout.fragment_list_view)
+        ItemClickSupport.addTo(recyclerView, R.layout.fragment_workmates)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {

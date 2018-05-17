@@ -12,7 +12,7 @@
     // DECLARE SWIPE REFRESH
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/list_view_swipe_refresh"
+        android:id="@+id/workmates_swipe_refresh"
         android:layout_marginBottom="70dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,7 +20,7 @@
         // DECLARE RECYCLER VIEW
         <android.support.v7.widget.RecyclerView
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/list_view_recyclerView"
+            android:id="@+id/workmates_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

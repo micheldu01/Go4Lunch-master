@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.michel.go4lunch.R;
-import com.example.michel.go4lunch.auth.ProfileActivity;
 
 import java.util.List;
 
@@ -16,18 +15,18 @@ public class AdapterWorkmates extends RecyclerView.Adapter<ViewHolderWorkmates> 
 
 
 
-    private List<ProfileActivity> profileActivitiesList;
+    private List<ProfileWorkmates> profileActivitiesList;
 
 
 
     // CONSTRUCTOR WITH OBJECT RESTAURANT LIST
-    public AdapterWorkmates(List<ProfileActivity> profileActivitiesList) {
+    public AdapterWorkmates(List<ProfileWorkmates> profileActivitiesList) {
         this.profileActivitiesList = profileActivitiesList;
     }
 
 
     // METHOD FOR GET POSITION
-    public ProfileActivity profileActivity(int position){
+    public ProfileWorkmates profileActivity(int position){
         return this.profileActivitiesList.get(position);
     }
 
@@ -45,8 +44,8 @@ public class AdapterWorkmates extends RecyclerView.Adapter<ViewHolderWorkmates> 
     // METHOD FOR GIVE POSITION
     @Override
     public void onBindViewHolder(@NonNull ViewHolderWorkmates holder, int position) {
-        ProfileActivity profileActivity = profileActivitiesList.get(position);
-        holder.insertDataIntoRecyclerView(profileActivity);
+        ProfileWorkmates profileWorkmates = profileActivitiesList.get(position);
+        holder.insertDataIntoRecyclerView(profileWorkmates);
 
     }
 

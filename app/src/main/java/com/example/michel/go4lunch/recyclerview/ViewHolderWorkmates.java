@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.michel.go4lunch.R;
-import com.example.michel.go4lunch.auth.ProfileActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,16 +38,17 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
     }
 
     // METHOD FOR SET VALUES IN RECYCLER VIEW
-    public void insertDataIntoRecyclerView(ProfileActivity profileActivity){
+    public void insertDataIntoRecyclerView(ProfileWorkmates profileWorkmates){
 
-        // SET IMAGE PROFILE
-        Glide.with(itemView.getContext()).load(profileActivity.getUrlImage()).into(imageProfile);
+
         // SET NAME PROFILE
-        nameProfile.setText(profileActivity.getName());
+        nameProfile.setText(profileWorkmates.getName());
+        // SET IMAGE PROFILE
+        Glide.with(itemView.getContext()).load(profileWorkmates.getUrlImage()).into(imageProfile);
         // SET TYPE FOOD
-        typeFood.setText(profileActivity.getType());
+        typeFood.setText(profileWorkmates.getType());
         // SET NAME RESTAURANT
-        nameRestaurant.setText(profileActivity.getName());
+        nameRestaurant.setText(profileWorkmates.getNameRestaurant());
 
     }
 }

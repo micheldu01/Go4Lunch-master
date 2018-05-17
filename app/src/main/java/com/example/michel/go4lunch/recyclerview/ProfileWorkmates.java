@@ -1,9 +1,9 @@
-package com.example.michel.go4lunch.auth;
+package com.example.michel.go4lunch.recyclerview;
 
 
 import com.example.michel.go4lunch.base.BaseActivity;
 
-public class ProfileActivity extends BaseActivity {
+public class ProfileWorkmates extends BaseActivity {
 
 
     // NAME PROFILE
@@ -17,13 +17,13 @@ public class ProfileActivity extends BaseActivity {
 
 
     // EMPTY CONSTRUCTOR
-    public ProfileActivity() {}
+    public ProfileWorkmates() {}
 
 
     // CONSTRUCTOR FULL VALUES
 
 
-    public ProfileActivity(String name, String urlImage, String type, String nameRestaurant) {
+    public ProfileWorkmates(String name, String urlImage, String type, String nameRestaurant) {
         this.name = name;
         this.urlImage = urlImage;
         this.type = type;
