@@ -17,6 +17,8 @@
     <string name="is_eating"> mange </string>
     <string name="no_decided">n\'a pas encore décidé(e)</string>
 
+    // SHOW RESTAURANT RECYCLER VIEW
+    <string name="is_joining">est présent(e)</string>
 
 
 </resources>

@@ -26,7 +26,10 @@
 
     // WORKMATES RECYCLER VIEW
     <string name="is_eating"> is eating </string>
-    <string name="no_decided">hasn't decided yet</string>
+    <string name="no_decided">hasn\'t decided yet</string>
+    
+    // SHOW RESTAURANT RECYCLER VIEW
+    <string name="is_joining">is joining</string>
 
 
 
