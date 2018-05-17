@@ -13,6 +13,9 @@
     <string name="the_connecte_is_ok">La connexion est ok</string>
     <string name="dont_connected">Non connecté</string>
 
+    // WORKMATES RECYCLER VIEW
+    <string name="is_eating"> mange </string>
+    <string name="no_decided">n\'a pas encore décidé(e)</string>
 
 
 

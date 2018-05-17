@@ -16,6 +16,8 @@ import com.example.michel.go4lunch.recyclerview.AdapterWorkmates;
 import com.example.michel.go4lunch.recyclerview.ItemClickSupport;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -74,9 +76,18 @@ public class WorkmatesFragment extends Fragment {
     private void showProfileWithChoice(){
 
 
-        profileActivities.add(new ProfileWorkmates("robert","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","auvergnat","c'est ouvert"));
-        profileActivities.add(new ProfileWorkmates("robert","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","auvergnat","c'est ouvert"));
-        profileActivities.add(new ProfileWorkmates("robert","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","auvergnat","c'est ouvert"));
+        profileActivities.add(new ProfileWorkmates(true,"robert","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","french","Le bistro"));
+        profileActivities.add(new ProfileWorkmates(true,"philippe","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","usa","California"));
+        profileActivities.add(new ProfileWorkmates(false,"pierre","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","",null));
+        profileActivities.add(new ProfileWorkmates(false,"stéphane","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","",null));
+        profileActivities.add(new ProfileWorkmates(true,"stéphanie","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","china","Embassade d'asie"));
+        profileActivities.add(new ProfileWorkmates(false,"Annie","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","",null));
+
+
+        // SORT TYPE FOOD
+        Collections.sort(profileActivities);
+
+
 
 
         // IMPLEMENT RECYCLER VIEW

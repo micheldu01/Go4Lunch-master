@@ -2,6 +2,7 @@ package com.example.michel.go4lunch.recyclerview;
 
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 public class RestaurantObject implements Comparable<RestaurantObject> {
 
@@ -30,7 +31,7 @@ public class RestaurantObject implements Comparable<RestaurantObject> {
 
 
 
-
+    // CONSTRUCTOR FULL VALUE
     public RestaurantObject(String name, String type, String address, String heuresOuverture, int distance, int workMates, int star, String urlPhoto) {
         this.name = name;
         this.type = type;

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -12,9 +10,11 @@
         android:layout_centerInParent="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:scaleType="center"
-        android:layout_width="75dp"
-        android:layout_height="75dp" />
+        android:layout_width="70dp"
+        android:layout_height="70dp" />
 
     // NAME PROFILE
     <TextView
@@ -22,29 +22,44 @@
         android:text="name test"
         android:layout_centerInParent="true"
         android:layout_toRightOf="@+id/image_recycler_workmates"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    // TEXT EAT OR DECIDE
+    <TextView
+        android:id="@+id/decide_workmates_recycler"
+        android:text="@string/is_eating"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@+id/name_workmates_recycler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     // TYPE FOOD
     <TextView
         android:id="@+id/type_workmates_recycler"
-        android:text="my type"
         android:layout_centerInParent="true"
-        android:layout_toRightOf="@+id/name_workmates_recycler"
-        android:layout_marginRight="15dp"
+        android:layout_toRightOf="@+id/decide_workmates_recycler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+
 
     // NAME RESTAURANT
     <TextView
         android:id="@+id/name_restaurant_workmates_recycler"
-        android:text="Name restaurant"
         android:layout_centerInParent="true"
         android:layout_toRightOf="@+id/type_workmates_recycler"
-        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/line_workmates_recycler"
+        android:background="@color/gray_text"
+        android:layout_marginLeft="95dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
 
 </RelativeLayout>
 

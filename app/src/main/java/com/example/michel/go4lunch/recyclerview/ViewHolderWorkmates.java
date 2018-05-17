@@ -1,12 +1,17 @@
 package com.example.michel.go4lunch.recyclerview;
 
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.michel.go4lunch.R;
 
 import butterknife.BindView;
@@ -24,6 +29,11 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
     @BindView(R.id.type_workmates_recycler)TextView typeFood;
     // NAME RESTAURANT
     @BindView(R.id.name_restaurant_workmates_recycler)TextView nameRestaurant;
+    // LINE
+    @BindView(R.id.line_workmates_recycler)TextView line;
+    // TEXT EAT OR NOT DECIDED
+    @BindView(R.id.decide_workmates_recycler)TextView eating;
+
 
 
 
@@ -38,17 +48,42 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
     }
 
     // METHOD FOR SET VALUES IN RECYCLER VIEW
+    @SuppressLint("ResourceAsColor")
     public void insertDataIntoRecyclerView(ProfileWorkmates profileWorkmates){
 
 
-        // SET NAME PROFILE
-        nameProfile.setText(profileWorkmates.getName());
-        // SET IMAGE PROFILE
-        Glide.with(itemView.getContext()).load(profileWorkmates.getUrlImage()).into(imageProfile);
-        // SET TYPE FOOD
-        typeFood.setText(profileWorkmates.getType());
-        // SET NAME RESTAURANT
-        nameRestaurant.setText(profileWorkmates.getNameRestaurant());
+        // IF CHOICE RESTAURANT
+        if(profileWorkmates.isChoice()==true){
+            // SET NAME
+            nameProfile.setText(profileWorkmates.getName()+" ");
+            // SET IMAGE PROFILE
+            Glide.with(itemView.getContext()).load(profileWorkmates.getUrlImage()).apply(RequestOptions.circleCropTransform()).into(imageProfile);
+            // SET TYPE FOOD
+            typeFood.setText(" "+profileWorkmates.getType());
+            // SET NAME RESTAURANT
+            nameRestaurant.setText(" ("+profileWorkmates.getNameRestaurant()+")");
+
+        }else{
+            // SET NAME PROFILE
+            nameProfile.setText(profileWorkmates.getName()+" ");
+            // ITALIC
+            nameProfile.setTypeface(null, Typeface.ITALIC);
+            // COLOR GRAY LIGHT
+            nameProfile.setTextColor(Color.parseColor("#D3D3D3"));
+            // CHANGE TEXT NO DECIDED
+            eating.setText(R.string.no_decided);
+            // ITALIC
+            eating.setTypeface(null, Typeface.ITALIC);
+            // COLOR GRAY LIGHT
+            eating.setTextColor(Color.parseColor("#D3D3D3"));
+            // SET IMAGE PROFILE
+            Glide.with(itemView.getContext()).load(profileWorkmates.getUrlImage()).apply(RequestOptions.circleCropTransform()).into(imageProfile);
+
+        }
+
+
 
     }
+
+
 }

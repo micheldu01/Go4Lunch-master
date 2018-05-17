@@ -24,5 +24,10 @@
     // GOOGLE MAPS KEY
     <string name="google_maps_key"></string>
 
+    // WORKMATES RECYCLER VIEW
+    <string name="is_eating"> is eating </string>
+    <string name="no_decided">hasn't decided yet</string>
+
+
 
 </resources>
