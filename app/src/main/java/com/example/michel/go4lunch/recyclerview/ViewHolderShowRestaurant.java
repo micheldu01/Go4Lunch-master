@@ -38,7 +38,7 @@ public class ViewHolderShowRestaurant extends RecyclerView.ViewHolder {
     public void restaurantShowRecyclerView(ChoiceRestaurant choiceRestaurant){
 
         // SET NAME
-        name.setText(choiceRestaurant.getName());
+        name.setText(choiceRestaurant.getName()+" ");
         // SET IMAGE
         Glide.with(itemView.getContext()).load(choiceRestaurant.getUrlImage()).apply(RequestOptions.circleCropTransform()).into(imageView);
 

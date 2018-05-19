@@ -72,8 +72,9 @@ dependencies {
     // GOOGLE MAPS
     implementation 'com.google.android.gms:play-services-maps:15.0.0'
 
-    // RECYCLER VIEW
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    // TRANSPARENT
+    implementation 'com.jaeger.statusbarutil:library:1.4.0'
+
 
 
 }

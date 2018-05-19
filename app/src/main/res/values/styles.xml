@@ -25,7 +25,9 @@
         <item name="android:windowBackground">@drawable/imagerestaurantok</item>
     </style>
 
+    // TRANSPARENT SHOW RESTAURANT
+    <style name="TranslucideShow" parent="Theme.AppCompat.Light">
 
-
+    </style>
 
 </resources>

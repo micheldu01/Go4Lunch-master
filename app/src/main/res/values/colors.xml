@@ -11,6 +11,9 @@
     <color name="gray_line">#696969</color>
     // COLOR GRAY TEXT WORKMATES RECYCLER NO CHOICE
     <color name="gray_text">#808080</color>
+    // COLOR GRAY LINE SHOW RESTAURANT
+    <color name="gray_line_restaurant">#DCDCDC</color>
+
 
 
 </resources>

@@ -29,10 +29,9 @@
     // NAME PROFILE
     <TextView
         android:id="@+id/string_show_restaurant_recycler"
-        android:text="name test"
+        android:text="@string/is_joining"
         android:layout_centerInParent="true"
-        android:layout_toRightOf="@+id/image_recycler_show_restaurant"
-        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/name_restaurant_show_restaurant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

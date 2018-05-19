@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:theme="@style/TranslucideShow"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ActivityShowRestaurant">
+
+<LinearLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <RelativeLayout
@@ -19,12 +25,12 @@
             android:src="@drawable/imagerestaurantok"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="230dp" />
+            android:layout_height="200dp" />
 
         <TextView
             android:id="@+id/colorOrange"
-            android:layout_marginTop="230dp"
-            android:background="@color/colorAccent"
+            android:layout_below="@id/image_view_show_restaurant"
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="80dp" />
 
@@ -98,22 +104,129 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+            // BUTTONS
+            // BUTTON BACKGROUND WHITE
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="165dp"
+                android:src="@drawable/circlewhite"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="25dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp" />
 
+            // BUTTON GREEN
+        <ImageView
+            android:id="@+id/button_green_show_restaurant"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="180dp"
+            android:src="@drawable/button_green"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        // BUTTON RED
+        <ImageView
+            android:id="@+id/button_red_show_restaurant"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="180dp"
+            android:src="@drawable/button_red"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+
+            // IMAGE BUTTON PHONE
+            <ImageButton
+                android:id="@+id/image_button_phone_show_restaurant"
+                android:src="@drawable/baseline_call_black_48dp"
+                android:tint="@color/colorPrimary"
+                android:layout_below="@+id/colorOrange"
+                android:background="@color/fui_transparent"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        // TEXT CALL
+        <TextView
+            android:text="CALL"
+            android:textSize="17sp"
+            android:layout_below="@id/image_button_phone_show_restaurant"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        // IMAGE BUTTON STAR
+        <ImageButton
+            android:id="@+id/image_button_star_show_restaurant"
+            android:src="@drawable/baseline_star_black_48dp"
+            android:tint="@color/colorPrimary"
+            android:layout_below="@+id/colorOrange"
+            android:background="@color/fui_transparent"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        // TEXT LIKE
+        <TextView
+            android:text="LIKE"
+            android:textSize="17sp"
+            android:layout_below="@id/image_button_phone_show_restaurant"
+            android:textColor="@color/colorPrimary"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        // IMAGE BUTTON STAR
+        <ImageButton
+            android:id="@+id/image_button_public_show_restaurant"
+            android:src="@drawable/baseline_public_black_48dp"
+            android:tint="@color/colorPrimary"
+            android:layout_below="@+id/colorOrange"
+            android:background="@color/fui_transparent"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        // TEXT LIKE
+        <TextView
+            android:id="@+id/text_website"
+            android:text="WEBSITE"
+            android:textSize="17sp"
+            android:layout_below="@id/image_button_phone_show_restaurant"
+            android:textColor="@color/colorPrimary"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="29dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        // LINE GRAY
+        <TextView
+            android:layout_below="@id/text_website"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray_line_restaurant"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+
+    </RelativeLayout>
 
             // DECLARE RECYCLER VIEW
             <android.support.v7.widget.RecyclerView
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/workmates_recycler_view"
-                android:layout_below="@+id/colorOrange"
+                android:id="@+id/show_restaurant_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-
-
-
-        </RelativeLayout>
-
 </LinearLayout>
+
+</ScrollView>
