@@ -26,6 +26,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.michel.go4lunch.adapter.PageAdapter;
 import com.example.michel.go4lunch.base.BaseActivity;
 import com.example.michel.go4lunch.models.User;
+import com.example.michel.go4lunch.notification.ActivityNoticationShow;
 import com.example.michel.go4lunch.recyclerview.AdapterShowRestaurant;
 import com.facebook.login.LoginManager;
 import com.firebase.ui.auth.AuthUI;
@@ -198,6 +199,8 @@ public class MainActivity extends BaseActivity
                 break;
                 // ASK SETTING
             case R.id.activity_main_drawer_settings:
+                startActivity(new Intent(this, ActivityNoticationShow.class));
+
                 break;
                 // ASK LOGOUT
             case R.id.activity_main_drawer_logout:
