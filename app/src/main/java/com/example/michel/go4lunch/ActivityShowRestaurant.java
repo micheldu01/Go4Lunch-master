@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.michel.go4lunch.recyclerview.AdapterShowRestaurant;
 import com.example.michel.go4lunch.recyclerview.AdapterWorkmates;
@@ -97,32 +99,58 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(Color.parseColor("#808080"));
-    }
+        }
 
     }
+
+
 
 
     // IMPLEMENT BUTTON
 
+        // BUTTON CALL
+        @OnClick(R.id.image_button_phone_show_restaurant)
+        void submitImageBuutonCall (View view){
 
+            // TOAST IF CLICK
+            Toast.makeText(this, "-----TEST CALL----", Toast.LENGTH_SHORT).show();
+        }
 
+        // BUTTON CALL
+        @OnClick(R.id.image_button_star_show_restaurant)
+        void submitImageBuutonLike(View view){
 
-    // METHOD SHOW HIDE BUTTON GREEN RED
-    private void showHideButtonGreenRed(){
+            // TOAST IF CLICK
+            Toast.makeText(this,"-----TEST LIKE----", Toast.LENGTH_SHORT).show();
+        }
 
-        // IF RESTAURANT IS NOT CHOICE
-        String choiceRestaurant = "yes";
+        // BUTTON CALL
+        @OnClick(R.id.image_button_public_show_restaurant)
+        void submitImageBuutonWeb(View view){
 
-        // ASK
-        if(choiceRestaurant.equals("yes")){
+            // TOAST IF CLICK
+            Toast.makeText(this,"-----TEST WEB----", Toast.LENGTH_SHORT).show();
+        }
 
+        // BUTTON CALL
+        @OnClick(R.id.button_green_show_restaurant)
+        void submitImageViewButtonGreen(View view){
+
+             // TOAST IF CLICK
+             Toast.makeText(this,"-----BUTTON GREEN----", Toast.LENGTH_SHORT).show();
+            imageViewButtonGreen.setVisibility(view.INVISIBLE);
 
         }
+
+        // BUTTON CALL
+        @OnClick(R.id.button_red_show_restaurant)
+        void submitImageViewButtonRed(View view){
+
+        // TOAST IF CLICK
+        Toast.makeText(this,"-----BUTTON RED----", Toast.LENGTH_SHORT).show();
+        imageViewButtonRed.setVisibility(view.INVISIBLE);
+
     }
-
-    // IMPLEMENT BUTTON
-
-    // BUTTON CALL
 
 
 }

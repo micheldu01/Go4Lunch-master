@@ -1,5 +1,6 @@
 package com.example.michel.go4lunch;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.provider.ContactsContract;
@@ -25,6 +26,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.michel.go4lunch.adapter.PageAdapter;
 import com.example.michel.go4lunch.base.BaseActivity;
 import com.example.michel.go4lunch.models.User;
+import com.example.michel.go4lunch.recyclerview.AdapterShowRestaurant;
 import com.facebook.login.LoginManager;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -189,7 +191,10 @@ public class MainActivity extends BaseActivity
 
         switch (id){
             // ASK RESTAURANT
-            case R.id.activity_main_drawer_news :
+            case R.id.activity_main_your_lunch :
+                // INTENT OF RESTAURANT CHOICE
+                startActivity(new Intent(this, ActivityShowRestaurant.class));
+
                 break;
                 // ASK SETTING
             case R.id.activity_main_drawer_settings:
