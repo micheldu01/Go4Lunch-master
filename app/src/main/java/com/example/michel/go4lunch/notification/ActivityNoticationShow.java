@@ -1,11 +1,13 @@
 package com.example.michel.go4lunch.notification;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -22,14 +24,12 @@ public class ActivityNoticationShow extends AppCompatActivity {
 
 
     // DECLARE IMAGE NOTIFICATION
-    @BindView(R.id.image_notification_show)
-    ImageView imageView;
+    @BindView(R.id.image_notification_show)ImageView imageView;
     // DECLARE SWITCH
-    @BindView(R.id.switch_notification)
-    Switch aSwitch;
+    @BindView(R.id.switch_notification)Switch aSwitch;
     // value for de hour of the notification
-    private int hour_of_day = 12;
-    private int minute = 0;
+    private int hour_of_day = 11;
+    private int minute = 51;
     private int second = 0;
 
 
@@ -44,8 +44,8 @@ public class ActivityNoticationShow extends AppCompatActivity {
         // CALL SWITCH
         implementSwitch();
 
-
     }
+
 
     // IMPLEMENT SWITCH
     public void implementSwitch() {
@@ -61,11 +61,14 @@ public class ActivityNoticationShow extends AppCompatActivity {
 
                     //get a Toast for ask to choice a check box
                     Toast.makeText(ActivityNoticationShow.this, "Notification is activate", Toast.LENGTH_LONG).show();
-                }
 
+                    // TEST LOG
+                    Log.e("----switch--------","-----ok---------");
+                }
             }
         });
     }
+
 
     // METHOD ALARM MANAGER
     // method for get the time and the design of the notification
@@ -80,11 +83,11 @@ public class ActivityNoticationShow extends AppCompatActivity {
         calendar.set(Calendar.SECOND, second);
         // PendingIntent for AlarmReceiver
         PendingIntent pi = PendingIntent.getBroadcast(this, 0,
-                new Intent(this, AlarmReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+                new Intent(this, AlarmRestaurant.class), PendingIntent.FLAG_UPDATE_CURRENT);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 //repeat start notification one a day
                 AlarmManager.INTERVAL_DAY, pi);
-
     }
+
 
 }

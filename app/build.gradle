@@ -75,6 +75,10 @@ dependencies {
     // TRANSPARENT
     implementation 'com.jaeger.statusbarutil:library:1.4.0'
 
+    implementation "com.android.support:support-compat:27.1.1"
+
+
+
 
 }
 

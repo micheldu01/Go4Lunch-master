@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.michel.go4lunch">
+
+
+
+
+
     //add permission internet
     <uses-permission android:name="android.permission.INTERNET" />
     // GOOGLE MAPS
@@ -36,6 +41,7 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
+
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -58,6 +64,17 @@
         </activity>
         <activity android:name=".ActivityShowRestaurant" />
         <activity android:name=".notification.ActivityNoticationShow"></activity>
+
+
+        // NOTIFICATION AND ALARM RECEIVER
+        <receiver android:name=".notification.AlarmRestaurant"
+            android:enabled="true"
+            android:exported="true"/>
+
+        <service android:name=".notification.NotificationRestaurant"
+            android:enabled="true"
+            android:exported="true"/>
+
     </application>
 
 </manifest>
