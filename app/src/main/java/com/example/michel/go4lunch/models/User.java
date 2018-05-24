@@ -4,26 +4,30 @@ import android.support.annotation.Nullable;
 
 public class User {
 
+    // DECLARE UID
     private String uid;
+    // DECLARE USERNAME
     private String username;
-    private String email;
+    // DECLARE URL PICTURE
     @Nullable private String urlPicture;
+    // DECLARE CHOICE
+    private String choice;
 
-    public User() {
-    }
+    // CONSTRUCTOR EMPTY
+    public User() {}
 
-    public User(String uid, String username, String urlPicture) {
+    // CONSTRUCTOR
+    public User(String uid, String username, String urlPicture, String choice) {
         this.uid = uid;
         this.username = username;
         this.urlPicture = urlPicture;
+        this.choice = choice;
     }
 
-    public User(String uid, String username, String email, String urlPicture) {
-        this.uid = uid;
-        this.username = username;
-        this.email = email;
-        this.urlPicture = urlPicture;
-    }
+
+    // GETTER AN SETTER
+
+    public String getChoice() {return choice;}
 
     public String getUid() {
         return uid;
@@ -37,16 +41,10 @@ public class User {
         return username;
     }
 
+    public void setChoice(String choice) {this.choice = choice;}
+
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Nullable

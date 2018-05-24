@@ -1,11 +1,8 @@
 package com.example.michel.go4lunch.fragments;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,9 +13,9 @@ import android.view.ViewGroup;
 
 import com.example.michel.go4lunch.ActivityShowRestaurant;
 import com.example.michel.go4lunch.R;
-import com.example.michel.go4lunch.recyclerview.AdapterListView;
+import com.example.michel.go4lunch.recyclerview.adapter.AdapterListView;
 import com.example.michel.go4lunch.recyclerview.ItemClickSupport;
-import com.example.michel.go4lunch.recyclerview.RestaurantObject;
+import com.example.michel.go4lunch.models.RestaurantObject;
 
 import java.util.ArrayList;
 import java.util.Collections;

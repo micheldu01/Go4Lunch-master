@@ -1,8 +1,7 @@
-package com.example.michel.go4lunch.recyclerview;
+package com.example.michel.go4lunch.models;
 
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 public class RestaurantObject implements Comparable<RestaurantObject> {
 

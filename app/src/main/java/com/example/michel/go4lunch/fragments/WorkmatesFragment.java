@@ -14,12 +14,11 @@ import android.view.ViewGroup;
 import com.example.michel.go4lunch.ActivityShowRestaurant;
 import com.example.michel.go4lunch.R;
 import com.example.michel.go4lunch.recyclerview.ProfileWorkmates;
-import com.example.michel.go4lunch.recyclerview.AdapterWorkmates;
+import com.example.michel.go4lunch.recyclerview.adapter.AdapterWorkmates;
 import com.example.michel.go4lunch.recyclerview.ItemClickSupport;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;

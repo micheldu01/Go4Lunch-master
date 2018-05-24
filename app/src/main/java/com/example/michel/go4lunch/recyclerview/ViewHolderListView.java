@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.michel.go4lunch.R;
-
-import java.text.ParseException;
+import com.example.michel.go4lunch.models.RestaurantObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

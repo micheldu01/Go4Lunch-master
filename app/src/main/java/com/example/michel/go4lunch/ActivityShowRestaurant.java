@@ -1,25 +1,27 @@
 package com.example.michel.go4lunch;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.michel.go4lunch.recyclerview.AdapterShowRestaurant;
-import com.example.michel.go4lunch.recyclerview.AdapterWorkmates;
+import com.example.michel.go4lunch.models.User;
+import com.example.michel.go4lunch.recyclerview.adapter.AdapterShowRestaurant;
 import com.example.michel.go4lunch.recyclerview.ChoiceRestaurant;
-import com.example.michel.go4lunch.recyclerview.ProfileWorkmates;
-import com.example.michel.go4lunch.recyclerview.RestaurantObject;
-import com.jaeger.library.StatusBarUtil;
+import com.example.michel.go4lunch.models.RestaurantObject;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,9 +84,8 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         recyclerView.setAdapter(new AdapterShowRestaurant(choiceRestaurantList));
         //------------------------------------------------------------------
 
-
-
-
+        // TEST
+        this.getChoiceFromDataBase();
 
 
 
@@ -102,9 +103,6 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         }
 
     }
-
-
-
 
     // IMPLEMENT BUTTON
 
@@ -152,6 +150,33 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         Toast.makeText(this,"-----BUTTON RED----", Toast.LENGTH_SHORT).show();
         imageViewButtonRed.setVisibility(view.INVISIBLE);
 
+    }
+
+    // METHOD FOR GET CHOICE RESTAURANT INTO PROFILE
+    private void getChoiceFromDataBase(){
+
+        // DECLARE DATA BASE
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // READ CHOICE INTO DATA BASE PROFILE
+        DocumentReference docRef = db.collection("users").document(FirebaseAuth.getInstance().getUid());
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                // GET DATA INTO USER OBJECT
+                User user = documentSnapshot.toObject(User.class);
+                Log.e("---test---","--- get choice restaurant ---" + user.getChoice());
+
+
+            }
+        });
+
+    }
+
+    // METHOD COMPARE CHOICE AND ID RESTAURANT
+    private void compareChoiceIdRestaurant(){
+
+        //
     }
 
 

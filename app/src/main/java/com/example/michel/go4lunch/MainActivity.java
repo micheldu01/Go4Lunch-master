@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -13,7 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,8 +26,6 @@ import com.example.michel.go4lunch.adapter.PageAdapter;
 import com.example.michel.go4lunch.base.BaseActivity;
 import com.example.michel.go4lunch.models.User;
 import com.example.michel.go4lunch.notification.ActivityNoticationShow;
-import com.example.michel.go4lunch.recyclerview.AdapterShowRestaurant;
-import com.facebook.login.LoginManager;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -371,6 +367,8 @@ public class MainActivity extends BaseActivity
         user.put("name", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         // STRING URL
         user.put("photo",stringUri);
+        // CHOICE RESTAURANT
+        user.put("choix restaurant","");
 
 
         // CREATE DOCUMENT USERS WITH ID PROFILE AUTH

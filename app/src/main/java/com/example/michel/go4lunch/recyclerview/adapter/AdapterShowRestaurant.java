@@ -1,4 +1,4 @@
-package com.example.michel.go4lunch.recyclerview;
+package com.example.michel.go4lunch.recyclerview.adapter;
 
 
 import android.support.annotation.NonNull;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.michel.go4lunch.R;
+import com.example.michel.go4lunch.recyclerview.ChoiceRestaurant;
+import com.example.michel.go4lunch.recyclerview.ViewHolderShowRestaurant;
 
 import java.util.List;
 
