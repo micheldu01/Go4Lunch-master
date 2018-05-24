@@ -368,7 +368,7 @@ public class MainActivity extends BaseActivity
         // STRING URL
         user.put("photo",stringUri);
         // CHOICE RESTAURANT
-        user.put("choix restaurant","");
+        user.put("choice","no choice");
 
 
         // CREATE DOCUMENT USERS WITH ID PROFILE AUTH

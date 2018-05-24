@@ -22,9 +22,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +50,12 @@ public class ActivityShowRestaurant extends AppCompatActivity {
     @BindView(R.id.button_green_show_restaurant)ImageView imageViewButtonGreen;
     // DECLARE BUTTON RED
     @BindView(R.id.button_red_show_restaurant)ImageView imageViewButtonRed;
+    // DECLARE VIEW
+    View view;
+    // DECLARE DB
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    // TEST ID RESTAURANT --------------------
+    String id_retaurant = "restaurant 1";
 
 
 
@@ -136,9 +145,27 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         @OnClick(R.id.button_green_show_restaurant)
         void submitImageViewButtonGreen(View view){
 
+        // PUT ID RESTAURANT INTO USER FIRE BASE
+            Map<String, Object> user = new HashMap<>();
+
+            // CHOICE RESTAURANT
+            user.put("choice","no choice");
+
+            // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
+            db.collection("users").document(FirebaseAuth.getInstance().getUid())
+                    .set(user, SetOptions.merge())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.e("main activity","------data save url restaurant-----");
+                        }
+                    });
+
+
              // TOAST IF CLICK
-             Toast.makeText(this,"-----BUTTON GREEN----", Toast.LENGTH_SHORT).show();
+             Toast.makeText(this,"-----DELETE CHOICE RESTAURANT----", Toast.LENGTH_SHORT).show();
             imageViewButtonGreen.setVisibility(view.INVISIBLE);
+            imageViewButtonRed.setVisibility(view.VISIBLE);
 
         }
 
@@ -146,17 +173,35 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         @OnClick(R.id.button_red_show_restaurant)
         void submitImageViewButtonRed(View view){
 
-        // TOAST IF CLICK
-        Toast.makeText(this,"-----BUTTON RED----", Toast.LENGTH_SHORT).show();
-        imageViewButtonRed.setVisibility(view.INVISIBLE);
+            // PUT ID RESTAURANT INTO USER FIRE BASE
+            Map<String, Object> user = new HashMap<>();
 
-    }
+            // CHOICE RESTAURANT
+            user.put("choice",id_retaurant);
+
+            // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
+            db.collection("users").document(FirebaseAuth.getInstance().getUid())
+                    .set(user, SetOptions.merge())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.e("main activity","------data save url restaurant red-----");
+                        }
+                    });
+
+
+        // TOAST IF CLICK
+        Toast.makeText(this,"-----CHOICE RESTAURANT----", Toast.LENGTH_SHORT).show();
+        imageViewButtonRed.setVisibility(view.INVISIBLE);
+        imageViewButtonGreen.setVisibility(view.VISIBLE);
+
+
+
+        }
 
     // METHOD FOR GET CHOICE RESTAURANT INTO PROFILE
     private void getChoiceFromDataBase(){
 
-        // DECLARE DATA BASE
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // READ CHOICE INTO DATA BASE PROFILE
         DocumentReference docRef = db.collection("users").document(FirebaseAuth.getInstance().getUid());
@@ -168,18 +213,25 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                 Log.e("---test---","--- get choice restaurant ---" + user.getChoice());
 
 
+                compareChoiceIdRestaurant(user.getChoice(),id_retaurant);
+
             }
         });
 
     }
 
     // METHOD COMPARE CHOICE AND ID RESTAURANT
-    private void compareChoiceIdRestaurant(){
+    private void compareChoiceIdRestaurant(String choice, String id_restaurant){
 
-        //
+        // DECLARE VIEW
+
+
+        // USE COMPARE FOR SET COLOR OF BUTTON CHOICE RESTAURANT
+        if(choice.equals(id_restaurant)){
+            imageViewButtonRed.setVisibility(view.INVISIBLE);
+            imageViewButtonGreen.setVisibility(view.VISIBLE);
+        }
     }
-
-
 }
 
 
