@@ -132,6 +132,8 @@ public class ActivityShowRestaurant extends AppCompatActivity {
             Toast.makeText(this,"-----TEST WEB----", Toast.LENGTH_SHORT).show();
         }
 
+
+
         // BUTTON CALL
         @OnClick(R.id.button_green_show_restaurant)
         void submitImageViewButtonGreen(View view){

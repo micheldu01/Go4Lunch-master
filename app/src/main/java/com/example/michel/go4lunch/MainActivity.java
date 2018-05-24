@@ -3,6 +3,7 @@ package com.example.michel.go4lunch;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -30,12 +31,16 @@ import com.example.michel.go4lunch.notification.ActivityNoticationShow;
 import com.example.michel.go4lunch.recyclerview.AdapterShowRestaurant;
 import com.facebook.login.LoginManager;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -113,6 +118,9 @@ public class MainActivity extends BaseActivity
 
         // DRAWER MENU PROFILE
         this.profileIntoDrawerMenu();
+
+        // PUSH DATA PROFILE INTO FIREBASE
+        this.saveProfileFireBase();
 
 
 
@@ -343,6 +351,42 @@ public class MainActivity extends BaseActivity
                 RC_SIGN_IN);
     }
 
+    // SAVE PROFILE INTO FIREBASE
+    private void saveProfileFireBase(){
+
+        // DECLARE DATA BASE FIREBASE FIRESTORE
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        // TURN URI TO STRING
+        Uri urlPhoto = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
+        String stringUri = urlPhoto.toString();
+
+        // ADD DATA
+        // CREATE A NEW USER WITH LAST NAME AND PHOTO
+        Map<String, Object> user = new HashMap<>();
+
+        // PUT DATA
+        //NAME
+        user.put("name", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        // STRING URL
+        user.put("photo",stringUri);
+
+
+        // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
+        db.collection("users").document(FirebaseAuth.getInstance().getUid())
+                .set(user, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.e("main activity","------data save profile-----"+
+                                FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                    }
+                });
+
+
+
+    }
 
 
 }
