@@ -21,11 +21,9 @@
     <string name="facebook_login_protocol_scheme" translatable="false">fb239593013283202</string>
     <string name="info_no_username_found">no</string>
 
-    // GOOGLE MAPS KEY
-    <string name="google_maps_key"></string>
 
     // WORKMATES RECYCLER VIEW
-    <string name="is_eating"> is eating </string>
+    <string name="is_eating"> chose </string>
     <string name="no_decided">hasn\'t decided yet</string>
 
     // SHOW RESTAURANT RECYCLER VIEW

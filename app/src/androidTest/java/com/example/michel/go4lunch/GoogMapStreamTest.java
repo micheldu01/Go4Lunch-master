@@ -1,10 +1,9 @@
 package com.example.michel.go4lunch;
 
 
-import com.example.michel.go4lunch.api_google_maps.GoogleAPI;
-import com.example.michel.go4lunch.api_google_maps.MapStreams;
-import com.example.michel.mymaps5.apiGoogleMaps.GoogleAPI;
-import com.example.michel.mymaps5.apiGoogleMaps.MapStreams;
+import com.example.michel.go4lunch.APIMaps.GoogleAPI;
+import com.example.michel.go4lunch.APIMaps.MapStreams;
+
 
 import org.junit.Test;
 

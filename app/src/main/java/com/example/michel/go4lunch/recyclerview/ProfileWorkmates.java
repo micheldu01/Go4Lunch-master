@@ -13,8 +13,6 @@ public class ProfileWorkmates extends BaseActivity implements Comparable<Profile
     private String name;
     // URL IMAGE
     private String urlImage;
-    // TYPE RESTAURANT
-    private String type;
     // NAME RESTAURANT
     private String nameRestaurant;
     // BOOLEAN CHOICE RESTAURANT
@@ -26,21 +24,20 @@ public class ProfileWorkmates extends BaseActivity implements Comparable<Profile
 
 
     // CONSTRUCTOR FULL VALUES
-    public ProfileWorkmates(boolean choice, String name, String urlImage, @Nullable String type,@Nullable String nameRestaurant) {
+    public ProfileWorkmates(boolean choice, String name, String urlImage,@Nullable String nameRestaurant) {
         this.choice = choice;
         this.name = name;
         this.urlImage = urlImage;
-        this.type = type;
         this.nameRestaurant = nameRestaurant;
     }
-
+/*
     // CONSTRUCTOR WITHOUT RESTAURANT AND STYLE
     public ProfileWorkmates(boolean choice, String name, String urlImage) {
         this.choice = choice;
         this.name = name;
         this.urlImage = urlImage;
     }
-
+*/
 
 
     // GETTER AND SETTER
@@ -58,14 +55,6 @@ public class ProfileWorkmates extends BaseActivity implements Comparable<Profile
 
     public void setUrlImage(String urlImage) {
         this.urlImage = urlImage;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getNameRestaurant() {
@@ -86,9 +75,11 @@ public class ProfileWorkmates extends BaseActivity implements Comparable<Profile
 
     // METHOD FOR SORT TYPE FOOD
     @Override
-    public int compareTo(@NonNull ProfileWorkmates profileWorkmates) {
+    public int compareTo(ProfileWorkmates profileWorkmates) {
 
-        return profileWorkmates.getType().compareTo(type);
+
+            return profileWorkmates.getNameRestaurant().compareTo(nameRestaurant);
+
 
     }
 }

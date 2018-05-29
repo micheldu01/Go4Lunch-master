@@ -29,7 +29,7 @@ public class ActivityNoticationShow extends AppCompatActivity {
     @BindView(R.id.switch_notification)Switch aSwitch;
     // value for de hour of the notification
     private int hour_of_day = 11;
-    private int minute = 51;
+    private int minute = 11;
     private int second = 0;
 
 

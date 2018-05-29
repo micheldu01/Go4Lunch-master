@@ -1,9 +1,7 @@
-package com.example.michel.go4lunch.api_google_maps;
+package com.example.michel.go4lunch.APIMaps;
 
 
 
-
-import android.location.Location;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,11 +1,17 @@
 package com.example.michel.go4lunch;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -41,16 +47,19 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.support.v4.app.NotificationCompat.PRIORITY_DEFAULT;
+
 public class MainActivity extends BaseActivity
         implements
         NavigationView.OnNavigationItemSelectedListener{
 
 
     // DECLARE FOR SIGN IN
-    private static final int RC_SIGN_IN = 123;
+    private static final int RC_SIGN_IN = 124;
 
     // CHOOSE AUTHENTIFICATION PROVIDERS FACEBOOK AND GOOGLE
     List<AuthUI.IdpConfig> providers = Arrays.asList(
+            new AuthUI.IdpConfig.EmailBuilder().build(),
             new AuthUI.IdpConfig.FacebookBuilder().build(),
             new AuthUI.IdpConfig.GoogleBuilder().build());
 
@@ -117,7 +126,6 @@ public class MainActivity extends BaseActivity
 
         // PUSH DATA PROFILE INTO FIREBASE
         this.saveProfileFireBase();
-
 
 
     }
@@ -199,6 +207,7 @@ public class MainActivity extends BaseActivity
             case R.id.activity_main_your_lunch :
                 // INTENT OF RESTAURANT CHOICE
                 startActivity(new Intent(this, ActivityShowRestaurant.class));
+
 
                 break;
                 // ASK SETTING

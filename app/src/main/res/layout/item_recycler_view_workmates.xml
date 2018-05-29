@@ -35,21 +35,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    // TYPE FOOD
-    <TextView
-        android:id="@+id/type_workmates_recycler"
-        android:layout_centerInParent="true"
-        android:layout_toRightOf="@+id/decide_workmates_recycler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
 
     // NAME RESTAURANT
     <TextView
         android:id="@+id/name_restaurant_workmates_recycler"
         android:layout_centerInParent="true"
-        android:layout_toRightOf="@+id/type_workmates_recycler"
+        android:layout_toRightOf="@+id/decide_workmates_recycler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

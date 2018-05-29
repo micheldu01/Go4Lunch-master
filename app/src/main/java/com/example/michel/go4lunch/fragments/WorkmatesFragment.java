@@ -76,17 +76,21 @@ public class WorkmatesFragment extends Fragment {
     // METHOD SHOW PROFILE CHOICE
     private void showProfileWithChoice(){
 
-
-        profileActivities.add(new ProfileWorkmates(true,"robert","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","french","Le bistro"));
-        profileActivities.add(new ProfileWorkmates(true,"philippe","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","usa","California"));
-        profileActivities.add(new ProfileWorkmates(false,"pierre","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","",null));
-        profileActivities.add(new ProfileWorkmates(false,"stéphane","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","",null));
-        profileActivities.add(new ProfileWorkmates(true,"stéphanie","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","china","Embassade d'asie"));
-        profileActivities.add(new ProfileWorkmates(false,"Annie","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","",null));
+        ProfileWorkmates profileWorkmates = new ProfileWorkmates();
 
 
-        // SORT TYPE FOOD
-        Collections.sort(profileActivities);
+        profileActivities.add(new ProfileWorkmates(true,"robert","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","Le bistro"));
+        profileActivities.add(new ProfileWorkmates(true,"philippe","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","California"));
+        profileActivities.add(new ProfileWorkmates(false,"pierre","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","1"));
+        profileActivities.add(new ProfileWorkmates(false,"stéphane","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","1"));
+        profileActivities.add(new ProfileWorkmates(true,"stéphanie","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","Embassade d'asie"));
+        profileActivities.add(new ProfileWorkmates(false,"Annie","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","1"));
+
+
+        // SORT TYPE RESTAURANT
+            Collections.sort(profileActivities);
+
+
 
 
         // IMPLEMENT RECYCLER VIEW

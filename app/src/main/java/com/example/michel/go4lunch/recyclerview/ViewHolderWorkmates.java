@@ -25,8 +25,6 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
     @BindView(R.id.image_recycler_workmates)ImageView imageProfile;
     // NAME PROFILE
     @BindView(R.id.name_workmates_recycler)TextView nameProfile;
-    // TYPE FOOD
-    @BindView(R.id.type_workmates_recycler)TextView typeFood;
     // NAME RESTAURANT
     @BindView(R.id.name_restaurant_workmates_recycler)TextView nameRestaurant;
     // LINE
@@ -58,10 +56,8 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
             nameProfile.setText(profileWorkmates.getName()+" ");
             // SET IMAGE PROFILE
             Glide.with(itemView.getContext()).load(profileWorkmates.getUrlImage()).apply(RequestOptions.circleCropTransform()).into(imageProfile);
-            // SET TYPE FOOD
-            typeFood.setText(" "+profileWorkmates.getType());
             // SET NAME RESTAURANT
-            nameRestaurant.setText(" ("+profileWorkmates.getNameRestaurant()+")");
+            nameRestaurant.setText(" : "+ profileWorkmates.getNameRestaurant());
 
         }else{
             // SET NAME PROFILE

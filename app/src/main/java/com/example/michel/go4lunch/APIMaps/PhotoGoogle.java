@@ -1,4 +1,4 @@
-package com.example.michel.go4lunch.api_google_maps;
+package com.example.michel.go4lunch.APIMaps;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,14 +1,11 @@
 package com.example.michel.go4lunch.adapter;
 
+
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.ViewGroup;
-import android.widget.TableLayout;
 
 import com.example.michel.go4lunch.fragments.ListViewFragment;
-import com.example.michel.go4lunch.fragments.MapViewFragment;
 import com.example.michel.go4lunch.fragments.WorkmatesFragment;
 
 /**

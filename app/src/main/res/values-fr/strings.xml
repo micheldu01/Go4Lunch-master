@@ -14,7 +14,7 @@
     <string name="dont_connected">Non connecté</string>
 
     // WORKMATES RECYCLER VIEW
-    <string name="is_eating"> mange </string>
+    <string name="is_eating"> a choisi </string>
     <string name="no_decided">n\'a pas encore décidé</string>
 
     // SHOW RESTAURANT RECYCLER VIEW
