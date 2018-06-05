@@ -18,7 +18,7 @@ public class GoogMapStreamTest {
         // 1 - Get the stream
         //     Recupération de la stream
         io.reactivex.Observable<GoogleApiA> observableGoogleAPI =
-                MapStreams.streamGoogleApi("AIzaSyBAxEEYEH1wJoxzXT6_X0CbC-P6oZgbG3k");
+                MapStreams.streamGoogleApi(BuildConfig.KEY_GOOGLE_MAP);
 
         // - 2 Create a new TestObserver
         //     Création d'un nouveau TestObserver
@@ -45,7 +45,7 @@ public class GoogMapStreamTest {
         // 1 - Get the stream
         //     Recupération de la stream
         io.reactivex.Observable<GoogleAPIplaceId> googleAPIplaceIdObservable =
-                MapStreams.streamGoogleAPIplaceId("AIzaSyBAxEEYEH1wJoxzXT6_X0CbC-P6oZgbG3k","ChIJJ9DR8BxWi0cRY6z352rEi_0");
+                MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP,"ChIJJ9DR8BxWi0cRY6z352rEi_0");
 
         // - 2 Create a new TestObserver
         //     Création d'un nouveau TestObserver
