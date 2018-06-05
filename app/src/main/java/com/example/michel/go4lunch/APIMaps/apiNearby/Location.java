@@ -19,11 +19,14 @@ public class Location {
     @Nullable private Float longitude;
 
 
+    // CONSTRUCTOR
     public Location(Float latitude, Float longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
+
+    // GETTER AND SETTER
     public Float getLatitude() {
         return latitude;
     }

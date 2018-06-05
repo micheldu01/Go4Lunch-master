@@ -15,10 +15,13 @@ public class GoogleAPIplaceId {
     public ResultAPI resultsAPI;
 
 
-
+    // CONSTRUCTOR
     public GoogleAPIplaceId(ResultAPI resultsAPI) {
         this.resultsAPI = resultsAPI;
     }
+
+
+    // GETTER AND SETTER
 
     public ResultAPI getResultsAPI() {
         return resultsAPI;

@@ -45,14 +45,13 @@ public class Results {
 
 
 
+    // CONSTRUCTOR EMPTY
     public Results(String name) {
         this.name = name;
     }
 
 
     // CONSTRUCTOR WITH PHOTO
-
-
     public Results(Geometry geometry, String id, String name, List<PhotoGoogle> photos, String vicinity, Opening_hours opening_hours, String place_id) {
         this.geometry = geometry;
         this.id = id;
@@ -62,6 +61,9 @@ public class Results {
         this.opening_hours = opening_hours;
         this.place_id = place_id;
     }
+
+
+    //  GETTER AND SETTER
 
     public Geometry getGeometry() {
         return geometry;

@@ -20,6 +20,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.michel.go4lunch.APIMaps.MapStreams;
+import com.example.michel.go4lunch.APIMaps.ObjectRestaurant;
+import com.example.michel.go4lunch.APIMaps.apiNearby.GoogleApiA;
+import com.example.michel.go4lunch.APIMaps.apiPlaceId.GoogleAPIplaceId;
+import com.example.michel.go4lunch.BuildConfig;
 import com.example.michel.go4lunch.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -34,6 +39,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -82,10 +89,13 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
     private Disposable disposable;
 
     // DECLARE ARRAY OBJECT RESTAURANT
-    //private List<ObjectRestaurant> objectRestaurantList = new ArrayList<>();
+    private List<ObjectRestaurant> objectRestaurantList = new ArrayList<>();
 
     // DECLARE PLACE ID
     private String idPlaceAPI;
+
+    // DECLARE INT i FOR WHILE
+    int i = 0;
 
 
     public MapViewFragment() {
@@ -130,6 +140,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         // GET MAPS ASYNC
         mapFragment.getMapAsync(this);
 
+        // GET DATA FROM GOOGLE PLACE
+        this.getDataFromGooglePlace();
 
         return v;
 
@@ -303,76 +315,113 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
     }
 
 
-    private void testAPI(){
+    // METHOD FOR GET DATA FROM STREAMS
+    // AND PUT DATA INTO FIRE BASE
+    private void getDataFromGooglePlace(){
 
-        // get calendar
+        // GET CALENDAR
         Calendar calendar = Calendar.getInstance();
+        // GET NUMBER OF DAY OF WEEK
         final int day = calendar.get(Calendar.DAY_OF_WEEK);
 
 
+        // IMPLEMENT DISPOSABLE WITH GoogleApiA
         disposable = MapStreams.streamGoogleApi(BuildConfig.KEY_GOOGLE_MAP)
                 .subscribeWith(new DisposableObserver<GoogleApiA>() {
 
-
+                    // GET DATA FROM STREAM IN ON NEXT METHOD
                     @Override
                     public void onNext(final GoogleApiA googleAPI) {
 
-                        idPlaceAPI = googleAPI.getResults().get(0).getPlace_id();
+                        // DECLARE AND IMPLEMENT FIRE BASE DATA BASE
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                        disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP,idPlaceAPI)
-                                .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
-                                    @Override
-                                    public void onNext(GoogleAPIplaceId googleAPIplaceId) {
 
-                                        String str = googleAPIplaceId.getResultsAPI().getWebsite();
+                        // DECLARE VALUE INT
+                        i = 0;
+                        // CREATE WHILE FOR PUT DATA INTO OBJECT RESTAURANT
+                        //while (i <= googleAPI.getResults().size()){
 
-                                        Log.e("--test 3--","-- name restaurant"
-                                                +str);
+                            // GET KEY PLACE FOR USE GoogleAPIplaceId
+                            idPlaceAPI = googleAPI.getResults().get(0).getPlace_id();
 
-                                        objectRestaurantList.add(new ObjectRestaurant(
-                                                googleAPI.getResults().get(0).getName(),
-                                                googleAPI.getResults().get(0).getId(),
-                                                googleAPI.getResults().get(0).getVicinity(),
-                                                googleAPI.getResults().get(0).getOpening_hours().isOpen_now(),
-                                                googleAPI.getResults().get(0).getGeometry().getLocation().getLatitude(),
-                                                googleAPI.getResults().get(0).getGeometry().getLocation().getLongitude(),
-                                                googleAPI.getResults().get(0).getPlace_id(),
-                                                googleAPIplaceId.getResultsAPI().getWebsite(),
-                                                googleAPIplaceId.getResultsAPI().getPhone(),
-                                                googleAPIplaceId.getResultsAPI().getAddressComponents().get(0).getShort_name(),
-                                                googleAPIplaceId.getResultsAPI().getAddressComponents().get(1).getShort_name(),
-                                                googleAPIplaceId.getResultsAPI().getOpening_hours().getPeriods().get(0).getClose().getTime(),
-                                                googleAPIplaceId.getResultsAPI().getOpening_hours().getPeriods().get(day-2).getClose().getDay(),
-                                                googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference(),
-                                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="+googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference()+BuildConfig.KEY_GOOGLE_MAP
-                                        ));
+                        Log.e("--API GOOGLE--", "-----------------"+googleAPI.getResults().get(1).getPlace_id());
+                        Log.e("--API GOOGLE--", "-----------------"+googleAPI.getResults().get(1).getGeometry().getLocation().getLongitude());
 
-                                        Log.e("--API GOOGLE--", "-- name restaurant"
-                                                + objectRestaurantList.get(0).getId()
-                                                + objectRestaurantList.get(0).getNameRestaurant()
-                                                + objectRestaurantList.get(0).getAddress()
-                                                + objectRestaurantList.get(0).isTime_open()
-                                                + objectRestaurantList.get(0).getLatitude()
-                                                + objectRestaurantList.get(0).getLongitude()
-                                                + objectRestaurantList.get(0).getPlace_id()
-                                                + objectRestaurantList.get(0).getWeb()
-                                                + objectRestaurantList.get(0).getPhone()
-                                                + objectRestaurantList.get(0).getNumber_street()
-                                                + objectRestaurantList.get(0).getName_street()
-                                                + objectRestaurantList.get(0).getTime_close()
-                                                + objectRestaurantList.get(0).getDays()
-                                                + objectRestaurantList.get(0).getPhoto_key()
-                                                + objectRestaurantList.get(0).getUrl_photo()
 
-                                        );
-                                    }
-                                    @Override
-                                    public void onError(Throwable e) {
-                                    }
-                                    @Override
-                                    public void onComplete() {
-                                    }
-                                });
+                                // IMPLEMENT DISPOSABLE WITH GoogleAPIplaceId
+                            disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, "ChIJwWRJWmRRi0cRXtBEQZTMYQM")
+                                    .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
+
+                                        // GET DATA FROM STREAM IN ON NEXT METHOD
+                                        @Override
+                                        public void onNext(GoogleAPIplaceId googleAPIplaceId) {
+
+                                            // PUT DATA INTO RESTAURANT OBJECT LIST
+                                            objectRestaurantList.add(new ObjectRestaurant(
+                                                    googleAPI.getResults().get(0).getName(),
+                                                    googleAPI.getResults().get(0).getId(),
+                                                    googleAPI.getResults().get(0).getVicinity(),
+                                                    googleAPI.getResults().get(0).getOpening_hours().isOpen_now(),
+                                                    googleAPI.getResults().get(0).getGeometry().getLocation().getLatitude(),
+                                                    googleAPI.getResults().get(0).getGeometry().getLocation().getLongitude(),
+                                                    googleAPI.getResults().get(0).getPlace_id(),
+                                                    googleAPIplaceId.getResultsAPI().getWebsite(),
+                                                    //"website",
+                                                    googleAPIplaceId.getResultsAPI().getPhone(),
+                                                    //"phone",
+                                                    googleAPIplaceId.getResultsAPI().getAddressComponents().get(0).getShort_name(),
+                                                    //"adresse",
+                                                    googleAPIplaceId.getResultsAPI().getAddressComponents().get(1).getShort_name(),
+                                                    //"adresse 2",
+                                                    googleAPIplaceId.getResultsAPI().getOpening_hours().getPeriods().get(day-2).getClose().getTime(),
+                                                    //"time",
+                                                    //googleAPIplaceId.getResultsAPI().getOpening_hours().getPeriods().get(day-2).getClose().getDay(),
+                                                    1,
+                                                    //googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference(),
+                                                    "ref photo",
+                                                    //"https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="+googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference()+BuildConfig.KEY_GOOGLE_MAP
+                                                    "url photo"
+                                            ));
+
+                                            Log.e("--API GOOGLE--", "-- name restaurant"
+                                                    + objectRestaurantList.get(0).getId()
+                                                    + objectRestaurantList.get(0).getNameRestaurant()
+                                                    + objectRestaurantList.get(0).getAddress()
+                                                    + objectRestaurantList.get(0).isTime_open()
+                                                    + objectRestaurantList.get(0).getLatitude()
+                                                    + objectRestaurantList.get(0).getLongitude()
+                                                    + objectRestaurantList.get(0).getPlace_id()
+                                                    + objectRestaurantList.get(0).getWeb()
+                                                    + objectRestaurantList.get(0).getPhone()
+                                                    + objectRestaurantList.get(0).getNumber_street()
+                                                    + objectRestaurantList.get(0).getName_street()
+                                                    + objectRestaurantList.get(0).getTime_close()
+                                                    + objectRestaurantList.get(0).getDays()
+                                                    + objectRestaurantList.get(0).getPhoto_key()
+                                                    + objectRestaurantList.get(0).getUrl_photo()
+
+                                            );
+
+                                            // PUT RESTAURANT OBJECT INTO DATA BASE FIRE FORE
+                                            //db.collection("restaurant").document(objectRestaurantList.get(0).getId()).set(objectRestaurantList.get(0), SetOptions.merge());
+                                            Log.e("---test----","--- data base ---"+objectRestaurantList.get(0).getUrl_photo());
+                                        }
+                                        @Override
+                                        public void onError(Throwable e) {
+                                        }
+                                        @Override
+                                        public void onComplete() {
+                                        }
+                                    });
+
+
+
+                            // INCREMENT I
+                            //i++;
+
+                        //}
+
                     }
                     @Override
                     public void onError(Throwable e) {

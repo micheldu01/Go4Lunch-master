@@ -27,7 +27,7 @@ public class NotificationRestaurant extends Service {
     @Override
     public IBinder onBind(Intent intent) {return null;}
 
-
+/*
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
@@ -64,7 +64,7 @@ public class NotificationRestaurant extends Service {
 
     }
 
-
+*/
 
 
 }

@@ -19,8 +19,13 @@ public class Media {
         this.url = url;
     }
 
-    // CREATE GETTER
+
+    // GETTER AND SETTER
     public String getUrl() {
         return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

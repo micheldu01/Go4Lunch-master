@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity
 
 
         // METHOD FOR AUTH
-        this.launchSignInIntent();
+        //this.launchSignInIntent();
 
         // 1.toolbar add toolbar method
         this.configureToolbar();
@@ -127,7 +127,7 @@ public class MainActivity extends BaseActivity
         this.profileIntoDrawerMenu();
 
         // PUSH DATA PROFILE INTO FIREBASE
-        this.saveProfileFireBase();
+        //this.saveProfileFireBase();
 
 
 

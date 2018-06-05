@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 public class Close {
 
 
+    // DECLARE VALUES
     @SerializedName("day")
     @Expose
     public int day;
@@ -16,14 +17,19 @@ public class Close {
     public String time;
 
 
+    // CONSTRUCTOR
     public Close(String time) {
         this.time = time;
     }
 
+    // CONSTRUCTOR
     public Close(int day, String time) {
         this.day = day;
         this.time = time;
     }
+
+
+    // GETTER AND SETTER
 
     public int getDay() {
         return day;

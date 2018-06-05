@@ -27,9 +27,12 @@ public class GoogleApiA {
     }
 
 
-    // CREATE GETTER
-
+    // GETTER AND SETTER
     public List<Results> getResults() {
         return results;
+    }
+
+    public void setResults(List<Results> results) {
+        this.results = results;
     }
 }

@@ -6,14 +6,20 @@ import com.google.gson.annotations.SerializedName;
 
 public class Photo {
 
+
+    // DECLARE VALUE
     @SerializedName("photo_reference")
     @Expose
     public String photoReference;
 
 
+    // CONSTRUCTOR
     public Photo(String photoReference) {
         this.photoReference = photoReference;
     }
+
+
+    // GETTER AND SETTER
 
     public String getPhotoReference() {
         return photoReference;

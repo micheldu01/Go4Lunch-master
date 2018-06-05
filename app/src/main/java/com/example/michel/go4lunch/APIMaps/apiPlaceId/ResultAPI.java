@@ -33,6 +33,8 @@ public class ResultAPI {
     @Expose
     public List<Photo> photos = null;
 
+
+    // CONSTRUCTOR
     public ResultAPI(List<AddressComponent> addressComponents, String website, String phone, OpeningHours opening_hours, List<Photo> photos) {
         this.addressComponents = addressComponents;
         this.website = website;
@@ -40,6 +42,9 @@ public class ResultAPI {
         this.opening_hours = opening_hours;
         this.photos = photos;
     }
+
+
+    // GETTER AND SETTER
 
     public List<AddressComponent> getAddressComponents() {
         return addressComponents;
