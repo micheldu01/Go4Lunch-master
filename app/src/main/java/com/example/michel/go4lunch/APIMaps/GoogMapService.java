@@ -1,6 +1,9 @@
 package com.example.michel.go4lunch.APIMaps;
 
 
+import com.example.michel.go4lunch.APIMaps.apiNearby.GoogleApiA;
+import com.example.michel.go4lunch.APIMaps.apiPlaceId.GoogleAPIplaceId;
+
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;

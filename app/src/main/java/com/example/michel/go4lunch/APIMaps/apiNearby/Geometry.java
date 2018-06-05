@@ -1,7 +1,7 @@
 package com.example.michel.go4lunch.APIMaps.apiNearby;
 
 
-import com.example.michel.myapplication.apiGoogleMaps.apinearby.Location;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
