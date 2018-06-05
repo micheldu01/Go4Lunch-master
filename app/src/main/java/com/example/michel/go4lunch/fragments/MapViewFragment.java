@@ -3,6 +3,7 @@ package com.example.michel.go4lunch.fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,8 +18,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.michel.go4lunch.R;
@@ -47,7 +46,7 @@ import io.reactivex.disposables.Disposable;
 public class MapViewFragment extends Fragment implements OnMapReadyCallback,
             GoogleApiClient.ConnectionCallbacks,
             GoogleApiClient.OnConnectionFailedListener,
-            LocationListener{
+        LocationListener {
 
 
     // DECLARE SUPPORT MAP FRAGMENT
@@ -167,15 +166,15 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         mMap = googleMap;
         mMap.setMapType(googleMap.MAP_TYPE_NORMAL);
 
+
+
+
         // IMPLEMENT GOOGLE MAP WHITE ENABLE POSITION
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
 
-
-
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
-
         }
 
     }
@@ -192,27 +191,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
     }
 
 
-    // IMPLEMENT LOCATION REQUEST
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
 
-        // IMPLEMENT LOCATION REQUEST
-        locationRequest = new LocationRequest();
-
-        // ADD TIME REQUEST
-        locationRequest.setInterval(1000);
-        locationRequest.setFastestInterval(1000);
-        // ADD PRIORITY
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-
-
-        // ASK IF CONTEXT COMPAT HAVE ACCESS
-        if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
-            // IMPLEMENT LOCATION SERVICE
-            //LocationServices.FusedLocationApi.requestLocationUpdates(client,locationRequest,this);
-            LocationServices.getFusedLocationProviderClient(getActivity());
-        }
-    }
 
 
 
@@ -266,6 +245,29 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
             LocationServices.getFusedLocationProviderClient(getActivity());
         }
     }
+
+    // IMPLEMENT LOCATION REQUEST
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+        // IMPLEMENT LOCATION REQUEST
+        locationRequest = new LocationRequest();
+
+        // ADD TIME REQUEST
+        locationRequest.setInterval(1000);
+        locationRequest.setFastestInterval(1000);
+        // ADD PRIORITY
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+
+
+        // ASK IF CONTEXT COMPAT HAVE ACCESS
+        if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+            // IMPLEMENT LOCATION SERVICE
+            //LocationServices.FusedLocationApi.requestLocationUpdates(client,locationRequest,this);
+            LocationServices.getFusedLocationProviderClient(getActivity());
+        }
+    }
+
 
     // METHOD ASK CHECK PERMISSION LOCATION
     public boolean checkLocationPermission(){

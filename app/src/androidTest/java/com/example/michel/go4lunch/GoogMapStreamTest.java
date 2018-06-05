@@ -1,7 +1,6 @@
 package com.example.michel.go4lunch;
 
 
-import com.example.michel.go4lunch.APIMaps.GoogleAPI;
 import com.example.michel.go4lunch.APIMaps.MapStreams;
 
 

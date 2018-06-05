@@ -11,11 +11,21 @@ public class MapStreams {
 
 
     // CREATE OBSERVABLE FOR GET STREAM TOP STORIES NYT
-    public static Observable<GoogleAPI> streamGoogleApi() {
+    public static Observable<GoogleApiA> streamGoogleApi(String key) {
         GoogMapService googMapService = GoogMapService.retrofit.create(GoogMapService.class);
-        return googMapService.getGoogleApi()
+        return googMapService.getGoogleApi(key)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);
     }
+
+    // CREATE OBSERVABLE FOR GET STREAM TOP STORIES NYT
+    public static Observable<GoogleAPIplaceId> streamGoogleAPIplaceId(String key,String place_id) {
+        GoogMapService googMapService = GoogMapService.retrofit.create(GoogMapService.class);
+        return googMapService.getGoogleAPIplaceId(key,place_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .timeout(10, TimeUnit.SECONDS);
+    }
+
 }
