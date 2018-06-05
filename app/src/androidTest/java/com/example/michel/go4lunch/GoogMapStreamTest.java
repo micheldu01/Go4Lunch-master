@@ -17,12 +17,12 @@ public class GoogMapStreamTest {
 
         // 1 - Get the stream
         //     Recupération de la stream
-        io.reactivex.Observable<GoogleAPI> observableGoogleAPI =
-                MapStreams.streamGoogleApi();
+        io.reactivex.Observable<GoogleApiA> observableGoogleAPI =
+                MapStreams.streamGoogleApi("AIzaSyBAxEEYEH1wJoxzXT6_X0CbC-P6oZgbG3k");
 
         // - 2 Create a new TestObserver
         //     Création d'un nouveau TestObserver
-        TestObserver<GoogleAPI> testObserver = new TestObserver<>();
+        TestObserver<GoogleApiA> testObserver = new TestObserver<>();
 
         // 3 - Launch observable
         //     Lancement d'un observable
@@ -32,9 +32,36 @@ public class GoogMapStreamTest {
                 .awaitTerminalEvent(); // - Await the stream terminated before continue
 
         // 4 - Test if streamTopStories is empty
-        GoogleAPI googleAPI = testObserver.values().get(0);
+        GoogleApiA googleAPI = testObserver.values().get(0);
         // 5 - Ask if getResults is different to null
-        assertThat("result", googleAPI.getResults() != null);
+        assertThat("result", googleAPI.getResults().get(0) != null);
+
+
+    }
+
+    @Test
+    public void googleApiTest2() throws Exception {
+
+        // 1 - Get the stream
+        //     Recupération de la stream
+        io.reactivex.Observable<GoogleAPIplaceId> googleAPIplaceIdObservable =
+                MapStreams.streamGoogleAPIplaceId("AIzaSyBAxEEYEH1wJoxzXT6_X0CbC-P6oZgbG3k","ChIJJ9DR8BxWi0cRY6z352rEi_0");
+
+        // - 2 Create a new TestObserver
+        //     Création d'un nouveau TestObserver
+        TestObserver<GoogleAPIplaceId> testObserver = new TestObserver<>();
+
+        // 3 - Launch observable
+        //     Lancement d'un observable
+        googleAPIplaceIdObservable.subscribeWith(testObserver)
+                .assertNoErrors() // 3.1 - Check if  no errors
+                .assertNoTimeout() // 3.2 - Check if no Timeout
+                .awaitTerminalEvent(); // - Await the stream terminated before continue
+
+        // 4 - Test if streamTopStories is empty
+        GoogleAPIplaceId googleAPIplaceId = testObserver.values().get(0);
+        // 5 - Ask if getResults is different to null
+        assertThat("result", googleAPIplaceId.getResultsAPI() != null);
 
 
     }
