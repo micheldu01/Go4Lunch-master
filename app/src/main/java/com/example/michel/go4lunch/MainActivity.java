@@ -1,5 +1,6 @@
 package com.example.michel.go4lunch;
 
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,7 +12,6 @@ import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -47,7 +47,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.support.v4.app.NotificationCompat.PRIORITY_DEFAULT;
+
 
 public class MainActivity extends BaseActivity
         implements
@@ -92,6 +92,8 @@ public class MainActivity extends BaseActivity
     // FIRE BASE USER
     private FirebaseUser firebaseUser;
 
+    //-----------------------
+
 
 
 
@@ -126,6 +128,9 @@ public class MainActivity extends BaseActivity
 
         // PUSH DATA PROFILE INTO FIREBASE
         this.saveProfileFireBase();
+
+
+
 
 
     }

@@ -31,7 +31,7 @@ public class NotificationRestaurant extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-/*
+
         // using NotificationManager for get Alarm
         NotificationManager notify_manager = (NotificationManager)
                getSystemService(Context.NOTIFICATION_SERVICE);
@@ -58,7 +58,7 @@ public class NotificationRestaurant extends Service {
 
         // use notify
         notify_manager.notify(1, notification_poupup);
-*/
+
             return START_NOT_STICKY;
 
 
