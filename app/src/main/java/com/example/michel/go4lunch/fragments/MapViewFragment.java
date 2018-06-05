@@ -36,9 +36,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -300,5 +302,86 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
 
     }
 
+
+    private void testAPI(){
+
+        // get calendar
+        Calendar calendar = Calendar.getInstance();
+        final int day = calendar.get(Calendar.DAY_OF_WEEK);
+
+
+        disposable = MapStreams.streamGoogleApi(BuildConfig.KEY_GOOGLE_MAP)
+                .subscribeWith(new DisposableObserver<GoogleApiA>() {
+
+
+                    @Override
+                    public void onNext(final GoogleApiA googleAPI) {
+
+                        idPlaceAPI = googleAPI.getResults().get(0).getPlace_id();
+
+                        disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP,idPlaceAPI)
+                                .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
+                                    @Override
+                                    public void onNext(GoogleAPIplaceId googleAPIplaceId) {
+
+                                        String str = googleAPIplaceId.getResultsAPI().getWebsite();
+
+                                        Log.e("--test 3--","-- name restaurant"
+                                                +str);
+
+                                        objectRestaurantList.add(new ObjectRestaurant(
+                                                googleAPI.getResults().get(0).getName(),
+                                                googleAPI.getResults().get(0).getId(),
+                                                googleAPI.getResults().get(0).getVicinity(),
+                                                googleAPI.getResults().get(0).getOpening_hours().isOpen_now(),
+                                                googleAPI.getResults().get(0).getGeometry().getLocation().getLatitude(),
+                                                googleAPI.getResults().get(0).getGeometry().getLocation().getLongitude(),
+                                                googleAPI.getResults().get(0).getPlace_id(),
+                                                googleAPIplaceId.getResultsAPI().getWebsite(),
+                                                googleAPIplaceId.getResultsAPI().getPhone(),
+                                                googleAPIplaceId.getResultsAPI().getAddressComponents().get(0).getShort_name(),
+                                                googleAPIplaceId.getResultsAPI().getAddressComponents().get(1).getShort_name(),
+                                                googleAPIplaceId.getResultsAPI().getOpening_hours().getPeriods().get(0).getClose().getTime(),
+                                                googleAPIplaceId.getResultsAPI().getOpening_hours().getPeriods().get(day-2).getClose().getDay(),
+                                                googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference(),
+                                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="+googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference()+BuildConfig.KEY_GOOGLE_MAP
+                                        ));
+
+                                        Log.e("--API GOOGLE--", "-- name restaurant"
+                                                + objectRestaurantList.get(0).getId()
+                                                + objectRestaurantList.get(0).getNameRestaurant()
+                                                + objectRestaurantList.get(0).getAddress()
+                                                + objectRestaurantList.get(0).isTime_open()
+                                                + objectRestaurantList.get(0).getLatitude()
+                                                + objectRestaurantList.get(0).getLongitude()
+                                                + objectRestaurantList.get(0).getPlace_id()
+                                                + objectRestaurantList.get(0).getWeb()
+                                                + objectRestaurantList.get(0).getPhone()
+                                                + objectRestaurantList.get(0).getNumber_street()
+                                                + objectRestaurantList.get(0).getName_street()
+                                                + objectRestaurantList.get(0).getTime_close()
+                                                + objectRestaurantList.get(0).getDays()
+                                                + objectRestaurantList.get(0).getPhoto_key()
+                                                + objectRestaurantList.get(0).getUrl_photo()
+
+                                        );
+                                    }
+                                    @Override
+                                    public void onError(Throwable e) {
+                                    }
+                                    @Override
+                                    public void onComplete() {
+                                    }
+                                });
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("TAG","On Error"+Log.getStackTraceString(e));
+                    }
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
 
 }

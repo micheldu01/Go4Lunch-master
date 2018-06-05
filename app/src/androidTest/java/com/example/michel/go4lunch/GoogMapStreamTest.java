@@ -2,6 +2,8 @@ package com.example.michel.go4lunch;
 
 
 import com.example.michel.go4lunch.APIMaps.MapStreams;
+import com.example.michel.go4lunch.APIMaps.apiNearby.GoogleApiA;
+import com.example.michel.go4lunch.APIMaps.apiPlaceId.GoogleAPIplaceId;
 
 
 import org.junit.Test;
