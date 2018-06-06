@@ -1,4 +1,4 @@
-package com.example.michel.go4lunch.APIMaps;
+package com.example.michel.go4lunch.models;
 
 
 import android.support.annotation.Nullable;

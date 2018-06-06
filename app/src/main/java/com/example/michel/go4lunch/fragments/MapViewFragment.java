@@ -2,8 +2,9 @@ package com.example.michel.go4lunch.fragments;
 
 
 import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,9 +22,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.michel.go4lunch.APIMaps.MapStreams;
-import com.example.michel.go4lunch.APIMaps.ObjectRestaurant;
+import com.example.michel.go4lunch.models.ObjectRestaurant;
 import com.example.michel.go4lunch.APIMaps.apiNearby.GoogleApiA;
-import com.example.michel.go4lunch.APIMaps.apiPlaceId.GoogleAPIplaceId;
 import com.example.michel.go4lunch.BuildConfig;
 import com.example.michel.go4lunch.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -48,6 +48,8 @@ import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
+
+import static com.example.michel.go4lunch.shared.Shared.MYSHARED;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -96,9 +98,17 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
 
     // DECLARE INT i FOR WHILE
     int i = 0;
+    int num = 0;
 
     // DECLARE DATA BASE
     FirebaseFirestore db;
+
+    // SHARED PREFERENCES
+    private SharedPreferences preferences;
+
+
+
+
 
 
 
@@ -185,25 +195,47 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
     public void onMapReady(GoogleMap googleMap) {
         // DECLARE GOOGLE MAP
         mMap = googleMap;
+        // SET MAP TYPE NORMAL
         mMap.setMapType(googleMap.MAP_TYPE_NORMAL);
-
-        MarkerOptions markerOptions = new MarkerOptions();
-
-        markerOptions.position(new LatLng(46.066667,5.316667));
-        markerOptions.title("mon village");
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.button_green));
-
 
 
         // IMPLEMENT GOOGLE MAP WHITE ENABLE POSITION
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
 
+            // BUILD API CLIENT
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
-            mMap.addMarker(markerOptions);
-        }
 
+            // DECLARE INT
+            num = 0;
+
+            // MAKE WHILE FOR IMPLEMENT MARKER OPTION
+            while (num<=objectRestaurantList.size()-1) {
+
+                // IMPLEMENT GOOGLE MAP WITH MARKER OPTION
+                mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(objectRestaurantList.get(num).getLatitude(),objectRestaurantList.get(num).getLongitude()))
+                        .title(objectRestaurantList.get(num).getNameRestaurant())
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_restaurant_orange2)));
+
+                // IMPLEMENT ON CLICK MARKER
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+
+                        Log.e("----click-----","---marker---"+marker.getTitle());
+                        // IMPLEMENT SHARED PREFERENCES
+                        preferences = getActivity().getSharedPreferences(MYSHARED, Context.MODE_PRIVATE);
+                        return false;
+                    }
+                });
+
+                num++;
+
+
+            }
+        }
     }
 
     // METHOD GOOGLE API CLIENT
@@ -216,10 +248,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                 .build();
         client.connect();
     }
-
-
-
-
 
 
     // IMPLEMENT LAST LOCATION
@@ -241,7 +269,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         }
         // IMPLEMENT LATITUDE LONGITUDE
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        Log.e("------test--------","-------test---------"+latLng);
 
 
         // DECLARE MARKER OPTION
@@ -253,9 +280,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         markerOptions.title("Current location");
         // ADD ICON AND BLUE COLOR
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-
-        // LOG
-        Log.e("------test--------","-------test---------");
 
         // IMPLEMENT CURRENT LOCATION WITH MARKER OPTION
         currentLocationMarker = mMap.addMarker(markerOptions);
