@@ -97,6 +97,10 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
     // DECLARE INT i FOR WHILE
     int i = 0;
 
+    // DECLARE DATA BASE
+    FirebaseFirestore db;
+
+
 
     public MapViewFragment() {
     }
@@ -143,6 +147,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         // GET DATA FROM GOOGLE PLACE
         this.getDataFromGooglePlace();
 
+        // SHOW RESTAURANT ON MAP
+        this.showRestaurantOnMap();
+
         return v;
 
     }
@@ -180,6 +187,11 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         mMap = googleMap;
         mMap.setMapType(googleMap.MAP_TYPE_NORMAL);
 
+        MarkerOptions markerOptions = new MarkerOptions();
+
+        markerOptions.position(new LatLng(46.066667,5.316667));
+        markerOptions.title("mon village");
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.button_green));
 
 
 
@@ -189,6 +201,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
 
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
+            mMap.addMarker(markerOptions);
         }
 
     }
@@ -334,94 +347,33 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                     public void onNext(final GoogleApiA googleAPI) {
 
                         // DECLARE AND IMPLEMENT FIRE BASE DATA BASE
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db = FirebaseFirestore.getInstance();
 
 
                         // DECLARE VALUE INT
                         i = 0;
                         // CREATE WHILE FOR PUT DATA INTO OBJECT RESTAURANT
-                        //while (i <= googleAPI.getResults().size()){
+                        while (i <= googleAPI.getResults().size()-1){
 
-                            // GET KEY PLACE FOR USE GoogleAPIplaceId
-                            idPlaceAPI = googleAPI.getResults().get(0).getPlace_id();
+                        // GET KEY PLACE FOR USE GoogleAPIplaceId
+                        idPlaceAPI = googleAPI.getResults().get(i).getPlace_id();
 
-                        Log.e("--API GOOGLE--", "-----------------"+googleAPI.getResults().get(1).getPlace_id());
-                        Log.e("--API GOOGLE--", "-----------------"+googleAPI.getResults().get(1).getGeometry().getLocation().getLongitude());
+                            // PUT DATA INTO RESTAURANT OBJECT LIST
+                            objectRestaurantList.add(new ObjectRestaurant(
+                                    googleAPI.getResults().get(i).getName(),
+                                    googleAPI.getResults().get(i).getId(),
+                                    googleAPI.getResults().get(i).getVicinity(),
+                                    googleAPI.getResults().get(i).getGeometry().getLocation().getLatitude(),
+                                    googleAPI.getResults().get(i).getGeometry().getLocation().getLongitude(),
+                                    googleAPI.getResults().get(i).getPlace_id()
+                            ));
 
-
-                                // IMPLEMENT DISPOSABLE WITH GoogleAPIplaceId
-                            disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, "ChIJwWRJWmRRi0cRXtBEQZTMYQM")
-                                    .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
-
-                                        // GET DATA FROM STREAM IN ON NEXT METHOD
-                                        @Override
-                                        public void onNext(GoogleAPIplaceId googleAPIplaceId) {
-
-                                            // PUT DATA INTO RESTAURANT OBJECT LIST
-                                            objectRestaurantList.add(new ObjectRestaurant(
-                                                    googleAPI.getResults().get(0).getName(),
-                                                    googleAPI.getResults().get(0).getId(),
-                                                    googleAPI.getResults().get(0).getVicinity(),
-                                                    googleAPI.getResults().get(0).getOpening_hours().isOpen_now(),
-                                                    googleAPI.getResults().get(0).getGeometry().getLocation().getLatitude(),
-                                                    googleAPI.getResults().get(0).getGeometry().getLocation().getLongitude(),
-                                                    googleAPI.getResults().get(0).getPlace_id(),
-                                                    googleAPIplaceId.getResultsAPI().getWebsite(),
-                                                    //"website",
-                                                    googleAPIplaceId.getResultsAPI().getPhone(),
-                                                    //"phone",
-                                                    googleAPIplaceId.getResultsAPI().getAddressComponents().get(0).getShort_name(),
-                                                    //"adresse",
-                                                    googleAPIplaceId.getResultsAPI().getAddressComponents().get(1).getShort_name(),
-                                                    //"adresse 2",
-                                                    googleAPIplaceId.getResultsAPI().getOpening_hours().getPeriods().get(day-2).getClose().getTime(),
-                                                    //"time",
-                                                    //googleAPIplaceId.getResultsAPI().getOpening_hours().getPeriods().get(day-2).getClose().getDay(),
-                                                    1,
-                                                    //googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference(),
-                                                    "ref photo",
-                                                    //"https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="+googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference()+BuildConfig.KEY_GOOGLE_MAP
-                                                    "url photo"
-                                            ));
-
-                                            Log.e("--API GOOGLE--", "-- name restaurant"
-                                                    + objectRestaurantList.get(0).getId()
-                                                    + objectRestaurantList.get(0).getNameRestaurant()
-                                                    + objectRestaurantList.get(0).getAddress()
-                                                    + objectRestaurantList.get(0).isTime_open()
-                                                    + objectRestaurantList.get(0).getLatitude()
-                                                    + objectRestaurantList.get(0).getLongitude()
-                                                    + objectRestaurantList.get(0).getPlace_id()
-                                                    + objectRestaurantList.get(0).getWeb()
-                                                    + objectRestaurantList.get(0).getPhone()
-                                                    + objectRestaurantList.get(0).getNumber_street()
-                                                    + objectRestaurantList.get(0).getName_street()
-                                                    + objectRestaurantList.get(0).getTime_close()
-                                                    + objectRestaurantList.get(0).getDays()
-                                                    + objectRestaurantList.get(0).getPhoto_key()
-                                                    + objectRestaurantList.get(0).getUrl_photo()
-
-                                            );
-
-                                            // PUT RESTAURANT OBJECT INTO DATA BASE FIRE FORE
-                                            //db.collection("restaurant").document(objectRestaurantList.get(0).getId()).set(objectRestaurantList.get(0), SetOptions.merge());
-                                            Log.e("---test----","--- data base ---"+objectRestaurantList.get(0).getUrl_photo());
-                                        }
-                                        @Override
-                                        public void onError(Throwable e) {
-                                        }
-                                        @Override
-                                        public void onComplete() {
-                                        }
-                                    });
-
-
+                            // PUT RESTAURANT OBJECT INTO DATA BASE FIRE FORE
+                            db.collection("restaurant").document(objectRestaurantList.get(i).getId()).set(objectRestaurantList.get(i), SetOptions.merge());
 
                             // INCREMENT I
-                            //i++;
-
-                        //}
-
+                            i++;
+                        }
                     }
                     @Override
                     public void onError(Throwable e) {
@@ -433,4 +385,62 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                 });
     }
 
+    //SHOW RESTAURANT ON MAP
+    private void showRestaurantOnMap(){
+
+
+
+
+
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,8 @@
 package com.example.michel.go4lunch.APIMaps.apiPlaceId;
 
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -26,6 +28,7 @@ public class ResultAPI {
     // DECLARE LIST OPEN (hours)
     @SerializedName("opening_hours")
     @Expose
+    @Nullable
     public OpeningHours opening_hours;
 
     // DECLARE PHOTO
@@ -33,6 +36,16 @@ public class ResultAPI {
     @Expose
     public List<Photo> photos = null;
 
+
+    // CONTRUCTOR WITHOUT OPENING HOURS
+
+
+    public ResultAPI(List<AddressComponent> addressComponents, String website, String phone, List<Photo> photos) {
+        this.addressComponents = addressComponents;
+        this.website = website;
+        this.phone = phone;
+        this.photos = photos;
+    }
 
     // CONSTRUCTOR
     public ResultAPI(List<AddressComponent> addressComponents, String website, String phone, OpeningHours opening_hours, List<Photo> photos) {

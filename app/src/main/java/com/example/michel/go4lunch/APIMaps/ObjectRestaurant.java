@@ -50,10 +50,6 @@ public class ObjectRestaurant {
     @Nullable
     private String time_close;
 
-    // DECLARE INT DAY
-    @Nullable
-    private int days;
-
     // DECLARE PHOTO KEY
     @Nullable
     private String photo_key;
@@ -63,23 +59,19 @@ public class ObjectRestaurant {
     private String url_photo;
 
 
-    public ObjectRestaurant(String nameRestaurant, String id, String address, boolean time_open, Float latitude, Float longitude, String place_id, String web, String phone, String number_street, String name_street, String time_close, int days, String photo_key, String url_photo) {
+    // CONSTRUCTOR WITHOUT TIME CLOSE AND TIME
+    public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id) {
         this.nameRestaurant = nameRestaurant;
         this.id = id;
         this.address = address;
-        this.time_open = time_open;
         this.latitude = latitude;
         this.longitude = longitude;
         this.place_id = place_id;
-        this.web = web;
-        this.phone = phone;
-        this.number_street = number_street;
-        this.name_street = name_street;
-        this.time_close = time_close;
-        this.days = days;
-        this.photo_key = photo_key;
-        this.url_photo = url_photo;
     }
+
+
+
+    // GETTER AND SETTER
 
     public String getNameRestaurant() {
         return nameRestaurant;
@@ -181,15 +173,6 @@ public class ObjectRestaurant {
 
     public void setTime_close(@Nullable String time_close) {
         this.time_close = time_close;
-    }
-
-    @Nullable
-    public int getDays() {
-        return days;
-    }
-
-    public void setDays(@Nullable int days) {
-        this.days = days;
     }
 
     @Nullable
