@@ -3,6 +3,7 @@ package com.example.michel.go4lunch.fragments;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.michel.go4lunch.APIMaps.MapStreams;
+import com.example.michel.go4lunch.ActivityShowRestaurant;
 import com.example.michel.go4lunch.models.ObjectRestaurant;
 import com.example.michel.go4lunch.APIMaps.apiNearby.GoogleApiA;
 import com.example.michel.go4lunch.BuildConfig;
@@ -50,6 +52,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
 import static com.example.michel.go4lunch.shared.Shared.MYSHARED;
+import static com.example.michel.go4lunch.shared.Shared.NAME_RESTAURANT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -224,16 +227,21 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                     @Override
                     public boolean onMarkerClick(Marker marker) {
 
-                        Log.e("----click-----","---marker---"+marker.getTitle());
                         // IMPLEMENT SHARED PREFERENCES
                         preferences = getActivity().getSharedPreferences(MYSHARED, Context.MODE_PRIVATE);
+
+                        // PUT NAME RESTAURANT INTO SHARED
+                        preferences.edit().putString(NAME_RESTAURANT, marker.getTitle()).commit();
+
+                        // ADD INTENT FO GO TO RESTAURANT
+                        startActivity(new Intent(getActivity(), ActivityShowRestaurant.class));
+
                         return false;
                     }
                 });
 
+                // INCREMENT INT WILE
                 num++;
-
-
             }
         }
     }

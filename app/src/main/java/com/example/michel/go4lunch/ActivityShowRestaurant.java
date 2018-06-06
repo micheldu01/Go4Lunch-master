@@ -81,6 +81,7 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         this.colorGray();
 
 
+
         // TEST RECYCLER VIEW-------------------------------------------
         choiceRestaurantList.add(new ChoiceRestaurant("robert","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
         choiceRestaurantList.add(new ChoiceRestaurant("robert","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
