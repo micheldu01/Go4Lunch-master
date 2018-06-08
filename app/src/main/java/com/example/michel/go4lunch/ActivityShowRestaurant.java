@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -120,6 +121,9 @@ public class ActivityShowRestaurant extends AppCompatActivity {
     // DECLARE LIST RESTAURANT OBJECT
     private List<RestaurantObject> restaurantObjectList = new ArrayList<>();
 
+    // INT RADIO GROUP ALERT DIALOG
+    private int number_radio_groupe;
+
 
 
 
@@ -208,8 +212,7 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         // METHOD DIALOG BOX
         starDialogBox();
 
-        // TOAST IF CLICK
-        Toast.makeText(this, "-----TEST LIKE----", Toast.LENGTH_SHORT).show();
+        Log.e("button like","---recuperation du number--"+number_radio_groupe);
     }
 
     // BUTTON WEB SITE
@@ -456,6 +459,9 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         TextView textView_cancel = (TextView)dialog.findViewById(R.id.text_dialog_cancel);
         TextView textView_valid = (TextView)dialog.findViewById(R.id.text_dialog_valid);
 
+        // ADD RADIO GROUP DIALOG METHOD
+        radioGroupDialogBox(dialog);
+
 
         // IMPLEMENT TEXT VIEW CANCEL
         textView_cancel.setOnClickListener(new View.OnClickListener() {
@@ -472,7 +478,7 @@ public class ActivityShowRestaurant extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
+                // IMPLEMENT NUMBER RADIO GROUP
 
                 // RETURN TO ACTIVITY
                 dialog.dismiss();
@@ -481,6 +487,41 @@ public class ActivityShowRestaurant extends AppCompatActivity {
             }
         });
     }
+
+    // RADIO GROUP DIALOG BOX
+    private void radioGroupDialogBox(Dialog dialog){
+
+        // DECLARE AND IMPLEMENT RADIO GROUP
+        RadioGroup radioGroup = (RadioGroup)dialog.findViewById(R.id.radio_groupe_dialog);
+
+        // IMPLEMENT CLICK RADIO GROUP
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+                // IMPLEMENT SWITCH
+                switch (i){
+
+                    case R.id.checkbox_0:
+                        number_radio_groupe = 0;
+                        break;
+
+                    case R.id.checkbox_1:
+                        number_radio_groupe = 1;
+                        break;
+
+                    case R.id.checkbox_2:
+                        number_radio_groupe = 2;
+                        break;
+
+                    case R.id.checkbox_3:
+                        number_radio_groupe = 3;
+                        break;
+                }
+            }
+        });
+    }
+
 
 }
 
