@@ -34,6 +34,7 @@ public class ResultAPI {
     // DECLARE PHOTO
     @SerializedName("photos")
     @Expose
+    @Nullable
     public List<Photo> photos = null;
 
 

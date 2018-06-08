@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:theme="@style/TranslucideShow"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ActivityShowRestaurant">
 
 <LinearLayout
@@ -22,7 +23,6 @@
         // IMAGE RESTAURANT
         <ImageView
             android:id="@+id/image_view_show_restaurant"
-            android:src="@drawable/imagerestaurantok"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
@@ -80,25 +80,13 @@
                 android:layout_height="20dp" />
 
 
-            // TYPE FOOD
-            <TextView
-                android:id="@+id/type_restaurant_show_restaurant"
-                android:text="Type - "
-                android:layout_below="@+id/name_restaurant_show_restaurant"
-                android:layout_marginTop="10dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
             // ADDRESS RESTAURANT
             <TextView
                 android:id="@+id/address_restaurant_show_restaurant"
                 android:text="Address"
                 android:layout_below="@+id/name_restaurant_show_restaurant"
                 android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/type_restaurant_show_restaurant"
+                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
@@ -229,4 +217,4 @@
 
 </LinearLayout>
 
-</ScrollView>
+</LinearLayout>

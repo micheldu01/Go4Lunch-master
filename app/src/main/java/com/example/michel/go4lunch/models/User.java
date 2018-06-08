@@ -11,7 +11,7 @@ public class User {
     // DECLARE URL PICTURE
     @Nullable private String urlPicture;
     // DECLARE CHOICE
-    private String choice;
+    @Nullable private String choice;
 
     // CONSTRUCTOR EMPTY
     public User() {}

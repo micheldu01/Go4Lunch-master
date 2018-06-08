@@ -51,8 +51,9 @@ import java.util.List;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
+import static com.example.michel.go4lunch.shared.Shared.ID_RESTAURANT;
 import static com.example.michel.go4lunch.shared.Shared.MYSHARED;
-import static com.example.michel.go4lunch.shared.Shared.NAME_RESTAURANT;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -108,9 +109,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
 
     // SHARED PREFERENCES
     private SharedPreferences preferences;
-
-
-
 
 
 
@@ -219,7 +217,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                 // IMPLEMENT GOOGLE MAP WITH MARKER OPTION
                 mMap.addMarker(new MarkerOptions()
                         .position(new LatLng(objectRestaurantList.get(num).getLatitude(),objectRestaurantList.get(num).getLongitude()))
-                        .title(objectRestaurantList.get(num).getNameRestaurant())
+                        .snippet(objectRestaurantList.get(num).getId())
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_restaurant_orange2)));
 
                 // IMPLEMENT ON CLICK MARKER
@@ -227,11 +225,15 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                     @Override
                     public boolean onMarkerClick(Marker marker) {
 
+                        marker.hideInfoWindow();
+
                         // IMPLEMENT SHARED PREFERENCES
                         preferences = getActivity().getSharedPreferences(MYSHARED, Context.MODE_PRIVATE);
 
                         // PUT NAME RESTAURANT INTO SHARED
-                        preferences.edit().putString(NAME_RESTAURANT, marker.getTitle()).commit();
+                        preferences.edit().putString(ID_RESTAURANT, marker.getSnippet()).commit();
+
+                        Log.e("****marquer*****","****ID Map view fragment****"+marker.getSnippet());
 
                         // ADD INTENT FO GO TO RESTAURANT
                         startActivity(new Intent(getActivity(), ActivityShowRestaurant.class));

@@ -59,6 +59,12 @@ public class ObjectRestaurant {
     private String url_photo;
 
 
+
+    // CONSTRUCTOR EMPTY
+    public ObjectRestaurant() {}
+
+
+
     // CONSTRUCTOR WITHOUT TIME CLOSE AND TIME
     public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id) {
         this.nameRestaurant = nameRestaurant;

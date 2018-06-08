@@ -4,6 +4,7 @@
 
 
     //add permission internet
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
 
