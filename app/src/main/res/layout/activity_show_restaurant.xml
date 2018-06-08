@@ -24,6 +24,7 @@
         <ImageView
             android:id="@+id/image_view_show_restaurant"
             android:scaleType="centerCrop"
+            android:src="@drawable/sign_no_camera2"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
 
