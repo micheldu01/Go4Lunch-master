@@ -16,33 +16,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <CheckBox
-        android:id="@+id/checkbox_0"
-        android:buttonTint="@color/gold"
-        android:drawableRight="@drawable/star_empty_25"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
-    <CheckBox
-        android:id="@+id/checkbox_1"
-        android:buttonTint="@color/gold"
-        android:drawableRight="@drawable/startgold25"
+    <RadioGroup
+        android:id="@+id/radio_groupe_dialog"
+        android:checkedButton="1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
-    <CheckBox
-        android:id="@+id/checkbox_2"
-        android:buttonTint="@color/gold"
-        android:drawableRight="@drawable/star_2_25"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/checkbox_0"
+            android:buttonTint="@color/gold"
+            android:drawableRight="@drawable/star_empty_25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <CheckBox
-        android:id="@+id/checkbox_3"
-        android:buttonTint="@color/gold"
-        android:drawableRight="@drawable/star_25_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/checkbox_1"
+            android:buttonTint="@color/gold"
+            android:drawableRight="@drawable/startgold25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/checkbox_2"
+            android:buttonTint="@color/gold"
+            android:drawableRight="@drawable/star_2_25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/checkbox_3"
+            android:buttonTint="@color/gold"
+            android:drawableRight="@drawable/star_25_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RadioGroup>
+
 
     <RelativeLayout
         android:layout_width="match_parent"

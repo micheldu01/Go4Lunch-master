@@ -1,5 +1,6 @@
 package com.example.michel.go4lunch;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -203,6 +204,9 @@ public class ActivityShowRestaurant extends AppCompatActivity {
     // BUTTON LIKE
     @OnClick(R.id.image_button_star_show_restaurant)
     void submitImageBuutonLike(View view) {
+
+        // METHOD DIALOG BOX
+        starDialogBox();
 
         // TOAST IF CLICK
         Toast.makeText(this, "-----TEST LIKE----", Toast.LENGTH_SHORT).show();
@@ -436,6 +440,47 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         }
     }
 
+    // STAR DIALOG BOX
+    private void starDialogBox(){
+
+        // DECLARE DIALOG BOX
+        final Dialog dialog = new Dialog(ActivityShowRestaurant.this);
+
+        // IMPLEMENT DIALOG
+        dialog.setContentView(R.layout.dialog_view);
+
+        // SHOW DIALOG
+        dialog.show();
+
+        // DECLARE AND IMPLEMENT TEXT VIEW BUTTON
+        TextView textView_cancel = (TextView)dialog.findViewById(R.id.text_dialog_cancel);
+        TextView textView_valid = (TextView)dialog.findViewById(R.id.text_dialog_valid);
+
+
+        // IMPLEMENT TEXT VIEW CANCEL
+        textView_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // RETURN TO ACTIVITY
+                dialog.dismiss();
+            }
+        });
+
+        // IMPLEMENT TEXT VIEW VALID
+        textView_valid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+                // RETURN TO ACTIVITY
+                dialog.dismiss();
+
+
+            }
+        });
+    }
 
 }
 

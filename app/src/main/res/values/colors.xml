@@ -13,7 +13,7 @@
     <color name="gray_text">#808080</color>
     // COLOR GRAY LINE SHOW RESTAURANT
     <color name="gray_line_restaurant">#DCDCDC</color>
-
+    <color name="gold">#FFD700</color>
 
 
 </resources>
