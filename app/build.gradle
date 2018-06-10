@@ -23,6 +23,8 @@ android {
 
     buildTypes.each {
         it.buildConfigField 'String', 'KEY_GOOGLE_MAP', key_google_map
+        it.buildConfigField 'String', 'KEY_GOOGLE_MAP_1', key_google_map_1
+
     }
 }
 

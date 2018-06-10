@@ -2,6 +2,7 @@ package com.example.michel.go4lunch;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -46,6 +47,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.internal.DebouncingOnClickListener;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
@@ -166,6 +168,15 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         this.getDataFromUsers();
 
 
+        imageButtonLike.setOnClickListener(new DebouncingOnClickListener() {
+            @Override
+            public void doClick(View v) {
+
+                Toast.makeText(ActivityShowRestaurant.this, "Phone not lable.", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
 
 
     }
@@ -204,7 +215,7 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
 
     }
-
+/*
     // BUTTON LIKE
     @OnClick(R.id.image_button_star_show_restaurant)
     void submitImageBuutonLike(View view) {
@@ -212,8 +223,12 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         // METHOD DIALOG BOX
         starDialogBox();
 
-        Log.e("button like","---recuperation du number--"+number_radio_groupe);
+        saveStars();
     }
+*/
+
+
+
 
     // BUTTON WEB SITE
     @OnClick(R.id.image_button_public_show_restaurant)
@@ -283,6 +298,10 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                         Log.e("main activity", "------data save url restaurant red-----");
                     }
                 });
+
+        //------------------------------
+        // TEST CREATE DATA BASE CHOICE
+        //------------------------------
 
 
         // TOAST IF CLICK
@@ -444,7 +463,8 @@ public class ActivityShowRestaurant extends AppCompatActivity {
     }
 
     // STAR DIALOG BOX
-    private void starDialogBox(){
+    private void starDialogBox() {
+
 
         // DECLARE DIALOG BOX
         final Dialog dialog = new Dialog(ActivityShowRestaurant.this);
@@ -462,7 +482,12 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         // ADD RADIO GROUP DIALOG METHOD
         radioGroupDialogBox(dialog);
 
+        Toast.makeText(ActivityShowRestaurant.this,"put data "+number_radio_groupe,Toast.LENGTH_SHORT).show();
 
+
+
+
+/*
         // IMPLEMENT TEXT VIEW CANCEL
         textView_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -478,15 +503,34 @@ public class ActivityShowRestaurant extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // IMPLEMENT NUMBER RADIO GROUP
 
+                // IMPLEMENT NUMBER STARS IN DATA BASE
+                //db.collection("stars").document("results_number_stars").set(number_radio_groupe, SetOptions.merge());
+                Toast.makeText(ActivityShowRestaurant.this,"put data "+number_radio_groupe,Toast.LENGTH_SHORT).show();
+                /*
+                // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
+                db.collection("stars").document(FirebaseAuth.getInstance().getUid())
+                        .set(number_radio_groupe, SetOptions.merge())
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.e("main activity","------data save profile-----"+
+                                        FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                            }
+                        });
                 // RETURN TO ACTIVITY
                 dialog.dismiss();
 
+                Toast.makeText(ActivityShowRestaurant.this,"put data "+number_radio_groupe,Toast.LENGTH_SHORT).show();
 
+                startActivity(new Intent(getBaseContext(),MainActivity.class));
             }
         });
+        Log.e("---------//////////-----------","--- number radio = "+number_radio_groupe);
+        */
+
     }
+
 
     // RADIO GROUP DIALOG BOX
     private void radioGroupDialogBox(Dialog dialog){
@@ -504,10 +548,12 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
                     case R.id.checkbox_0:
                         number_radio_groupe = 0;
+                        Log.e("--------------------","--- number radio = "+number_radio_groupe);
                         break;
 
                     case R.id.checkbox_1:
                         number_radio_groupe = 1;
+                        Log.e("--------------------","--- number radio = "+number_radio_groupe);
                         break;
 
                     case R.id.checkbox_2:
@@ -520,6 +566,22 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    // SAVE DATA NUMBER STARS INTO DATA BASE
+    private void saveStars(){
+
+        Log.e("--------------------","--- number radio = "+number_radio_groupe);
+    }
+
+    //----------------------------------------------------------------------------------------
+    //  T E S T
+    //---------------------------------------------------------------------------------------
+    // SAVE CHOICE RESTAURANT
+
+    private void saveChoiceRestaurant(){
+
+
     }
 
 

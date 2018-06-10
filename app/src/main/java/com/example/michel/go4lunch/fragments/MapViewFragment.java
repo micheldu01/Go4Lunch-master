@@ -197,7 +197,10 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         // DECLARE GOOGLE MAP
         mMap = googleMap;
         // SET MAP TYPE NORMAL
-        mMap.setMapType(googleMap.MAP_TYPE_NORMAL);
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        // SET ZOOM MAP
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(46,5.3),11));
 
 
         // IMPLEMENT GOOGLE MAP WHITE ENABLE POSITION
