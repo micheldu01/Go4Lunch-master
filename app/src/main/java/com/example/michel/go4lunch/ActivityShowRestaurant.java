@@ -120,11 +120,11 @@ public class ActivityShowRestaurant extends AppCompatActivity {
     // STRING CHOICE RESTAURANT
     private String choice_restaurant;
 
+    // STRING URL FOR RATING
+    private String rating_restaurant;
+
     // DECLARE LIST RESTAURANT OBJECT
     private List<RestaurantObject> restaurantObjectList = new ArrayList<>();
-
-    // INT RADIO GROUP ALERT DIALOG
-    private int number_radio_groupe;
 
 
 
@@ -168,15 +168,6 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         this.getDataFromUsers();
 
 
-        imageButtonLike.setOnClickListener(new DebouncingOnClickListener() {
-            @Override
-            public void doClick(View v) {
-
-                Toast.makeText(ActivityShowRestaurant.this, "Phone not lable.", Toast.LENGTH_LONG).show();
-
-            }
-        });
-
 
 
     }
@@ -215,17 +206,22 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
 
     }
-/*
+
     // BUTTON LIKE
     @OnClick(R.id.image_button_star_show_restaurant)
     void submitImageBuutonLike(View view) {
 
-        // METHOD DIALOG BOX
-        starDialogBox();
+        // DIRECTING FOR GOOGLE PAGE RESTAURANT FOR RATING
 
-        saveStars();
+        // DECLARE AND IMPLEMENT INTENT WITH URL
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.fr/search?q="+rating_restaurant));
+        // START INTENT
+        startActivity(intent);
+
+        Log.e("--get name restaurant---","---------------"+rating_restaurant);
+
     }
-*/
+
 
 
 
@@ -375,6 +371,12 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                 getDataFromApi(objectRestaurant.getPlace_id());
                 Log.e("---TAG---", "-- place id --" + objectRestaurant.getPlace_id());
 
+                // IMPLEMENT URL WITH NAME RESTAURANT
+                rating_restaurant = "https://www.google.fr/search?q="+objectRestaurant.getNameRestaurant();
+                Log.e("---TAG---", "--url rating restaurant --" + objectRestaurant.getPlace_id());
+
+
+
             }
         });
 
@@ -461,129 +463,6 @@ public class ActivityShowRestaurant extends AppCompatActivity {
             imageViewButtonRed.setVisibility(view.VISIBLE);
         }
     }
-
-    // STAR DIALOG BOX
-    private void starDialogBox() {
-
-
-        // DECLARE DIALOG BOX
-        final Dialog dialog = new Dialog(ActivityShowRestaurant.this);
-
-        // IMPLEMENT DIALOG
-        dialog.setContentView(R.layout.dialog_view);
-
-        // SHOW DIALOG
-        dialog.show();
-
-        // DECLARE AND IMPLEMENT TEXT VIEW BUTTON
-        TextView textView_cancel = (TextView)dialog.findViewById(R.id.text_dialog_cancel);
-        TextView textView_valid = (TextView)dialog.findViewById(R.id.text_dialog_valid);
-
-        // ADD RADIO GROUP DIALOG METHOD
-        radioGroupDialogBox(dialog);
-
-        Toast.makeText(ActivityShowRestaurant.this,"put data "+number_radio_groupe,Toast.LENGTH_SHORT).show();
-
-
-
-
-/*
-        // IMPLEMENT TEXT VIEW CANCEL
-        textView_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                // RETURN TO ACTIVITY
-                dialog.dismiss();
-            }
-        });
-
-        // IMPLEMENT TEXT VIEW VALID
-        textView_valid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                // IMPLEMENT NUMBER STARS IN DATA BASE
-                //db.collection("stars").document("results_number_stars").set(number_radio_groupe, SetOptions.merge());
-                Toast.makeText(ActivityShowRestaurant.this,"put data "+number_radio_groupe,Toast.LENGTH_SHORT).show();
-                /*
-                // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
-                db.collection("stars").document(FirebaseAuth.getInstance().getUid())
-                        .set(number_radio_groupe, SetOptions.merge())
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.e("main activity","------data save profile-----"+
-                                        FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                            }
-                        });
-                // RETURN TO ACTIVITY
-                dialog.dismiss();
-
-                Toast.makeText(ActivityShowRestaurant.this,"put data "+number_radio_groupe,Toast.LENGTH_SHORT).show();
-
-                startActivity(new Intent(getBaseContext(),MainActivity.class));
-            }
-        });
-        Log.e("---------//////////-----------","--- number radio = "+number_radio_groupe);
-        */
-
-    }
-
-
-    // RADIO GROUP DIALOG BOX
-    private void radioGroupDialogBox(Dialog dialog){
-
-        // DECLARE AND IMPLEMENT RADIO GROUP
-        RadioGroup radioGroup = (RadioGroup)dialog.findViewById(R.id.radio_groupe_dialog);
-
-        // IMPLEMENT CLICK RADIO GROUP
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
-                // IMPLEMENT SWITCH
-                switch (i){
-
-                    case R.id.checkbox_0:
-                        number_radio_groupe = 0;
-                        Log.e("--------------------","--- number radio = "+number_radio_groupe);
-                        break;
-
-                    case R.id.checkbox_1:
-                        number_radio_groupe = 1;
-                        Log.e("--------------------","--- number radio = "+number_radio_groupe);
-                        break;
-
-                    case R.id.checkbox_2:
-                        number_radio_groupe = 2;
-                        break;
-
-                    case R.id.checkbox_3:
-                        number_radio_groupe = 3;
-                        break;
-                }
-            }
-        });
-    }
-
-    // SAVE DATA NUMBER STARS INTO DATA BASE
-    private void saveStars(){
-
-        Log.e("--------------------","--- number radio = "+number_radio_groupe);
-    }
-
-    //----------------------------------------------------------------------------------------
-    //  T E S T
-    //---------------------------------------------------------------------------------------
-    // SAVE CHOICE RESTAURANT
-
-    private void saveChoiceRestaurant(){
-
-
-    }
-
 
 }
 
