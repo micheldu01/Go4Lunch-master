@@ -175,6 +175,7 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         // TEST
         this.getChoiceFromDataBase();
 
+
         // GET VALUES RESTAURANT
         this.getValuesRestaurant();
 
@@ -436,7 +437,6 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                         if(photo_retaurant!=null){
                             Glide.with(ActivityShowRestaurant.this).load(photo_retaurant).into(imageView_restaurant);
                         }
-
 
 
                     }

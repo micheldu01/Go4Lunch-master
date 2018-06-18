@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.michel.go4lunch.R;
+import com.example.michel.go4lunch.models.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,21 +48,21 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
 
     // METHOD FOR SET VALUES IN RECYCLER VIEW
     @SuppressLint("ResourceAsColor")
-    public void insertDataIntoRecyclerView(ProfileWorkmates profileWorkmates){
+    public void insertDataIntoRecyclerView(User user){
 
 
         // IF CHOICE RESTAURANT
-        if(profileWorkmates.isChoice()==true){
+        if(user.getChoice()!=null){
             // SET NAME
-            nameProfile.setText(profileWorkmates.getName()+" ");
+            nameProfile.setText(user.getUsername()+" ");
             // SET IMAGE PROFILE
-            Glide.with(itemView.getContext()).load(profileWorkmates.getUrlImage()).apply(RequestOptions.circleCropTransform()).into(imageProfile);
+            Glide.with(itemView.getContext()).load(user.getUrlPicture()).apply(RequestOptions.circleCropTransform()).into(imageProfile);
             // SET NAME RESTAURANT
-            nameRestaurant.setText(" : "+ profileWorkmates.getNameRestaurant());
+            nameRestaurant.setText(" : "+ user.getNameRestaurant());
 
         }else{
             // SET NAME PROFILE
-            nameProfile.setText(profileWorkmates.getName()+" ");
+            nameProfile.setText(user.getUsername()+" ");
             // ITALIC
             nameProfile.setTypeface(null, Typeface.ITALIC);
             // COLOR GRAY LIGHT
@@ -73,7 +74,7 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
             // COLOR GRAY LIGHT
             eating.setTextColor(Color.parseColor("#D3D3D3"));
             // SET IMAGE PROFILE
-            Glide.with(itemView.getContext()).load(profileWorkmates.getUrlImage()).apply(RequestOptions.circleCropTransform()).into(imageProfile);
+            Glide.with(itemView.getContext()).load(user.getUrlPicture()).apply(RequestOptions.circleCropTransform()).into(imageProfile);
 
         }
 

@@ -171,9 +171,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         // GET MAPS ASYNC
         mapFragment.getMapAsync(this);
 
-        // IMPLEMENT DB
-        implementDB();
-
         // GET DATA FROM GOOGLE PLACE
         this.getDataFromGooglePlace();
 
@@ -238,7 +235,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
             // MAKE WHILE FOR IMPLEMENT MARKER OPTION
             while (num<=objectRestaurantList.size()-1) {
 
-                // IMPLEMENT LIST ID RESTAURANT CHOICE
+                // IMPLEMENT LIST ID RESTAURANT CHOICE WITH GREEN ICON
                 askIfRestaurantChoice(objectRestaurantList.get(num).getId(),objectRestaurantList.get(num).getLatitude(),objectRestaurantList.get(num).getLongitude());
 
                     // IMPLEMENT GOOGLE MAP WITH MARKER OPTION ORANGE
@@ -247,9 +244,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                             .snippet(objectRestaurantList.get(num).getId())
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_restaurant_orange2)));
 
-             // IF RESTAURANT IS CHOICE BY WORKMATES CHANGE COLOR ICON
-
-                Log.e("---- marker ----", "---list id get(0)  ---" + list_id.size());
 
                 // IMPLEMENT ON CLICK MARKER
                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -465,16 +459,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                     }
                 });
     }
-
-    // METHOD IMPLEMENT BD
-    private void implementDB(){
-
-        // DECLARE AND IMPLEMENT FIRE BASE DATA BASE
-        db = FirebaseFirestore.getInstance();
-    }
-
-
-
 }
 
 

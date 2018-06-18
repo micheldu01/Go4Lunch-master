@@ -28,10 +28,10 @@ public class User {
 
 
     // CONSTRUCTOR WITHOUT UID
-    public User(String username, String urlPicture, String choice) {
+    public User(String choice, String username, String urlPicture) {
+        this.choice = choice;
         this.username = username;
         this.urlPicture = urlPicture;
-        this.choice = choice;
     }
 
 
