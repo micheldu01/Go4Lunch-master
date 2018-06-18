@@ -42,6 +42,12 @@ public class Results {
     @Expose
     @Nullable private String place_id;
 
+    @SerializedName("rating")
+    @Expose
+    @Nullable private double rating;
+
+
+
 
 
 
@@ -52,7 +58,8 @@ public class Results {
 
 
     // CONSTRUCTOR WITH PHOTO
-    public Results(Geometry geometry, String id, String name, List<PhotoGoogle> photos, String vicinity, Opening_hours opening_hours, String place_id) {
+
+    public Results(Geometry geometry, String id, String name, List<PhotoGoogle> photos, String vicinity, Opening_hours opening_hours, String place_id, double rating) {
         this.geometry = geometry;
         this.id = id;
         this.name = name;
@@ -60,6 +67,7 @@ public class Results {
         this.vicinity = vicinity;
         this.opening_hours = opening_hours;
         this.place_id = place_id;
+        this.rating = rating;
     }
 
 
@@ -121,6 +129,15 @@ public class Results {
 
     public void setPlace_id(@Nullable String place_id) {
         this.place_id = place_id;
+    }
+
+    @Nullable
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(@Nullable double rating) {
+        this.rating = rating;
     }
 }
 

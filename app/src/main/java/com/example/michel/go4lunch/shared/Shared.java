@@ -8,5 +8,6 @@ public class Shared {
 
     public static final String MYSHARED = "MyShared";
     public static final String ID_RESTAURANT = "name_restaurant";
+    public static final int RESSOURCE_ICON = 999;
 
 }

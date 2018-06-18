@@ -47,36 +47,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            // START YELLO 1
-            <ImageView
-                android:layout_marginTop="10dp"
-                android:id="@+id/star_show_restaurant"
-                android:src="@drawable/startgold"
+            // STAR RATING BAR
+            <RatingBar
+                android:layout_marginTop="12dp"
+                android:id="@+id/rating_bar"
                 android:layout_below="@+id/image_view_show_restaurant"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/name_restaurant_show_restaurant"
-                android:layout_width="15dp"
-                android:layout_height="15dp" />
-
-            // START YELLO 2
-            <ImageView
-                android:layout_marginTop="10dp"
-                android:id="@+id/star_show_restaurant2"
-                android:src="@drawable/startgold"
-                android:layout_below="@+id/image_view_show_restaurant"
-                android:layout_toRightOf="@+id/star_show_restaurant"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
-
-            // START YELLO 3
-            <ImageView
-                android:layout_marginTop="10dp"
-                android:id="@+id/star_show_restaurant3"
-                android:src="@drawable/startgold"
-                android:layout_below="@+id/image_view_show_restaurant"
-                android:layout_toRightOf="@+id/star_show_restaurant2"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
+                android:numStars="5"
+                android:scaleX="0.4"
+                android:scaleY="0.4"
+                android:theme="@style/RatingBar"
+                android:transformPivotX="0dp"
+                android:transformPivotY="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
 
             // ADDRESS RESTAURANT

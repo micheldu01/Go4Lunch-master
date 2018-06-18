@@ -58,6 +58,11 @@ public class ObjectRestaurant {
     @Nullable
     private String url_photo;
 
+    // DECLARE RATING
+    @Nullable
+    private double rating;
+
+
 
 
     // CONSTRUCTOR EMPTY
@@ -66,13 +71,14 @@ public class ObjectRestaurant {
 
 
     // CONSTRUCTOR WITHOUT TIME CLOSE AND TIME
-    public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id) {
+    public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id, double rating) {
         this.nameRestaurant = nameRestaurant;
         this.id = id;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
         this.place_id = place_id;
+        this.rating = rating;
     }
 
 
@@ -198,4 +204,50 @@ public class ObjectRestaurant {
     public void setUrl_photo(@Nullable String url_photo) {
         this.url_photo = url_photo;
     }
+
+    @Nullable
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(@Nullable double rating) {
+        this.rating = rating;
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

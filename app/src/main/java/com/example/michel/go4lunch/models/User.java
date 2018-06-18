@@ -13,12 +13,22 @@ public class User {
     // DECLARE CHOICE
     @Nullable private String choice;
 
+
     // CONSTRUCTOR EMPTY
     public User() {}
+
 
     // CONSTRUCTOR
     public User(String uid, String username, String urlPicture, String choice) {
         this.uid = uid;
+        this.username = username;
+        this.urlPicture = urlPicture;
+        this.choice = choice;
+    }
+
+
+    // CONSTRUCTOR WITHOUT UID
+    public User(String username, String urlPicture, String choice) {
         this.username = username;
         this.urlPicture = urlPicture;
         this.choice = choice;

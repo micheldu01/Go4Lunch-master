@@ -6,9 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.ProviderInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,11 +35,15 @@ import com.example.michel.go4lunch.models.User;
 import com.example.michel.go4lunch.recyclerview.adapter.AdapterShowRestaurant;
 import com.example.michel.go4lunch.recyclerview.ChoiceRestaurant;
 import com.example.michel.go4lunch.models.RestaurantObject;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
@@ -121,7 +128,14 @@ public class ActivityShowRestaurant extends AppCompatActivity {
     private String choice_restaurant;
 
     // STRING URL FOR RATING
-    private String rating_restaurant;
+    private String url_rating_restaurant;
+
+    // DOUBLE RATING RESTAURANT
+    private double rating;
+
+    // STAR RATING BAR
+    @BindView(R.id.rating_bar)
+    RatingBar ratingBar;
 
     // DECLARE LIST RESTAURANT OBJECT
     private List<RestaurantObject> restaurantObjectList = new ArrayList<>();
@@ -214,11 +228,10 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         // DIRECTING FOR GOOGLE PAGE RESTAURANT FOR RATING
 
         // DECLARE AND IMPLEMENT INTENT WITH URL
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.fr/search?q="+rating_restaurant));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.fr/search?q="+url_rating_restaurant));
         // START INTENT
         startActivity(intent);
 
-        Log.e("--get name restaurant---","---------------"+rating_restaurant);
 
     }
 
@@ -372,8 +385,17 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                 Log.e("---TAG---", "-- place id --" + objectRestaurant.getPlace_id());
 
                 // IMPLEMENT URL WITH NAME RESTAURANT
-                rating_restaurant = "https://www.google.fr/search?q="+objectRestaurant.getNameRestaurant();
+                url_rating_restaurant = "https://www.google.fr/search?q="+objectRestaurant.getNameRestaurant();
                 Log.e("---TAG---", "--url rating restaurant --" + objectRestaurant.getPlace_id());
+
+
+                // IMPLEMENT RATING RESTAURANT
+                rating = objectRestaurant.getRating();
+                Log.e("---TAG---", "--rating --" + objectRestaurant.getRating());
+
+                // SHOW RATING BAR
+                ratingBar.setRating((float) rating);
+
 
 
 
@@ -414,6 +436,8 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                         if(photo_retaurant!=null){
                             Glide.with(ActivityShowRestaurant.this).load(photo_retaurant).into(imageView_restaurant);
                         }
+
+
 
                     }
                     @Override
