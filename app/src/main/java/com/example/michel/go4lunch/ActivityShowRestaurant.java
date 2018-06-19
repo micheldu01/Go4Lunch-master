@@ -172,9 +172,9 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         recyclerView.setAdapter(new AdapterShowRestaurant(choiceRestaurantList));
         //------------------------------------------------------------------
 
+
         // TEST
         this.getChoiceFromDataBase();
-
 
         // GET VALUES RESTAURANT
         this.getValuesRestaurant();
@@ -270,6 +270,8 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
         // CHOICE RESTAURANT
         user.put("choice", "");
+        // NAME RESTAURANT
+        user.put("name_restaurant","");
 
         // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
         db.collection("users").document(FirebaseAuth.getInstance().getUid())
@@ -293,11 +295,14 @@ public class ActivityShowRestaurant extends AppCompatActivity {
     @OnClick(R.id.button_red_show_restaurant)
     void submitImageViewButtonRed(View view) {
 
-        // PUT ID RESTAURANT INTO USER FIRE BASE
+        // PUT ID AND NAME RESTAURANT INTO USER FIRE BASE
         Map<String, Object> user = new HashMap<>();
 
         // CHOICE RESTAURANT
         user.put("choice", id_restaurant);
+        // NAME RESTAURANT
+        user.put("name_restaurant",name_restaurant);
+
 
         // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
         db.collection("users").document(FirebaseAuth.getInstance().getUid())
@@ -339,8 +344,9 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
             }
         });
-
     }
+
+
 
     // METHOD COMPARE CHOICE AND ID RESTAURANT
     private void compareChoiceIdRestaurant(String choice, String id_restaurant) {

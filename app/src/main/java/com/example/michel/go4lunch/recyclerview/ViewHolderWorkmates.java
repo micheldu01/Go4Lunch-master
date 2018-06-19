@@ -58,7 +58,7 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
             // SET IMAGE PROFILE
             Glide.with(itemView.getContext()).load(user.getUrlPicture()).apply(RequestOptions.circleCropTransform()).into(imageProfile);
             // SET NAME RESTAURANT
-            nameRestaurant.setText(" : "+ user.getNameRestaurant());
+            nameRestaurant.setText(" : "+ user.getUsername());
 
         }else{
             // SET NAME PROFILE

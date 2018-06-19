@@ -12,6 +12,8 @@ public class User {
     @Nullable private String urlPicture;
     // DECLARE CHOICE
     @Nullable private String choice;
+    // DECLARE NAME RESTAURANT
+    private String name_restaurant;
 
 
     // CONSTRUCTOR EMPTY
@@ -19,19 +21,20 @@ public class User {
 
 
     // CONSTRUCTOR
-    public User(String uid, String username, String urlPicture, String choice) {
+    public User(String uid, String username, String urlPicture, String choice, String name_restaurant) {
         this.uid = uid;
         this.username = username;
         this.urlPicture = urlPicture;
         this.choice = choice;
+        this.name_restaurant = name_restaurant;
     }
 
-
     // CONSTRUCTOR WITHOUT UID
-    public User(String choice, String username, String urlPicture) {
+    public User(String choice, String username, String urlPicture, String name_restaurant) {
         this.choice = choice;
         this.username = username;
         this.urlPicture = urlPicture;
+        this.name_restaurant = name_restaurant;
     }
 
 
@@ -65,4 +68,8 @@ public class User {
     public void setUrlPicture(@Nullable String urlPicture) {
         this.urlPicture = urlPicture;
     }
+
+    public String getName_restaurant() { return name_restaurant; }
+
+    public void setName_restaurant(String name_restaurant) { this.name_restaurant = name_restaurant; }
 }

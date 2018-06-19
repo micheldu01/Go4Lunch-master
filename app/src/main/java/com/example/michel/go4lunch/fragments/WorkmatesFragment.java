@@ -59,6 +59,7 @@ public class WorkmatesFragment extends Fragment {
     FirebaseFirestore db= FirebaseFirestore.getInstance();
 
 
+
     //create constructor
     public static WorkmatesFragment newInstance() {
         // Required empty public constructor
@@ -111,6 +112,9 @@ public class WorkmatesFragment extends Fragment {
                                     // ASK IF CHOICE IS DIFFERENT OF NULL
                                     if (!document.getData().equals(null)) {
 
+                                        Log.e("---split 1---", " --- ----- " + document.getData());
+
+
                                         // SPLIT DATA "="
                                         String currentString = document.getData().toString();
                                         String[] separated = currentString.split("=");
@@ -130,54 +134,23 @@ public class WorkmatesFragment extends Fragment {
                                         String urlPhoto_final = separated_url[0];
 
                                         // IMPLEMENT OBJECT USER LIST
-                                        list_workmate.add(new User(choice,username_final,urlPhoto_final));
+                                        list_workmate.add(new User(choice,username_final,urlPhoto_final,""));
 
 
-                                        Log.e("---split 1---", " --- ----- " + list_workmate.get(0).getChoice());
-                                        Log.e("---split 2---", " --- object user ----- " + list_workmate.get(0).getUsername());
-                                        Log.e("---split 2---", " --- object user ----- " + list_workmate.get(0).getUrlPicture());
+                                        //Log.e("---split 1---", " --- ----- " + list_workmate.get(0).getChoice());
+                                        //Log.e("---split 2---", " --- object user ----- " + list_workmate.get(0).getUsername());
+                                        //Log.e("---split 2---", " --- object user ----- " + list_workmate.get(0).getUrlPicture());
 
                                         // IMPLEMENT RECYCLER VIEW
                                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                         recyclerView.setAdapter(new AdapterWorkmates(list_workmate));
-
-
-
                                     }
-
-
                                 }
                             }
-
                         }
                     });
-
-
-
-
-/*
-        ProfileWorkmates profileWorkmates = new ProfileWorkmates();
-
-        profileActivities.add(new ProfileWorkmates(true,"robert","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","Le bistro"));
-        profileActivities.add(new ProfileWorkmates(true,"philippe","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","California"));
-        profileActivities.add(new ProfileWorkmates(false,"pierre","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","1"));
-        profileActivities.add(new ProfileWorkmates(false,"stéphane","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","1"));
-        profileActivities.add(new ProfileWorkmates(true,"stéphanie","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","Embassade d'asie"));
-        profileActivities.add(new ProfileWorkmates(false,"Annie","http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg","1"));
-
-
-        // SORT TYPE RESTAURANT
-            Collections.sort(profileActivities);
-
-
-
-
-        // IMPLEMENT RECYCLER VIEW
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new AdapterWorkmates(profileActivities));
-
-*/
     }
+
 
     // MEHTOD CLICK ON RECYCLER VIEW
     private void configureOnClickRecyclerView() {
@@ -207,5 +180,45 @@ public class WorkmatesFragment extends Fragment {
             }
         });
     }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
