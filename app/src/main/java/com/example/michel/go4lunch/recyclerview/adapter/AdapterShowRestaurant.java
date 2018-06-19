@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.michel.go4lunch.R;
+import com.example.michel.go4lunch.models.User;
 import com.example.michel.go4lunch.recyclerview.ChoiceRestaurant;
 import com.example.michel.go4lunch.recyclerview.ViewHolderShowRestaurant;
 
@@ -16,19 +17,19 @@ import java.util.List;
 public class AdapterShowRestaurant extends RecyclerView.Adapter<ViewHolderShowRestaurant> {
 
 
-    private List<ChoiceRestaurant> choiceRestaurantList;
+    private List<User> userList;
 
 
 
     // CONSTRUCTOR WITH OBJECT RESTAURANT LIST
-    public AdapterShowRestaurant(List<ChoiceRestaurant> choiceRestaurantList) {
-        this.choiceRestaurantList = choiceRestaurantList;
+    public AdapterShowRestaurant(List<User> userList) {
+        this.userList = userList;
     }
 
 
     // METHOD FOR GET POSITION
-    public ChoiceRestaurant choiceRestaurant(int position){
-        return this.choiceRestaurantList.get(position);
+    public User user(int position){
+        return this.userList.get(position);
     }
 
 
@@ -45,8 +46,8 @@ public class AdapterShowRestaurant extends RecyclerView.Adapter<ViewHolderShowRe
     // METHOD FOR GIVE POSITION
     @Override
     public void onBindViewHolder(@NonNull ViewHolderShowRestaurant holder, int position) {
-        ChoiceRestaurant choiceRestaurant = choiceRestaurantList.get(position);
-        holder.restaurantShowRecyclerView(choiceRestaurant);
+        User user = userList.get(position);
+        holder.restaurantShowRecyclerView(user);
 
     }
 
@@ -54,6 +55,39 @@ public class AdapterShowRestaurant extends RecyclerView.Adapter<ViewHolderShowRe
     // GET COUNT SIZE
     @Override
     public int getItemCount() {
-        return choiceRestaurantList.size();
+        return userList.size();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

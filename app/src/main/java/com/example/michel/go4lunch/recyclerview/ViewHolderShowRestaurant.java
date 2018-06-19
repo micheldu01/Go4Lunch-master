@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.michel.go4lunch.R;
+import com.example.michel.go4lunch.models.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,15 +36,20 @@ public class ViewHolderShowRestaurant extends RecyclerView.ViewHolder {
 
 
     // GET DATA INTO RECYCLER VIEW
-    public void restaurantShowRecyclerView(ChoiceRestaurant choiceRestaurant){
+    public void restaurantShowRecyclerView(User user){
 
         // SET NAME
-        name.setText(choiceRestaurant.getName()+" ");
+        name.setText(user.getUsername()+" ");
         // SET IMAGE
-        Glide.with(itemView.getContext()).load(choiceRestaurant.getUrlImage()).apply(RequestOptions.circleCropTransform()).into(imageView);
-
-
+        Glide.with(itemView.getContext()).load(user.getUrlPicture()).apply(RequestOptions.circleCropTransform()).into(imageView);
 
     }
 
+
+
 }
+
+
+
+
+

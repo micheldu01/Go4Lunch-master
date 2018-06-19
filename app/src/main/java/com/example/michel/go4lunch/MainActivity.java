@@ -338,7 +338,6 @@ public class MainActivity extends BaseActivity
 
 
 
-
     }
 
 
@@ -381,10 +380,8 @@ public class MainActivity extends BaseActivity
         user.put("name", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         // STRING URL
         user.put("photo",stringUri);
-        // CHOICE RESTAURANT
-        //user.put("choice","no choice");
-
-
+        // PUT  UID
+        user.put("uid",FirebaseAuth.getInstance().getCurrentUser().getUid());
 
 
         // CREATE DOCUMENT USERS WITH ID PROFILE AUTH

@@ -35,6 +35,7 @@ import com.example.michel.go4lunch.models.User;
 import com.example.michel.go4lunch.recyclerview.adapter.AdapterShowRestaurant;
 import com.example.michel.go4lunch.recyclerview.ChoiceRestaurant;
 import com.example.michel.go4lunch.models.RestaurantObject;
+import com.example.michel.go4lunch.recyclerview.adapter.AdapterWorkmates;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -137,9 +138,15 @@ public class ActivityShowRestaurant extends AppCompatActivity {
     @BindView(R.id.rating_bar)
     RatingBar ratingBar;
 
+    // DECLARE NAME RESTAURANT FOR SAVE INTO USER
+    private String name_restaurant_user;
+
+    // DECLARE LIST RESTAURANT OBJECT
+    private ArrayList<User> list_workmate = new ArrayList<>();
+/*
     // DECLARE LIST RESTAURANT OBJECT
     private List<RestaurantObject> restaurantObjectList = new ArrayList<>();
-
+*/
 
 
 
@@ -159,7 +166,10 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         // COLOR GRAY
         this.colorGray();
 
+        // SHOW WORkATES
+        this.showProfile();
 
+/*
         // TEST RECYCLER VIEW-------------------------------------------
         choiceRestaurantList.add(new ChoiceRestaurant("robert", "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
         choiceRestaurantList.add(new ChoiceRestaurant("robert", "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
@@ -171,7 +181,7 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new AdapterShowRestaurant(choiceRestaurantList));
         //------------------------------------------------------------------
-
+*/
 
         // TEST
         this.getChoiceFromDataBase();
@@ -181,6 +191,8 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
         // GET DATA USER
         this.getDataFromUsers();
+
+
 
 
 
@@ -301,7 +313,8 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         // CHOICE RESTAURANT
         user.put("choice", id_restaurant);
         // NAME RESTAURANT
-        user.put("name_restaurant",name_restaurant);
+        user.put("name_restaurant",name_restaurant_user);
+
 
 
         // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
@@ -310,13 +323,9 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.e("main activity", "------data save url restaurant red-----");
+
                     }
                 });
-
-        //------------------------------
-        // TEST CREATE DATA BASE CHOICE
-        //------------------------------
 
 
         // TOAST IF CLICK
@@ -382,6 +391,9 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                 // IMPLEMENT TEXT VIEW NAME RESTAURANT
                 name_restaurant.setText(objectRestaurant.getNameRestaurant());
                 Log.e("---TAG---", "-- name restaurant --" + objectRestaurant.getNameRestaurant());
+
+                // IMPLEMENT NAME RESTAURANT FOR USER
+                name_restaurant_user = objectRestaurant.getNameRestaurant();
 
                 // IMPLEMENT TEXT VIEW ADDRESS
                 address.setText(objectRestaurant.getAddress());
@@ -464,10 +476,11 @@ public class ActivityShowRestaurant extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
+                // DECLARE AND IMPLEMENT USER
                 User user = documentSnapshot.toObject(User.class);
 
+                // IMPLEMENT CHOICE RESTAURANT
                 choice_restaurant = user.getChoice();
-                Log.e("--------","-choice restaurant---"+choice_restaurant);
 
                 // IMPLEMENT METHOD COMPARE
                 choiceEqualThisRestaurant(choice_restaurant);
@@ -494,6 +507,72 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         }
     }
 
+    // METHOD SHOW PROFILE CHOICE
+    private void showProfile(){
+
+        // GET OBJECT USERS FROM CLOUD FIRESTORE
+
+        // GET USERS COLLECTION FROM CLOUD
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        // IF TASK IS SUCCESS FUL GET DATA
+                        if (task.isSuccessful()){
+
+                            // GET DATA FROM DATA BASE
+                            for (QueryDocumentSnapshot document : task.getResult()){
+
+                                // ASK IF CHOICE IS DIFFERENT OF NULL
+                                if (!document.getData().equals(null)) {
+
+                                    // SPLIT DATA "="
+                                    String currentString = document.getData().toString();
+                                    String[] separated = currentString.split("=");
+
+                                    // UID
+                                    String uid = separated[1];
+                                    String[] separated_uid = uid.split(",");
+                                    String uid_final = separated_uid[0];
+
+                                    // USERNAME
+                                    String username = separated[2];
+                                    String[] separated_username = username.split(",");
+                                    String username_final = separated_username[0];
+
+                                    // URL PHOTO
+                                    String urlPhoto = separated[4];
+                                    String[] separated_url = urlPhoto.split(",");
+                                    String urlPhoto_final = separated_url[0];
+
+                                    Log.e("---activity show ---", " --- uid ---- " + uid_final);
+
+
+                                    // DON'T SHOW USER PROFILE
+                                    // IF UID = CURRENT USER
+                                    if (!FirebaseAuth.getInstance().getUid().equals(uid_final)){
+
+                                        Log.e("---activity show ---", " --- uid 2 ---- " + uid_final);
+
+                                        // IMPLEMENT OBJECT USER LIST
+                                        list_workmate.add(new User(username_final,urlPhoto_final));
+
+                                    }
+
+
+
+                                    // IMPLEMENT RECYCLER VIEW
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(ActivityShowRestaurant.this));
+                                    recyclerView.setAdapter(new AdapterShowRestaurant(list_workmate));
+
+                                }
+                            }
+                        }
+                    }
+                });
+    }
 }
 
 

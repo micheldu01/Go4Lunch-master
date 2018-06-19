@@ -37,6 +37,12 @@ public class User {
         this.name_restaurant = name_restaurant;
     }
 
+    // CONSTRUCTOR FOR ACTIVITY SHOW RESTAURANT
+    public User(String username, String urlPicture) {
+        this.username = username;
+        this.urlPicture = urlPicture;
+    }
+
 
     // GETTER AN SETTER
 

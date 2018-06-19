@@ -22,6 +22,7 @@ import com.example.michel.go4lunch.recyclerview.ItemClickSupport;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -48,9 +49,6 @@ public class WorkmatesFragment extends Fragment {
 
     // IMPLEMENT REFRESH LAYOUT
     @BindView(R.id.workmates_swipe_refresh)SwipeRefreshLayout refreshLayout;
-
-    // DECLARE LIST RESTAURANT OBJECT
-    private List<ProfileWorkmates> profileActivities = new ArrayList<>();
 
     // DECLARE LIST RESTAURANT OBJECT
     private ArrayList<User> list_workmate = new ArrayList<>();
@@ -112,34 +110,40 @@ public class WorkmatesFragment extends Fragment {
                                     // ASK IF CHOICE IS DIFFERENT OF NULL
                                     if (!document.getData().equals(null)) {
 
-                                        Log.e("---split 1---", " --- ----- " + document.getData());
-
-
                                         // SPLIT DATA "="
                                         String currentString = document.getData().toString();
                                         String[] separated = currentString.split("=");
 
+                                        // UID
+                                        String uid = separated[1];
+                                        String[] separated_uid = uid.split(",");
+                                        String uid_final = separated_uid[0];
+
                                         // USERNAME
-                                        String username = separated[1];
+                                        String username = separated[2];
                                         String[] separated_username = username.split(",");
                                         String username_final = separated_username[0];
 
-                                        // CHOICE
-                                        String choice = separated[3];
-                                        choice = choice.replace("}","");
+                                        // NAME RESTAURANT
+                                        String name_restaurant = separated[3];
+                                        String[] separated_name_restaurant = name_restaurant.split(",");
+                                        String name_restaurant_final = separated_name_restaurant[0];
 
                                         // URL PHOTO
-                                        String urlPhoto = separated[2];
+                                        String urlPhoto = separated[4];
                                         String[] separated_url = urlPhoto.split(",");
                                         String urlPhoto_final = separated_url[0];
 
-                                        // IMPLEMENT OBJECT USER LIST
-                                        list_workmate.add(new User(choice,username_final,urlPhoto_final,""));
+                                        // CHOICE
+                                        String choice = separated[5];
+                                        choice = choice.replace("}","");
 
+                                        // DON'T ADD CURRENT WORKMATE
+                                        if (!FirebaseAuth.getInstance().getUid().equals(uid_final)){
 
-                                        //Log.e("---split 1---", " --- ----- " + list_workmate.get(0).getChoice());
-                                        //Log.e("---split 2---", " --- object user ----- " + list_workmate.get(0).getUsername());
-                                        //Log.e("---split 2---", " --- object user ----- " + list_workmate.get(0).getUrlPicture());
+                                            // IMPLEMENT OBJECT USER LIST
+                                            list_workmate.add(new User(choice,username_final,urlPhoto_final,name_restaurant_final));
+                                        }
 
                                         // IMPLEMENT RECYCLER VIEW
                                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -160,13 +164,13 @@ public class WorkmatesFragment extends Fragment {
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
                         // IF CHOICE OF RESTAURANT IS READY GET INTENT
-                        if(profileActivities.get(position).isChoice()==true){
+                        if(list_workmate.get(position).getChoice()!=null){
                             // ON CLICK INTENT
                             startActivity(new Intent(getContext(),ActivityShowRestaurant.class));
+
                         }
                     }
                 });
-
     }
 
 
