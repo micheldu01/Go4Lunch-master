@@ -3,19 +3,39 @@ package com.example.michel.go4lunch.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 
+import com.bumptech.glide.Glide;
+import com.example.michel.go4lunch.APIMaps.MapStreams;
+import com.example.michel.go4lunch.APIMaps.apiPlaceId.GoogleAPIplaceId;
 import com.example.michel.go4lunch.ActivityShowRestaurant;
+import com.example.michel.go4lunch.BuildConfig;
 import com.example.michel.go4lunch.R;
+import com.example.michel.go4lunch.models.ObjectRestaurant;
+import com.example.michel.go4lunch.models.RestaurantObjectRecycler;
+import com.example.michel.go4lunch.models.User;
 import com.example.michel.go4lunch.recyclerview.adapter.AdapterListView;
 import com.example.michel.go4lunch.recyclerview.ItemClickSupport;
-import com.example.michel.go4lunch.models.RestaurantObject;
+import com.example.michel.go4lunch.recyclerview.adapter.AdapterWorkmates;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,6 +43,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 
 
 /**
@@ -38,7 +60,21 @@ public class ListViewFragment extends Fragment {
     @BindView(R.id.list_view_swipe_refresh)SwipeRefreshLayout refreshLayout;
 
     // DECLARE LIST RESTAURANT OBJECT
-    private List<RestaurantObject> restaurantObjectList = new ArrayList<>();
+    private List<RestaurantObjectRecycler> restaurantObjectRecyclerList = new ArrayList<>();
+
+    // DECLARE DATA BASE
+    FirebaseFirestore db= FirebaseFirestore.getInstance();
+
+    // CREATE ARRAAY LIST WORKMATES
+    final ArrayList<String> workmates = new ArrayList<>();
+
+    // URL PHOTO RESTAURANT
+    private String url_restaurant;
+
+
+
+
+
 
 
 
@@ -68,34 +104,14 @@ public class ListViewFragment extends Fragment {
         this.configureOnClickRecyclerView();
 
         // SHOW RESTAURANT LIST
-        this.showListRestaurant();
+        this.showRestaurantList();
+
+
+
+
 
 
         return view;
-    }
-
-    // METHOD FOR SET LIST RESTAURANT INTO RECYCLER VIEW
-    private void showListRestaurant() {
-
-
-        // ADD DATA INTO OBJECT LIST
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 1","french","Mon adresse", "jusqu'à 22h", 150,1,0, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 2","french","Mon adresse", "jusqu'à 22h", 140,1,2,null));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 3","french","Mon adresse", "jusqu'à 22h", 300,3,1, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 4","french","Mon adresse", "close", 520,0,3, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 5","french","Mon adresse", "jusqu'à 22h", 600,0,2, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 6","french","Mon adresse", "jusqu'à 22h", 200,1,0, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
-        restaurantObjectList.add(new RestaurantObject("Mon restaurant 7","french","Mon adresse", "jusqu'à 22h", 300,4,3, "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
-
-
-        // SORT DISTANCE FROM THE SMALLEST TO THE LARGEST
-        Collections.sort(restaurantObjectList);
-
-
-        // IMPLEMENT RECYCLER VIEW
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new AdapterListView(restaurantObjectList));
-
     }
 
 
@@ -120,13 +136,163 @@ public class ListViewFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
                 // SHOW LIST RESTAURANT
-                showListRestaurant();
+                showRestaurantList();
             }
         });
     }
 
 
+    // METHOD FOR GET IMPLEMENT RECYCLER VIEW
+    private void showRestaurantList(){
+
+        final int[] count = {0};
+
+        // GET USERS COLLECTION FROM CLOUD
+        db.collection("restaurant")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (final DocumentSnapshot document : task.getResult()) {
+                                final ObjectRestaurant objectRestaurant = document.toObject(ObjectRestaurant.class);
+
+                                // SPLIT ADDRESS
+                                String currentString = objectRestaurant.getAddress();
+                                String[] separated = currentString.split(",");
+
+                                // STREET AND VILLAGE
+                                final String street = separated[0];
+                                final String village;
+
+                                // IF ADDRESS CANT TO BE SEPARATED
+                                if (separated.length<2){
+
+                                    // ADD VALUE NULL INTO STRING VILLAGE
+                                    village = null;
+                                }else {
+                                    // IMPLEMENT VILLAGE
+                                    village = separated[1];
+                                }
+
+                                // GET DATA RESTAURANT FROM GOOGLE API
+
+                                // DECLARE DISPOSABLE WITH STREAM GOOGLE API PLACE ID
+                                Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, objectRestaurant.getPlace_id())
+                                        .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
+                                            @Override
+                                            public void onNext(GoogleAPIplaceId googleAPIplaceId) {
+
+
+                                                // GET PHOTO RESTAURANT
+
+                                                // IF PHOTO IS NOT NULL GET PHOTO
+                                                if (googleAPIplaceId.getResultsAPI().getPhotos() != null) {
+                                                    url_restaurant = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
+                                                            + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference() + "&key=" + BuildConfig.KEY_GOOGLE_MAP;
+                                                    Log.e("--photo restaurant--", "--result--" + url_restaurant);
+
+
+
+
+
+                                                    // ADD DATA INTO OBJECT LIST
+                                                    restaurantObjectRecyclerList.add(new RestaurantObjectRecycler(objectRestaurant.getNameRestaurant(),street,village,"jusqu'à 22h", "", objectRestaurant.getRating(),1,150, url_restaurant));
+
+                                                    // IMPLEMENT RECYCLER VIEW
+                                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                                    recyclerView.setAdapter(new AdapterListView(restaurantObjectRecyclerList));
+
+                                                }
+
+                                            }
+                                            @Override
+                                            public void onError(Throwable e) {
+                                            }
+                                            @Override
+                                            public void onComplete() {
+                                            }
+                                        });
+
+
+
+                            }
+                        }
+                    }
+                });
+
+
+    }
+
+
+
+    // METHOD FOR GET IMPLEMENT RECYCLER VIEW
+    private void getNumberWorkmates(){
+
+        final ArrayList<String> number_workmates = new ArrayList<>();
+
+        final int[] number = {0};
+
+        // GET USERS COLLECTION FROM CLOUD
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+
+                                // DECLARE AND IMPLEMENT USER
+                                User user = document.toObject(User.class);
+
+                                //Log.e("-- list restaurant --", "-- get name restaurant --" + user.getChoice());
+
+                                number_workmates.add(user.getChoice());
+
+
+
+                                //Log.e("-- list restaurant --", "-- get name restaurant --" + number_workmates.get(0));
+
+
+                            }
+                        }
+                    }
+                });
+
+    }
+
+    // METHOD TO ASK IF RESTAURANT IS CHOICE
+    private void number(String id_restaurant){
+
+
+        // ASK DATA BASE, IF ONE USER HAVE CHOICE THIS RESTAURANT
+        db.collection("users")
+                .whereEqualTo("choice",id_restaurant)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        // IF TASK IS SUCCESS FUL GET DATA
+                        if(task.isSuccessful()){
+
+                            // GET DATA FROM DATA BASE
+                            for(QueryDocumentSnapshot document : task.getResult()) {
+
+                                // ASK IF CHOICE IS DIFFERENT OF NULL
+                                if (!document.getData().equals(null)) {
+
+                                    workmates.add(document.getData().toString());
+
+                                    Log.e("-- list workmates --", "-- get name workmates --" + workmates.size());
+                                }
+                            }
+                        }
+                    }
+                });
+    }
 }
 
 

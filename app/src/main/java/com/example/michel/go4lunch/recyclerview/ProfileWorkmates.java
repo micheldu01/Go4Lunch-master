@@ -11,10 +11,13 @@ public class ProfileWorkmates extends BaseActivity implements Comparable<Profile
 
     // NAME PROFILE
     private String name;
+
     // URL IMAGE
     private String urlImage;
+
     // NAME RESTAURANT
     private String nameRestaurant;
+
     // BOOLEAN CHOICE RESTAURANT
     private boolean choice;
 
@@ -30,14 +33,7 @@ public class ProfileWorkmates extends BaseActivity implements Comparable<Profile
         this.urlImage = urlImage;
         this.nameRestaurant = nameRestaurant;
     }
-/*
-    // CONSTRUCTOR WITHOUT RESTAURANT AND STYLE
-    public ProfileWorkmates(boolean choice, String name, String urlImage) {
-        this.choice = choice;
-        this.name = name;
-        this.urlImage = urlImage;
-    }
-*/
+
 
 
     // GETTER AND SETTER

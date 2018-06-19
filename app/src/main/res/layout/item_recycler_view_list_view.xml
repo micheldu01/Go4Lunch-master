@@ -16,33 +16,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    // TYPE OF RESTAURANT
+    // STREET RESTAURANT
     <TextView
-        android:text="type test"
+        android:text="adresse test"
         android:layout_marginTop="5dp"
-        android:id="@+id/type_recycler_view"
+        android:id="@+id/address_recycler_view"
         android:layout_below="@+id/name_recycler_view"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    // ADDRESS RESTAURANT
+    // VILLAGE RESTAURANT
     <TextView
-        android:text="adresse test"
+        android:text="village test"
         android:layout_marginTop="5dp"
-        android:id="@+id/address_recycler_view"
-        android:layout_below="@+id/name_recycler_view"
-        android:layout_toRightOf="@+id/type_recycler_view"
+        android:id="@+id/village_recycler_view"
+        android:layout_below="@+id/address_recycler_view"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
 
     // OPEN HOURS
     <TextView
         android:text="heures test"
         android:layout_marginTop="5dp"
         android:id="@+id/hour_recycler_view"
-        android:layout_below="@+id/address_recycler_view"
+        android:layout_below="@+id/village_recycler_view"
         android:layout_marginLeft="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -89,42 +91,21 @@
         android:layout_width="30dp"
         android:layout_height="30dp" />
 
-
-    // START YELLO 1
-    <ImageView
-        android:text="etoile test"
-        android:layout_marginTop="10dp"
-        android:id="@+id/star_recycler_view"
-        android:src="@drawable/startgold"
-        android:layout_below="@+id/workmates_recycler_view"
+    // STAR RATING BAR
+    <RatingBar
+        android:layout_marginTop="12dp"
+        android:id="@+id/rating_bar"
+        android:layout_below="@+id/icon_workmates_recycler_view"
         android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/image_recycler_view"
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
-
-    // START YELLO 2
-    <ImageView
-        android:text="etoile test"
-        android:layout_marginTop="10dp"
-        android:id="@+id/star_recycler_view2"
-        android:src="@drawable/startgold"
-        android:layout_below="@+id/workmates_recycler_view"
-        android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/star_recycler_view"
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
-
-    // STAR YELLO 3
-    <ImageView
-        android:text="etoile test"
-        android:layout_marginTop="10dp"
-        android:id="@+id/star_recycler_view3"
-        android:src="@drawable/startgold"
-        android:layout_below="@+id/workmates_recycler_view"
-        android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/star_recycler_view2"
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
+        android:layout_alignParentRight="true"
+        android:numStars="5"
+        android:scaleX="0.4"
+        android:scaleY="0.4"
+        android:theme="@style/RatingBar"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
 

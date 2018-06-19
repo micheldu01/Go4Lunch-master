@@ -1,17 +1,12 @@
 package com.example.michel.go4lunch;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.ProviderInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,21 +16,17 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.michel.go4lunch.APIMaps.MapStreams;
 import com.example.michel.go4lunch.APIMaps.apiPlaceId.GoogleAPIplaceId;
 import com.example.michel.go4lunch.models.ObjectRestaurant;
 import com.example.michel.go4lunch.models.User;
 import com.example.michel.go4lunch.recyclerview.adapter.AdapterShowRestaurant;
 import com.example.michel.go4lunch.recyclerview.ChoiceRestaurant;
-import com.example.michel.go4lunch.models.RestaurantObject;
-import com.example.michel.go4lunch.recyclerview.adapter.AdapterWorkmates;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -55,7 +46,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.internal.DebouncingOnClickListener;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
@@ -68,9 +58,6 @@ public class ActivityShowRestaurant extends AppCompatActivity {
     // DECLARE RECYCLER VIEW
     @BindView(R.id.show_restaurant_recycler_view)
     RecyclerView recyclerView;
-
-    // DECLARE LIST RESTAURANT OBJECT
-    private List<ChoiceRestaurant> choiceRestaurantList = new ArrayList<>();
 
     // DECLARE BUTTON CALL
     @BindView(R.id.image_button_phone_show_restaurant)
@@ -199,8 +186,10 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
             // DECLARE INTENT ACTION DIAL
             Intent intent = new Intent(Intent.ACTION_DIAL);
+
             // IMPLEMENT INTENT WITH PHONE NUMBER
             intent.setData(Uri.parse("tel:"+number_phone));
+
             // START ACTIVITY
             startActivity(intent);
 
@@ -222,6 +211,7 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
         // DECLARE AND IMPLEMENT INTENT WITH URL
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.fr/search?q="+url_rating_restaurant));
+
         // START INTENT
         startActivity(intent);
 
@@ -241,6 +231,7 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
             // DECLARE AND IMPLEMENT INTENT WITH URL
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(web_site));
+
             // START INTENT
             startActivity(intent);
 
@@ -262,6 +253,7 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
         // CHOICE RESTAURANT
         user.put("choice", "");
+
         // NAME RESTAURANT
         user.put("name_restaurant","");
 
@@ -292,6 +284,7 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
         // CHOICE RESTAURANT
         user.put("choice", id_restaurant);
+
         // NAME RESTAURANT
         user.put("name_restaurant",name_restaurant_user);
 
@@ -388,11 +381,13 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
 
                         // GET PHOTO RESTAURANT
+
                         // IF PHOTO IS NOT NULL GET PHOTO
                         if(googleAPIplaceId.getResultsAPI().getPhotos()!=null){
                             photo_retaurant = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
                                     + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference()+"&key=" + BuildConfig.KEY_GOOGLE_MAP;
                             Log.e("--photo restaurant--", "--result--" + photo_retaurant);
+
                         }
 
 

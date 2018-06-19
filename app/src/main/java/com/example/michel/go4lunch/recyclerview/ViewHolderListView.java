@@ -7,11 +7,12 @@ import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.michel.go4lunch.R;
-import com.example.michel.go4lunch.models.RestaurantObject;
+import com.example.michel.go4lunch.models.RestaurantObjectRecycler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,17 +22,33 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
 
 
     // ADD VALUES
+
+    // NAME
     @BindView(R.id.name_recycler_view)TextView name;
+
+    // ADDRESS (STREET)
     @BindView(R.id.address_recycler_view)TextView address;
+
+    // HOUR
     @BindView(R.id.hour_recycler_view)TextView hour;
-    @BindView(R.id.type_recycler_view)TextView type;
-    @BindView(R.id.star_recycler_view)ImageView star1;
-    @BindView(R.id.star_recycler_view2)ImageView star2;
-    @BindView(R.id.star_recycler_view3)ImageView star3;
+
+    // VILLAGE
+    @BindView(R.id.village_recycler_view)TextView village;
+
+    // WORKMATES
     @BindView(R.id.workmates_recycler_view)TextView workMates;
+
+    // DISTANCE
     @BindView(R.id.distance_recycler_view)TextView distance;
+
+    // IMAGE
     @BindView(R.id.image_recycler_view)ImageView image;
+
+    // IMAGE VIEW ICON WORKMATES
     @BindView(R.id.icon_workmates_recycler_view)ImageView icon_workmates;
+
+    // STAR RATING BAR
+    @BindView(R.id.rating_bar)RatingBar ratingBar;
 
 
 
@@ -48,48 +65,62 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
 
     // METHOD FOR SET VALUES IN RECYCLER VIEW
     @SuppressLint("ResourceAsColor")
-    public void restaurantHolderView(RestaurantObject restaurantObject) {
+    public void restaurantHolderView(RestaurantObjectRecycler restaurantObjectRecycler) {
 
 
         // SET NAME
-        name.setText(restaurantObject.getName());
+        name.setText(restaurantObjectRecycler.getName());
+
         // SET BOLD STYLE
         name.setTypeface(null, Typeface.BOLD);
-        // SET TYPE OF FOOD
-        type.setText(restaurantObject.getType()+" - ");
+
         // SET ADDRESS
-        address.setText(restaurantObject.getAdresse());
+        address.setText(restaurantObjectRecycler.getAddress());
+
+        // VILLAGE
+        village.setText(restaurantObjectRecycler.getVillage());
 
         // IF RESTAURANT CLOSE RED COLOR
-        if(restaurantObject.getHeuresOuverture().equals("close")){
+        if(restaurantObjectRecycler.getHeuresOuverture().equals("close")){
+
             // SET HOUR AND COLOR RED
-            hour.setText(restaurantObject.getHeuresOuverture());
+            hour.setText(restaurantObjectRecycler.getHeuresOuverture());
             hour.setTextColor(Color.RED);
         }
         else {
             // SET HOUR AND ITALIC STYLE
-            hour.setText(restaurantObject.getHeuresOuverture());
+            hour.setText(restaurantObjectRecycler.getHeuresOuverture());
             hour.setTypeface(null, Typeface.ITALIC);
         }
+
         // SET DISTANCE
-        distance.setText(String.valueOf(restaurantObject.getDistance())+"m");
+        distance.setText(String.valueOf(restaurantObjectRecycler.getDistance())+"m");
+
         // SET NUMBER WORKMATES AND HIDE IF 0 WITH ICON
-        if(restaurantObject.getWorkMates()==0){
+        if(restaurantObjectRecycler.getWorkMates()==0){
+
+            // MAKE WORKMATES INVISIBLE
             workMates.setVisibility(View.INVISIBLE);
+
+            // MAKE ICON WORKMATES INVISIBLE
             icon_workmates.setVisibility(View.INVISIBLE);
         }
-        workMates.setText("("+String.valueOf(restaurantObject.getWorkMates())+")");
-        // CREATE ARRAY FOR SHOW NUMBER OF STAR
-        int numberStar = restaurantObject.getStar();
-        int[][] invisible = {{View.INVISIBLE,View.INVISIBLE,View.INVISIBLE},
-                {View.VISIBLE,View.INVISIBLE,View.INVISIBLE},
-                {View.VISIBLE,View.VISIBLE,View.INVISIBLE},
-                {View.VISIBLE,View.VISIBLE,View.VISIBLE}};
-            star1.setVisibility(invisible[numberStar][0]);
-            star2.setVisibility(invisible[numberStar][1]);
-            star3.setVisibility(invisible[numberStar][2]);
+
+        // IMPLEMENT NUMBER WORKMATES
+        workMates.setText("("+String.valueOf(restaurantObjectRecycler.getWorkMates())+")");
+
+        // SHOW RATING BAR
+        ratingBar.setRating((float) restaurantObjectRecycler.getStar());
+
         // SHOW PIC OF RESTAURANT
-        Glide.with(itemView.getContext()).load(restaurantObject.getUrlPhoto()).into(image);
+
+        // IMPLEMENT PHOTO RESTAURANT IF PHOTO EXIST
+        if(restaurantObjectRecycler.getUrlPhoto()!=null){
+
+            // IMPLEMENT PHOTO RESTAURANT INTO IMAGE VIEW
+            Glide.with(itemView.getContext()).load(restaurantObjectRecycler.getUrlPhoto()).into(image);
+        }
+
 
 
 

@@ -18,10 +18,13 @@ public class ViewHolderShowRestaurant extends RecyclerView.ViewHolder {
 
 
     // DECLARE VALUES
+
     // IMAGE VIEW
     @BindView(R.id.image_recycler_show_restaurant)ImageView imageView;
+
     // NAME PROFILE
     @BindView(R.id.name_restaurant_show_restaurant)TextView name;
+
     // STRING IS JOINING
     @BindView(R.id.string_show_restaurant_recycler)TextView isjoining;
 

@@ -25,6 +25,10 @@ android {
         it.buildConfigField 'String', 'KEY_GOOGLE_MAP', key_google_map
         it.buildConfigField 'String', 'KEY_GOOGLE_MAP_1', key_google_map_1
 
+        it.buildConfigField 'String', 'KEY_FACEBOOK_1', key_google_facebook_1
+        it.buildConfigField 'String', 'KEY_FACEBOOK_2', key_google_facebook_2
+
+
     }
 }
 

@@ -3,19 +3,28 @@ package com.example.michel.go4lunch.models;
 
 import android.support.annotation.NonNull;
 
-public class RestaurantObject implements Comparable<RestaurantObject> {
+public class RestaurantObjectRecycler implements Comparable<RestaurantObjectRecycler> {
 
 
     // CREATE VALUE
+
+    // NAME
     private String name;
 
+    // ADDRESS (STREET)
     private String address;
 
+    // VILLAGE
+    private String village;
+
+    // TIME OPEN
     private String heuresOuverture;
 
+    // TYPE FOOD
     private String type;
 
-    private int star;
+    // INT START
+    private double star;
 
     private int workMates;
 
@@ -25,31 +34,28 @@ public class RestaurantObject implements Comparable<RestaurantObject> {
 
 
     // CONSTRUCTOR EMPTY
-    public RestaurantObject(){
+    public RestaurantObjectRecycler(){
     }
 
 
 
     // CONSTRUCTOR FULL VALUE
-    public RestaurantObject(String name, String type, String address, String heuresOuverture, int distance, int workMates, int star, String urlPhoto) {
+    public RestaurantObjectRecycler(String name, String address, String village, String heuresOuverture, String type, double star, int workMates, int distance, String urlPhoto) {
         this.name = name;
-        this.type = type;
         this.address = address;
+        this.village = village;
         this.heuresOuverture = heuresOuverture;
-        this.distance = distance;
-        this.workMates = workMates;
+        this.type = type;
         this.star = star;
+        this.workMates = workMates;
+        this.distance = distance;
         this.urlPhoto = urlPhoto;
     }
 
 
-
-
-
-
-
-
     // GETTER AND SETTER
+
+
     public String getName() {
         return name;
     }
@@ -58,12 +64,20 @@ public class RestaurantObject implements Comparable<RestaurantObject> {
         this.name = name;
     }
 
-    public String getAdresse() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(String adresse) {
-        adresse = adresse;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getVillage() {
+        return village;
+    }
+
+    public void setVillage(String village) {
+        this.village = village;
     }
 
     public String getHeuresOuverture() {
@@ -82,11 +96,10 @@ public class RestaurantObject implements Comparable<RestaurantObject> {
         this.type = type;
     }
 
-    public int getStar() {
-        return star;
-    }
+    public double getStar() { return star; }
 
-    public void setStar(int star) { this.star = star;
+    public void setStar(double star) {
+        this.star = star;
     }
 
     public int getWorkMates() {
@@ -102,7 +115,7 @@ public class RestaurantObject implements Comparable<RestaurantObject> {
     }
 
     public void setDistance(int distance) {
-        distance = distance;
+        this.distance = distance;
     }
 
     public String getUrlPhoto() {
@@ -113,11 +126,9 @@ public class RestaurantObject implements Comparable<RestaurantObject> {
         this.urlPhoto = urlPhoto;
     }
 
-
-
     // ADD METHOD FOR SORT DISTANCE
     @Override
-    public int compareTo(@NonNull RestaurantObject otherRestaurant) {
+    public int compareTo(@NonNull RestaurantObjectRecycler otherRestaurant) {
         // INTEGER ARGUMENT FOR COMPARE
         return Integer.compare(distance,  otherRestaurant.getDistance());
     }

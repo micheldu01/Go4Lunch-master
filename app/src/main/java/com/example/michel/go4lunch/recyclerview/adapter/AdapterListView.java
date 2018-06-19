@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.michel.go4lunch.R;
-import com.example.michel.go4lunch.models.RestaurantObject;
+import com.example.michel.go4lunch.models.RestaurantObjectRecycler;
 import com.example.michel.go4lunch.recyclerview.ViewHolderListView;
 
 import java.util.List;
@@ -17,19 +17,19 @@ import java.util.List;
 public class AdapterListView extends RecyclerView.Adapter<ViewHolderListView>{
 
 
-    private List<RestaurantObject> restaurantObjectList;
+    private List<RestaurantObjectRecycler> restaurantObjectRecyclerList;
 
 
 
     // CONSTRUCTOR WITH OBJECT RESTAURANT LIST
-    public AdapterListView(List<RestaurantObject> restaurantObjectList) {
-        this.restaurantObjectList = restaurantObjectList;
+    public AdapterListView(List<RestaurantObjectRecycler> restaurantObjectRecyclerList) {
+        this.restaurantObjectRecyclerList = restaurantObjectRecyclerList;
     }
 
 
     // METHOD FOR GET POSITION
-    public RestaurantObject restaurantObject(int position){
-        return this.restaurantObjectList.get(position);
+    public RestaurantObjectRecycler restaurantObject(int position){
+        return this.restaurantObjectRecyclerList.get(position);
     }
 
 
@@ -46,8 +46,8 @@ public class AdapterListView extends RecyclerView.Adapter<ViewHolderListView>{
     // METHOD FOR GIVE POSITION
     @Override
     public void onBindViewHolder(@NonNull ViewHolderListView holder, int position) {
-        RestaurantObject restaurantObject = restaurantObjectList.get(position);
-        holder.restaurantHolderView(restaurantObject);
+        RestaurantObjectRecycler restaurantObjectRecycler = restaurantObjectRecyclerList.get(position);
+        holder.restaurantHolderView(restaurantObjectRecycler);
 
     }
 
@@ -55,6 +55,6 @@ public class AdapterListView extends RecyclerView.Adapter<ViewHolderListView>{
     // GET COUNT SIZE
     @Override
     public int getItemCount() {
-        return restaurantObjectList.size();
+        return restaurantObjectRecyclerList.size();
     }
 }

@@ -25,8 +25,10 @@ public class ActivityNoticationShow extends AppCompatActivity {
 
     // DECLARE IMAGE NOTIFICATION
     @BindView(R.id.image_notification_show)ImageView imageView;
+
     // DECLARE SWITCH
     @BindView(R.id.switch_notification)Switch aSwitch;
+
     // value for de hour of the notification
     private int hour_of_day = 11;
     private int minute = 11;
@@ -71,20 +73,27 @@ public class ActivityNoticationShow extends AppCompatActivity {
 
 
     // METHOD ALARM MANAGER
+
     // method for get the time and the design of the notification
     public void methodAlarmManager() {
+
         //alarmManager
         AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+
         //use calendar for define the hour
         Calendar calendar = Calendar.getInstance();
+
         //time for show the notification
         calendar.set(Calendar.HOUR_OF_DAY, hour_of_day); // For 1 PM or 2 PM
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, second);
+
         // PendingIntent for AlarmReceiver
         PendingIntent pi = PendingIntent.getBroadcast(this, 0,
+
                 new Intent(this, AlarmRestaurant.class), PendingIntent.FLAG_UPDATE_CURRENT);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+
                 //repeat start notification one a day
                 AlarmManager.INTERVAL_DAY, pi);
     }

@@ -67,12 +67,16 @@ public class MainActivity extends BaseActivity
 
     // DECLARE TOOLBAR
     @BindView(R.id.activity_main_toolbar) Toolbar toolbar;
+
     // DECLARE DRAWER LAYOUT
     @BindView(R.id.activity_main_drawer_layout) DrawerLayout drawerLayout;
+
     // DECLARE NAVIGATION VIEW
     @BindView(R.id.activity_main_nav_view) NavigationView navigationView;
+
     // VIEW PAGER
     @BindView(R.id.activity_main_viewpager) ViewPager pager;
+
     // DECLARE TAB LAYOUT
     @BindView(R.id.activity_main_tabs) TabLayout tabs;
 
@@ -140,6 +144,7 @@ public class MainActivity extends BaseActivity
     // 1.menu implement menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         //2 - Inflate the menu and add it to the Toolbar
         getMenuInflater().inflate(R.menu.menu_activity_main, menu);
         return true;
@@ -149,6 +154,7 @@ public class MainActivity extends BaseActivity
     //method drawerLayout open close
     @Override
     public void onBackPressed() {
+
         // 5 - Handle back click to close menu
         if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             this.drawerLayout.closeDrawer(GravityCompat.START);
@@ -160,6 +166,7 @@ public class MainActivity extends BaseActivity
 
     // 2.toolbar implement toolbar method
     private void configureToolbar(){
+
         // Sets the Toolbar
         setSupportActionBar(toolbar);
     }
@@ -167,10 +174,13 @@ public class MainActivity extends BaseActivity
 
     //1.TabLayout create method for implement ViewPager and TabLayout
     private void configureViewPagerAndTabs() {
+
         //Set Adapter PageAdapter and glue it together
         pager.setAdapter(new PageAdapter(getSupportFragmentManager()));
+
         // 2 - Glue TabLayout and ViewPager together
         tabs.setupWithViewPager(pager);
+
         // 3 - Design purpose. Tabs have the same width
         tabs.setTabMode(TabLayout.MODE_FIXED);
 
@@ -188,6 +198,7 @@ public class MainActivity extends BaseActivity
     // implement button in toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         //3 - Handle actions on menu items
         switch (item.getItemId()) {
             case R.id.menu_activity_main_search:
@@ -208,25 +219,27 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         switch (id){
+
             // ASK RESTAURANT
             case R.id.activity_main_your_lunch :
+
                 // INTENT OF RESTAURANT CHOICE
                 startActivity(new Intent(this, ActivityShowRestaurant.class));
-
-
                 break;
+
                 // ASK SETTING
             case R.id.activity_main_drawer_settings:
                 startActivity(new Intent(this, ActivityNoticationShow.class));
-
                 break;
+
                 // ASK LOGOUT
             case R.id.activity_main_drawer_logout:
                 Log.e("MainActivity","Logout");
                 FirebaseAuth.getInstance().signOut();
                 this.launchSignInIntent();
                 break;
-            default:
+
+                default:
                 break;
         }
 
@@ -311,18 +324,22 @@ public class MainActivity extends BaseActivity
 
         // IMPLEMENT TEXT VIEW NAME
         TextView textViewName = (TextView)headerView.findViewById(R.id.drawer_nom);
+
         // IMPLEMENT TEXT VIEW EMAIL
         TextView textViewEmail = (TextView) headerView.findViewById(R.id.drawer_email);
+
         // IMPLEMENT IMAGE VIEW
         ImageView imageView = (ImageView) headerView.findViewById(R.id.drawer_image);
 
         // GET NAME INTO STRING
         String stringName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+
         // GET EMAIL INTO STRING
         String stringEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         // SHOW NAME
         textViewName.setText(stringName);
+
         // SHOW EMAIL
         textViewEmail.setText(stringEmail);
 
@@ -345,15 +362,20 @@ public class MainActivity extends BaseActivity
     private void launchSignInIntent(){
 
         // START ACTIVITY FOR RESULT
+
         // AND ADD LOGO
         startActivityForResult(
+
                 // GET INSTANCE UI
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
+
                         // ADD PROVIDERS GOOGLE AND FACEBOOK
                         .setAvailableProviders(providers)
+
                         // ADD LOGO BOL
                         .setLogo(R.drawable.boltitle)
+
                         // ADD THEME WITH PIC RESTAURANT BACKGROUND
                         .setTheme(R.style.MyThemeUI)
                 .build(),
@@ -372,10 +394,12 @@ public class MainActivity extends BaseActivity
         String stringUri = urlPhoto.toString();
 
         // ADD DATA
+
         // CREATE A NEW USER WITH LAST NAME AND PHOTO
         Map<String, Object> user = new HashMap<>();
 
         // PUT DATA
+
         //NAME
         user.put("name", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         // STRING URL
@@ -394,8 +418,6 @@ public class MainActivity extends BaseActivity
                                 FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                     }
                 });
-
-
 
     }
 
