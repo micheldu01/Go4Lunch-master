@@ -143,10 +143,7 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
     // DECLARE LIST RESTAURANT OBJECT
     private ArrayList<User> list_workmate = new ArrayList<>();
-/*
-    // DECLARE LIST RESTAURANT OBJECT
-    private List<RestaurantObject> restaurantObjectList = new ArrayList<>();
-*/
+
 
 
 
@@ -168,23 +165,6 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
         // SHOW WORkATES
         this.showProfile();
-
-/*
-        // TEST RECYCLER VIEW-------------------------------------------
-        choiceRestaurantList.add(new ChoiceRestaurant("robert", "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
-        choiceRestaurantList.add(new ChoiceRestaurant("robert", "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
-        choiceRestaurantList.add(new ChoiceRestaurant("robert", "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
-        choiceRestaurantList.add(new ChoiceRestaurant("robert", "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
-        choiceRestaurantList.add(new ChoiceRestaurant("robert", "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
-        choiceRestaurantList.add(new ChoiceRestaurant("robert", "http://bstatic.ccmbg.com/www.linternaute.com/img/restaurant/villes/440x293/1.jpg"));
-        // IMPLEMENT RECYCLER VIEW
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new AdapterShowRestaurant(choiceRestaurantList));
-        //------------------------------------------------------------------
-*/
-
-        // TEST
-        this.getChoiceFromDataBase();
 
         // GET VALUES RESTAURANT
         this.getValuesRestaurant();
@@ -332,43 +312,8 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         Toast.makeText(this, "-----RESTAURANT CHOICE----", Toast.LENGTH_SHORT).show();
         imageViewButtonRed.setVisibility(view.INVISIBLE);
         imageViewButtonGreen.setVisibility(view.VISIBLE);
-
-
     }
 
-    // METHOD FOR GET CHOICE RESTAURANT INTO PROFILE
-    private void getChoiceFromDataBase() {
-
-
-        // READ CHOICE INTO DATA BASE PROFILE
-        DocumentReference docRef = db.collection("users").document(FirebaseAuth.getInstance().getUid());
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                // GET DATA INTO USER OBJECT
-                User user = documentSnapshot.toObject(User.class);
-                Log.e("---test---", "--- get choice restaurant ---" + user.getChoice());
-
-                compareChoiceIdRestaurant(user.getChoice(), id_restaurant);
-
-            }
-        });
-    }
-
-
-
-    // METHOD COMPARE CHOICE AND ID RESTAURANT
-    private void compareChoiceIdRestaurant(String choice, String id_restaurant) {
-
-        // DECLARE VIEW
-
-
-        // USE COMPARE FOR SET COLOR OF BUTTON CHOICE RESTAURANT
-        if (choice.equals(id_restaurant)) {
-            imageViewButtonRed.setVisibility(view.INVISIBLE);
-            imageViewButtonGreen.setVisibility(view.VISIBLE);
-        }
-    }
 
     // METHOD FOR GET ADDRESS
     private void getValuesRestaurant() {
@@ -547,21 +492,21 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                                     String[] separated_url = urlPhoto.split(",");
                                     String urlPhoto_final = separated_url[0];
 
-                                    Log.e("---activity show ---", " --- uid ---- " + uid_final);
+                                    // CHOICE WORKMATES
+                                    String choice = separated[5];
+                                    choice = choice.replace("}","");
 
-
-                                    // DON'T SHOW USER PROFILE
-                                    // IF UID = CURRENT USER
+                                    // SELECT WORKMATES
+                                    // IF UID = CURRENT USER DON'T SHOW
                                     if (!FirebaseAuth.getInstance().getUid().equals(uid_final)){
 
-                                        Log.e("---activity show ---", " --- uid 2 ---- " + uid_final);
+                                        // ADD IF WORKMATE CHOICE THIS RESTAURANT
+                                        if (choice.equals(id_restaurant)){
 
-                                        // IMPLEMENT OBJECT USER LIST
-                                        list_workmate.add(new User(username_final,urlPhoto_final));
-
+                                            // IMPLEMENT OBJECT USER LIST
+                                            list_workmate.add(new User(username_final,urlPhoto_final));
+                                        }
                                     }
-
-
 
                                     // IMPLEMENT RECYCLER VIEW
                                     recyclerView.setLayoutManager(new LinearLayoutManager(ActivityShowRestaurant.this));
