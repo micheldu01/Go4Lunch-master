@@ -6,9 +6,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NotificationCompat;
@@ -33,9 +35,13 @@ import com.example.michel.go4lunch.base.BaseActivity;
 import com.example.michel.go4lunch.models.User;
 import com.example.michel.go4lunch.notification.ActivityNoticationShow;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -47,6 +53,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.michel.go4lunch.shared.Shared.ID_RESTAURANT;
+import static com.example.michel.go4lunch.shared.Shared.MYSHARED;
 
 
 public class MainActivity extends BaseActivity
@@ -80,9 +88,8 @@ public class MainActivity extends BaseActivity
     // DECLARE TAB LAYOUT
     @BindView(R.id.activity_main_tabs) TabLayout tabs;
 
-
-
-
+    // DECLARE DATA BASE FIREBASE FIRESTORE
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     // ADD ARRAY ICONS
     private int[] tabIcons = {R.drawable.ic_map_black_24dp,R.drawable.ic_view_list_black_24dp,R.drawable.ic_group_black_24dp};
@@ -95,11 +102,6 @@ public class MainActivity extends BaseActivity
 
     // FIRE BASE USER
     private FirebaseUser firebaseUser;
-
-    //-----------------------
-
-
-
 
 
 
@@ -224,6 +226,35 @@ public class MainActivity extends BaseActivity
             case R.id.activity_main_your_lunch :
 
                 // INTENT OF RESTAURANT CHOICE
+
+                // GET CHOICE CURRENT USER
+                DocumentReference docRef = db.collection("users").document(FirebaseAuth.getInstance().getUid());
+                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        // DECLARE AND IMPLEMENT USER
+                        User user = documentSnapshot.toObject(User.class);
+
+                        // GET CHOICE
+                        String choice = user.getChoice();
+                        Log.e("--------", "--- read 3 get name ---- " + user.getChoice());
+
+                        // IF CHOICE EXIST
+                        if (choice!=null){
+
+                            // SAVE CHOICE INTO SHARED
+
+                            // IMPLEMENT SHARED PREFERENCES
+                            SharedPreferences preferences = getSharedPreferences(MYSHARED, Context.MODE_PRIVATE);
+
+                            // PUT NAME RESTAURANT INTO SHARED
+                            preferences.edit().putString(ID_RESTAURANT, choice).commit();
+                        }
+                    }
+                });
+
+                // START INTENT
                 startActivity(new Intent(this, ActivityShowRestaurant.class));
                 break;
 
@@ -384,9 +415,6 @@ public class MainActivity extends BaseActivity
 
     // SAVE PROFILE INTO FIREBASE
     private void saveProfileFireBase(){
-
-        // DECLARE DATA BASE FIREBASE FIRESTORE
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
         // TURN URI TO STRING

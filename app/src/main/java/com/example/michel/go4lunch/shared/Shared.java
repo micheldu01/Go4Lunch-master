@@ -16,3 +16,5 @@ public class Shared {
     public static final int RESSOURCE_ICON = 999;
 
 }
+
+

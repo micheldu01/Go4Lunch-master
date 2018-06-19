@@ -178,7 +178,7 @@ public class ListViewFragment extends Fragment {
                                 }
 
                                 // GET DATA RESTAURANT FROM GOOGLE API
-
+/*
                                 // DECLARE DISPOSABLE WITH STREAM GOOGLE API PLACE ID
                                 Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, objectRestaurant.getPlace_id())
                                         .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
@@ -215,9 +215,7 @@ public class ListViewFragment extends Fragment {
                                             public void onComplete() {
                                             }
                                         });
-
-
-
+                                */
                             }
                         }
                     }
