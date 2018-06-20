@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import com.example.michel.go4lunch.ActivityShowRestaurant;
 import com.example.michel.go4lunch.R;
 import com.example.michel.go4lunch.models.User;
-import com.example.michel.go4lunch.recyclerview.ProfileWorkmates;
 import com.example.michel.go4lunch.recyclerview.adapter.AdapterWorkmates;
 import com.example.michel.go4lunch.recyclerview.ItemClickSupport;
 import com.google.android.gms.tasks.OnCompleteListener;

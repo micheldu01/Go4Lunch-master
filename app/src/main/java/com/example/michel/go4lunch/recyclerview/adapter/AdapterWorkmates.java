@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.example.michel.go4lunch.R;
 import com.example.michel.go4lunch.models.User;
-import com.example.michel.go4lunch.recyclerview.ProfileWorkmates;
 import com.example.michel.go4lunch.recyclerview.ViewHolderWorkmates;
 
 import java.util.List;
