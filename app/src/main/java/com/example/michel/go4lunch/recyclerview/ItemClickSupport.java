@@ -18,11 +18,6 @@ public class ItemClickSupport {
                 RecyclerView.ViewHolder holder = mRecyclerView.getChildViewHolder(v);
                 mOnItemClickListener.onItemClicked(mRecyclerView, holder.getAdapterPosition(), v);
 
-                //------------------------------------------
-                // CHANGE BACKGROUND COLOR IF IS IT CLICKED
-                //------------------------------------------
-                v.setBackgroundColor(Color.parseColor("#6ff9ff"));
-
 
             }
         }

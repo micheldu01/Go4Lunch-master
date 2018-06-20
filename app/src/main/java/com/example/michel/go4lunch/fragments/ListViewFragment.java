@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.michel.go4lunch.APIMaps.MapStreams;
@@ -38,6 +39,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -71,9 +73,17 @@ public class ListViewFragment extends Fragment {
     // URL PHOTO RESTAURANT
     private String url_restaurant;
 
+    // DECLARE CURRENT DAY
+    private int day = 0;
 
+    // DECLARE STRING TIME
+    private String time;
 
+    // DECLARE BOOLEAN IS OPEN
+    private boolean is_open;
 
+    // DECLARE ARRAY LIST NUMBER WORKMATES
+    private ArrayList<String> number_workmates = new ArrayList<>();
 
 
 
@@ -103,11 +113,12 @@ public class ListViewFragment extends Fragment {
         // DECLARE THE ONCLICK FOR USE IT FOR SHOW VIEW RESTAUARANT LIST
         this.configureOnClickRecyclerView();
 
+
+        // CALL METHOD FOR GET RESTAURANT CHOICE WORKMATES
+        getNumberWorkmates();
+
         // SHOW RESTAURANT LIST
         this.showRestaurantList();
-
-
-
 
 
 
@@ -178,7 +189,7 @@ public class ListViewFragment extends Fragment {
                                 }
 
                                 // GET DATA RESTAURANT FROM GOOGLE API
-/*
+
                                 // DECLARE DISPOSABLE WITH STREAM GOOGLE API PLACE ID
                                 Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, objectRestaurant.getPlace_id())
                                         .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
@@ -188,24 +199,106 @@ public class ListViewFragment extends Fragment {
 
                                                 // GET PHOTO RESTAURANT
 
-                                                // IF PHOTO IS NOT NULL GET PHOTO
-                                                if (googleAPIplaceId.getResultsAPI().getPhotos() != null) {
-                                                    url_restaurant = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
-                                                            + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference() + "&key=" + BuildConfig.KEY_GOOGLE_MAP;
-                                                    Log.e("--photo restaurant--", "--result--" + url_restaurant);
+
+                                                try {
+                                                    // IF PHOTO IS NOT NULL GET PHOTO
+                                                    if (googleAPIplaceId.getResultsAPI().getPhotos() != null) {
+                                                        url_restaurant = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
+                                                                + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference() + "&key=" + BuildConfig.KEY_GOOGLE_MAP;
+                                                    }
+                                                }catch (Exception e){
+
+                                                    url_restaurant = null;
+                                                }
+
+
+
+                                                    // GET CURRENT DAY
+                                                    Calendar c = Calendar.getInstance();
+
+                                                    // IMPLEMENT DAY
+                                                    day = c.get(Calendar.DAY_OF_WEEK);
+
+                                                    // MAKE SAME CURRENT DAY WITH GOOGLE API
+                                                    if(day<2){
+                                                        day = day+5;
+                                                    }else{
+                                                        day = day-2;
+                                                    }
+
+                                                    // USE TRY CATCH FOR GET CLOSE TIME RESTAURANT
+                                                    try {
+
+                                                        // IMPLEMENT TIME CLOSE RESTAURANT
+                                                        time = googleAPIplaceId.getResultsAPI().getOpening_hours().getPeriods().get(day).getClose().getTime();
+
+
+                                                    }catch (Exception e){
+
+                                                        // IF TIME CLOSE DO NOT EXIST IMPLEMENT TIME
+                                                        time = "----";
+
+                                                    }
+
+                                                    // USE TRY CATCH FOR KNOW IF RESTAURANT IS OPEN NOW
+                                                    try {
+
+                                                        // ASK IF RESTAURANT IS OPEN NOW AND IMPLEMENT ANSWER
+                                                        is_open = googleAPIplaceId.getResultsAPI().getOpening_hours().isOpen_now();
+
+                                                        // IF RESTAURANT IS CLOSE
+                                                        if (is_open==false) {
+
+                                                            // IMPLEMENT TIME
+                                                            time = "close";
+                                                        }
+
+                                                    }catch (Exception e){
+
+                                                    }
+
+
+                                                    // GET NUMBER WORKMATES
+                                                    int size_number_workmates = number_workmates.size();
+
+                                                    // DECLARE NUMBER
+                                                    int number = 0;
+
+                                                    Log.e("-- list workmates --", "-- get size --" + number_workmates.size());
+
+                                                    // GET NUMBER WORKMATES IN EACH RESTAURANT
+
+                                                    // IMPLEMENT I
+                                                    int i = 0;
+
+                                                    // USE WHILE TO GET NUMBER WORKMATES
+                                                    while (size_number_workmates<= i){
+
+                                                        // COMPARE CHOICE WORKMATES WITH ID RESTAURANT
+                                                        if (number_workmates.get(i).equals(objectRestaurant.getId())){
+
+                                                            Log.e("-- list workmates --", "-- get size --" + number_workmates.get(0));
+
+
+                                                            number++;
+                                                        }
+
+                                                    }
 
 
 
 
 
                                                     // ADD DATA INTO OBJECT LIST
-                                                    restaurantObjectRecyclerList.add(new RestaurantObjectRecycler(objectRestaurant.getNameRestaurant(),street,village,"jusqu'à 22h", "", objectRestaurant.getRating(),1,150, url_restaurant));
+                                                    restaurantObjectRecyclerList.add(new RestaurantObjectRecycler(objectRestaurant.getNameRestaurant(),street,village,time, "", objectRestaurant.getRating(),number,150, url_restaurant));
+
 
                                                     // IMPLEMENT RECYCLER VIEW
                                                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                                     recyclerView.setAdapter(new AdapterListView(restaurantObjectRecyclerList));
 
-                                                }
+
+
 
                                             }
                                             @Override
@@ -215,7 +308,9 @@ public class ListViewFragment extends Fragment {
                                             public void onComplete() {
                                             }
                                         });
-                                */
+
+
+
                             }
                         }
                     }
@@ -229,10 +324,6 @@ public class ListViewFragment extends Fragment {
     // METHOD FOR GET IMPLEMENT RECYCLER VIEW
     private void getNumberWorkmates(){
 
-        final ArrayList<String> number_workmates = new ArrayList<>();
-
-        final int[] number = {0};
-
         // GET USERS COLLECTION FROM CLOUD
         db.collection("users")
                 .get()
@@ -245,51 +336,13 @@ public class ListViewFragment extends Fragment {
                                 // DECLARE AND IMPLEMENT USER
                                 User user = document.toObject(User.class);
 
-                                //Log.e("-- list restaurant --", "-- get name restaurant --" + user.getChoice());
-
                                 number_workmates.add(user.getChoice());
 
-
-
-                                //Log.e("-- list restaurant --", "-- get name restaurant --" + number_workmates.get(0));
-
-
                             }
                         }
                     }
                 });
 
-    }
-
-    // METHOD TO ASK IF RESTAURANT IS CHOICE
-    private void number(String id_restaurant){
-
-
-        // ASK DATA BASE, IF ONE USER HAVE CHOICE THIS RESTAURANT
-        db.collection("users")
-                .whereEqualTo("choice",id_restaurant)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        // IF TASK IS SUCCESS FUL GET DATA
-                        if(task.isSuccessful()){
-
-                            // GET DATA FROM DATA BASE
-                            for(QueryDocumentSnapshot document : task.getResult()) {
-
-                                // ASK IF CHOICE IS DIFFERENT OF NULL
-                                if (!document.getData().equals(null)) {
-
-                                    workmates.add(document.getData().toString());
-
-                                    Log.e("-- list workmates --", "-- get name workmates --" + workmates.size());
-                                }
-                            }
-                        }
-                    }
-                });
     }
 }
 

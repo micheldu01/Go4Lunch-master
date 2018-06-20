@@ -15,6 +15,12 @@ public class Shared {
     // RESSOURCE ICON
     public static final int RESSOURCE_ICON = 999;
 
+    // DECLARE LATITUDE
+    public static final long LATITUDE = 120;
+
+    // DECLARE LONGITUDE
+    public static final long LONGITUDE = 140;
+
 }
 
 

@@ -62,6 +62,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
 import static com.example.michel.go4lunch.shared.Shared.ID_RESTAURANT;
+import static com.example.michel.go4lunch.shared.Shared.LATITUDE;
+import static com.example.michel.go4lunch.shared.Shared.LONGITUDE;
 import static com.example.michel.go4lunch.shared.Shared.MYSHARED;
 
 
@@ -144,6 +146,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_map_view, container, false);
+
+        // IMPLEMENT SHARED PREFERENCES
+        this.implementShared();
 
         // IF THE VERSION IS DIFFERENT
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -229,6 +234,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
             mMap.setMyLocationEnabled(true);
 
 
+
             // DECLARE INT
             num = 0;
 
@@ -253,13 +259,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                         // HIDE INFO WINDOW MARKER
                         marker.hideInfoWindow();
 
-                        // IMPLEMENT SHARED PREFERENCES
-                        preferences = getActivity().getSharedPreferences(MYSHARED, Context.MODE_PRIVATE);
-
                         // PUT NAME RESTAURANT INTO SHARED
                         preferences.edit().putString(ID_RESTAURANT, marker.getSnippet()).commit();
-
-                        Log.e("****marquer*****","****ID Map view fragment****"+marker.getSnippet());
 
                         // ADD INTENT FO GO TO RESTAURANT
                         startActivity(new Intent(getActivity(), ActivityShowRestaurant.class));
@@ -298,6 +299,29 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         // IMPLEMENT LONGITUDE
         longitude = location.getLongitude();
 
+        // SAVE LATITUDE INTO SHARED
+
+        // IMPLEMENT LOCATION
+
+        // TURN DOUBLE TO LONG LATITUDE
+        double latitude_double = latitude;
+        long latitude_long = (new Double(latitude_double)).longValue();
+
+        // TURN DOUBLE TO LONG LONGITUDE
+        double longitude_double = longitude;
+        long longitude_long = (new Double(longitude_double)).longValue();
+
+        // SAVE LATITUDE INTO SHARED
+        preferences.edit().putLong(String.valueOf(LATITUDE), latitude_long).commit();
+
+        // SAVE LATITUDE INTO SHARED
+        preferences.edit().putLong(String.valueOf(LONGITUDE), longitude_long).commit();
+
+        // TEST GET DATA LATITUDE FROM SHARED
+        long test_long = preferences.getLong(String.valueOf(LATITUDE), 0);
+
+        latitude = location.getLatitude();
+        Log.e("---test latitude---","--- test latitude ---" + latitude);
 
 
         // REMOVE MARKER CURRENT LOCATION IF DIFFERENT OF NULL
@@ -306,7 +330,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         }
         // IMPLEMENT LATITUDE LONGITUDE
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
 
         // DECLARE MARKER OPTION
         MarkerOptions markerOptions = new MarkerOptions();
@@ -329,14 +352,19 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         if(client != null){
 
             // REMOVE LOCATION UPDATE
-            //LocationServices.FusedLocationApi.removeLocationUpdates(client, this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(client, this);
             LocationServices.getFusedLocationProviderClient(getActivity());
+
+
+
+
+
         }
     }
 
     // IMPLEMENT LOCATION REQUEST
     @Override
-    public void onConnected(@Nullable Bundle bundle) {}
+    public void onConnected(@Nullable Bundle bundle) { }
 
 
     // METHOD ASK CHECK PERMISSION LOCATION
@@ -458,6 +486,13 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                         }
                     }
                 });
+    }
+
+    // IMPLEMENT SHARED PREFERENCES
+    private void implementShared(){
+
+        // IMPLEMENT SHARED PREFERENCES
+        preferences = getActivity().getSharedPreferences(MYSHARED, Context.MODE_PRIVATE);
     }
 }
 

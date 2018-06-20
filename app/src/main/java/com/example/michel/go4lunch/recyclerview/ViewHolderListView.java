@@ -119,6 +119,10 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
 
             // IMPLEMENT PHOTO RESTAURANT INTO IMAGE VIEW
             Glide.with(itemView.getContext()).load(restaurantObjectRecycler.getUrlPhoto()).into(image);
+        }else {
+
+            // IMPLEMENT PHOTO RESTAURANT INTO IMAGE VIEW
+            Glide.with(itemView.getContext()).load(R.drawable.sign_no_camera2).into(image);
         }
 
 

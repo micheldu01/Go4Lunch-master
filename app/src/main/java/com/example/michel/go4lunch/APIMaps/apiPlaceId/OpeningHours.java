@@ -9,16 +9,27 @@ import java.util.List;
 public class OpeningHours {
 
 
-    // DECLARE VALUE
+    // DECLARE LIST PERIODS
     @SerializedName("periods")
     @Expose
     private List<Periods> periods;
 
+    // DECLARE BOOLEAN OPEN NOW
+    @SerializedName("open_now")
+    @Expose
+    private boolean open_now;
 
-    // CONSTRUCTOR
+
+
+    // CONSTRUCTOR WITH LIST PERIODS
     public OpeningHours(List<Periods> periods) {
         this.periods = periods;
     }
+
+
+   // CONSTRUCTOR WITH BOOLEAN OPEN NOW
+    public OpeningHours(boolean open_now) { this.open_now = open_now; }
+
 
 
     // GETTER AND SETTER
@@ -30,4 +41,8 @@ public class OpeningHours {
     public void setPeriods(List<Periods> periods) {
         this.periods = periods;
     }
+
+    public boolean isOpen_now() { return open_now; }
+
+    public void setOpen_now(boolean open_now) { this.open_now = open_now; }
 }

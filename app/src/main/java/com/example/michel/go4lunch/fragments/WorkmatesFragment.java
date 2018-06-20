@@ -1,7 +1,9 @@
 package com.example.michel.go4lunch.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -36,6 +38,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.michel.go4lunch.shared.Shared.ID_RESTAURANT;
+import static com.example.michel.go4lunch.shared.Shared.MYSHARED;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,6 +60,9 @@ public class WorkmatesFragment extends Fragment {
 
     // DECLARE DATA BASE
     FirebaseFirestore db= FirebaseFirestore.getInstance();
+
+    // DECLARE SHARED PREFERENCES
+    SharedPreferences preferences;
 
 
 
@@ -110,6 +118,7 @@ public class WorkmatesFragment extends Fragment {
                                     // ASK IF CHOICE IS DIFFERENT OF NULL
                                     if (!document.getData().equals(null)) {
 
+
                                         // SPLIT DATA "="
                                         String currentString = document.getData().toString();
                                         String[] separated = currentString.split("=");
@@ -138,6 +147,7 @@ public class WorkmatesFragment extends Fragment {
                                         String choice = separated[5];
                                         choice = choice.replace("}","");
 
+
                                         // DON'T ADD CURRENT WORKMATE
                                         if (!FirebaseAuth.getInstance().getUid().equals(uid_final)){
 
@@ -165,6 +175,13 @@ public class WorkmatesFragment extends Fragment {
 
                         // IF CHOICE OF RESTAURANT IS READY GET INTENT
                         if(list_workmate.get(position).getChoice()!=null){
+
+                            // SAVE CHOICE WORKMATES FOR CLICK INTENT
+                            preferences = getActivity().getSharedPreferences(MYSHARED, Context.MODE_PRIVATE);
+
+                            // SAVE CHOICE INTO SHARED
+                            preferences.edit().putString(ID_RESTAURANT,"").commit();
+
                             // ON CLICK INTENT
                             startActivity(new Intent(getContext(),ActivityShowRestaurant.class));
 
