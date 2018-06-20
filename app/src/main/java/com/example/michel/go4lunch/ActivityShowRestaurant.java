@@ -328,26 +328,21 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
                 // IMPLEMENT TEXT VIEW NAME RESTAURANT
                 name_restaurant.setText(objectRestaurant.getNameRestaurant());
-                Log.e("---TAG---", "-- name restaurant --" + objectRestaurant.getNameRestaurant());
 
                 // IMPLEMENT NAME RESTAURANT FOR USER
                 name_restaurant_user = objectRestaurant.getNameRestaurant();
 
                 // IMPLEMENT TEXT VIEW ADDRESS
                 address.setText(objectRestaurant.getAddress());
-                Log.e("---TAG---", "-- address --" + objectRestaurant.getAddress());
 
                 // GET DATA WITH GOOGLE API STREAM
                 getDataFromApi(objectRestaurant.getPlace_id());
-                Log.e("---TAG---", "-- place id --" + objectRestaurant.getPlace_id());
 
                 // IMPLEMENT URL WITH NAME RESTAURANT
                 url_rating_restaurant = "https://www.google.fr/search?q="+objectRestaurant.getNameRestaurant();
-                Log.e("---TAG---", "--url rating restaurant --" + objectRestaurant.getPlace_id());
-
 
                 // IMPLEMENT RATING RESTAURANT
-                rating = objectRestaurant.getRating();
+                rating = objectRestaurant.getRating()-2;
                 Log.e("---TAG---", "--rating --" + objectRestaurant.getRating());
 
                 // SHOW RATING BAR
