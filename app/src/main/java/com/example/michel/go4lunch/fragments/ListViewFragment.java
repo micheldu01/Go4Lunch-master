@@ -161,57 +161,61 @@ public class ListViewFragment extends Fragment {
     // METHOD FOR GET IMPLEMENT RECYCLER VIEW
     private void showRestaurantList(){
 
+        // DECLARE AND IMPLEMENT COUNT
         final int[] count = {0};
 
-        // GET USERS COLLECTION FROM CLOUD
-        db.collection("restaurant")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (final DocumentSnapshot document : task.getResult()) {
-                                final ObjectRestaurant objectRestaurant = document.toObject(ObjectRestaurant.class);
+        // SECURITY DATABASE
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
 
-                                // SPLIT ADDRESS
-                                String currentString = objectRestaurant.getAddress();
-                                String[] separated = currentString.split(",");
+            // GET USERS COLLECTION FROM CLOUD
+            db.collection("restaurant")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (final DocumentSnapshot document : task.getResult()) {
+                                    final ObjectRestaurant objectRestaurant = document.toObject(ObjectRestaurant.class);
 
-                                // STREET AND VILLAGE
-                                final String street = separated[0];
-                                final String village;
+                                    // SPLIT ADDRESS
+                                    String currentString = objectRestaurant.getAddress();
+                                    String[] separated = currentString.split(",");
 
-                                // IF ADDRESS CANT TO BE SEPARATED
-                                if (separated.length<2){
+                                    // STREET AND VILLAGE
+                                    final String street = separated[0];
+                                    final String village;
 
-                                    // ADD VALUE NULL INTO STRING VILLAGE
-                                    village = null;
-                                }else {
-                                    // IMPLEMENT VILLAGE
-                                    village = separated[1];
-                                }
+                                    // IF ADDRESS CANT TO BE SEPARATED
+                                    if (separated.length<2){
 
-                                // GET DATA RESTAURANT FROM GOOGLE API
+                                        // ADD VALUE NULL INTO STRING VILLAGE
+                                        village = null;
+                                    }else {
+                                        // IMPLEMENT VILLAGE
+                                        village = separated[1];
+                                    }
 
-                                // DECLARE DISPOSABLE WITH STREAM GOOGLE API PLACE ID
-                                Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, objectRestaurant.getPlace_id())
-                                        .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
-                                            @Override
-                                            public void onNext(GoogleAPIplaceId googleAPIplaceId) {
+                                    // GET DATA RESTAURANT FROM GOOGLE API
+
+                                    // DECLARE DISPOSABLE WITH STREAM GOOGLE API PLACE ID
+                                    Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, objectRestaurant.getPlace_id())
+                                            .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
+                                                @Override
+                                                public void onNext(GoogleAPIplaceId googleAPIplaceId) {
 
 
-                                                // GET PHOTO RESTAURANT
+                                                    // GET PHOTO RESTAURANT
 
-                                                try {
-                                                    // IF PHOTO IS NOT NULL GET PHOTO
-                                                    if (googleAPIplaceId.getResultsAPI().getPhotos() != null) {
-                                                        url_restaurant = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
-                                                                + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference() + "&key=" + BuildConfig.KEY_GOOGLE_MAP;
+                                                    try {
+                                                        // IF PHOTO IS NOT NULL GET PHOTO
+                                                        if (googleAPIplaceId.getResultsAPI().getPhotos() != null) {
+                                                            url_restaurant = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
+                                                                    + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference() + "&key=" + BuildConfig.KEY_GOOGLE_MAP;
+                                                        }
+                                                    }catch (Exception e){
+
+                                                        url_restaurant = null;
                                                     }
-                                                }catch (Exception e){
-
-                                                    url_restaurant = null;
-                                                }
 
 
 
@@ -282,8 +286,8 @@ public class ListViewFragment extends Fragment {
                                                             number++;
                                                         }
                                                     }
-                                                     // GET RATING
-                                                     double rating = objectRestaurant.getRating()-2;
+                                                    // GET RATING
+                                                    double rating = objectRestaurant.getRating()-2;
 
 
                                                     // ADD DATA INTO OBJECT LIST
@@ -295,46 +299,51 @@ public class ListViewFragment extends Fragment {
                                                     recyclerView.setAdapter(new AdapterListView(restaurantObjectRecyclerList));
 
 
-                                            }
-                                            @Override
-                                            public void onError(Throwable e) {
-                                            }
-                                            @Override
-                                            public void onComplete() {
-                                            }
-                                        });
+                                                }
+                                                @Override
+                                                public void onError(Throwable e) {
+                                                }
+                                                @Override
+                                                public void onComplete() {
+                                                }
+                                            });
+                                }
                             }
                         }
-                    }
-                });
+                    });
+        }
+
+
 
 
     }
 
-
-
     // METHOD FOR GET IMPLEMENT RECYCLER VIEW
     private void getNumberWorkmates(){
 
-        // GET USERS COLLECTION FROM CLOUD
-        db.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (DocumentSnapshot document : task.getResult()) {
+        // SECURITY DATABASE
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
 
-                                // DECLARE AND IMPLEMENT USER
-                                User user = document.toObject(User.class);
+            // GET USERS COLLECTION FROM CLOUD
+            db.collection("users")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (DocumentSnapshot document : task.getResult()) {
 
-                                // IMPLEMENT NUMBER WORKMATES WITH CHOICE
-                                number_workmates.add(user.getChoice());
+                                    // DECLARE AND IMPLEMENT USER
+                                    User user = document.toObject(User.class);
 
+                                    // IMPLEMENT NUMBER WORKMATES WITH CHOICE
+                                    number_workmates.add(user.getChoice());
+
+                                }
                             }
                         }
-                    }
-                });
+                    });
+        }
 
     }
 }

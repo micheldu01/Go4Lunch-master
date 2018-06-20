@@ -248,24 +248,29 @@ public class ActivityShowRestaurant extends AppCompatActivity {
     @OnClick(R.id.button_green_show_restaurant)
     void submitImageViewButtonGreen(View view) {
 
-        // PUT ID RESTAURANT INTO USER FIRE BASE
-        Map<String, Object> user = new HashMap<>();
+        // SECURITY DATABASE
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
 
-        // CHOICE RESTAURANT
-        user.put("choice", "");
+            // PUT ID RESTAURANT INTO USER FIRE BASE
+            Map<String, Object> user = new HashMap<>();
 
-        // NAME RESTAURANT
-        user.put("name_restaurant","");
+            // CHOICE RESTAURANT
+            user.put("choice", "");
 
-        // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
-        db.collection("users").document(FirebaseAuth.getInstance().getUid())
-                .set(user, SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.e("main activity", "------data save url restaurant-----");
-                    }
-                });
+            // NAME RESTAURANT
+            user.put("name_restaurant","");
+
+            // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
+            db.collection("users").document(FirebaseAuth.getInstance().getUid())
+                    .set(user, SetOptions.merge())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.e("main activity", "------data save url restaurant-----");
+                        }
+                    });
+        }
+
 
 
         // TOAST IF CLICK
@@ -279,26 +284,29 @@ public class ActivityShowRestaurant extends AppCompatActivity {
     @OnClick(R.id.button_red_show_restaurant)
     void submitImageViewButtonRed(View view) {
 
-        // PUT ID AND NAME RESTAURANT INTO USER FIRE BASE
-        Map<String, Object> user = new HashMap<>();
+        // SECURITY DATABASE
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
 
-        // CHOICE RESTAURANT
-        user.put("choice", id_restaurant);
+            // PUT ID AND NAME RESTAURANT INTO USER FIRE BASE
+            Map<String, Object> user = new HashMap<>();
 
-        // NAME RESTAURANT
-        user.put("name_restaurant",name_restaurant_user);
+            // CHOICE RESTAURANT
+            user.put("choice", id_restaurant);
 
+            // NAME RESTAURANT
+            user.put("name_restaurant",name_restaurant_user);
 
+            // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
+            db.collection("users").document(FirebaseAuth.getInstance().getUid())
+                    .set(user, SetOptions.merge())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
 
-        // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
-        db.collection("users").document(FirebaseAuth.getInstance().getUid())
-                .set(user, SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
+                        }
+                    });
 
-                    }
-                });
+        }
 
 
         // TOAST IF CLICK
@@ -317,42 +325,47 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         // PUT ID RESTAURANT FROM SHARED INTO STRING id_restaurant
         id_restaurant = preferences.getString(ID_RESTAURANT, "");
 
+        // SECURITY DATABASE
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
 
-        // GET DATA RESTAURANT FROM FIRE BASE WITH OBJECT RESTAURANT
-        DocumentReference docRef = db.collection("restaurant").document(id_restaurant);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                ObjectRestaurant objectRestaurant = documentSnapshot.toObject(ObjectRestaurant.class);
-
-
-                // IMPLEMENT TEXT VIEW NAME RESTAURANT
-                name_restaurant.setText(objectRestaurant.getNameRestaurant());
-
-                // IMPLEMENT NAME RESTAURANT FOR USER
-                name_restaurant_user = objectRestaurant.getNameRestaurant();
-
-                // IMPLEMENT TEXT VIEW ADDRESS
-                address.setText(objectRestaurant.getAddress());
-
-                // GET DATA WITH GOOGLE API STREAM
-                getDataFromApi(objectRestaurant.getPlace_id());
-
-                // IMPLEMENT URL WITH NAME RESTAURANT
-                url_rating_restaurant = "https://www.google.fr/search?q="+objectRestaurant.getNameRestaurant();
-
-                // IMPLEMENT RATING RESTAURANT
-                rating = objectRestaurant.getRating()-2;
-                Log.e("---TAG---", "--rating --" + objectRestaurant.getRating());
-
-                // SHOW RATING BAR
-                ratingBar.setRating((float) rating);
+            // GET DATA RESTAURANT FROM FIRE BASE WITH OBJECT RESTAURANT
+            DocumentReference docRef = db.collection("restaurant").document(id_restaurant);
+            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    ObjectRestaurant objectRestaurant = documentSnapshot.toObject(ObjectRestaurant.class);
 
 
+                    // IMPLEMENT TEXT VIEW NAME RESTAURANT
+                    name_restaurant.setText(objectRestaurant.getNameRestaurant());
+
+                    // IMPLEMENT NAME RESTAURANT FOR USER
+                    name_restaurant_user = objectRestaurant.getNameRestaurant();
+
+                    // IMPLEMENT TEXT VIEW ADDRESS
+                    address.setText(objectRestaurant.getAddress());
+
+                    // GET DATA WITH GOOGLE API STREAM
+                    getDataFromApi(objectRestaurant.getPlace_id());
+
+                    // IMPLEMENT URL WITH NAME RESTAURANT
+                    url_rating_restaurant = "https://www.google.fr/search?q="+objectRestaurant.getNameRestaurant();
+
+                    // IMPLEMENT RATING RESTAURANT
+                    rating = objectRestaurant.getRating()-2;
+                    Log.e("---TAG---", "--rating --" + objectRestaurant.getRating());
+
+                    // SHOW RATING BAR
+                    ratingBar.setRating((float) rating);
 
 
-            }
-        });
+
+
+                }
+            });
+        }
+
+
 
     }
 
@@ -405,22 +418,28 @@ public class ActivityShowRestaurant extends AppCompatActivity {
     // GET USER DATA FROM DATA BASE
     private void getDataFromUsers(){
 
-        // GET DATA RESTAURANT FROM FIRE BASE WITH OBJECT RESTAURANT
-        DocumentReference docRef = db.collection("users").document(FirebaseAuth.getInstance().getUid());
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
+        // SECURITY DATABASE
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
 
-                // DECLARE AND IMPLEMENT USER
-                User user = documentSnapshot.toObject(User.class);
+            // GET DATA RESTAURANT FROM FIRE BASE WITH OBJECT RESTAURANT
+            DocumentReference docRef = db.collection("users").document(FirebaseAuth.getInstance().getUid());
+            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                // IMPLEMENT CHOICE RESTAURANT
-                choice_restaurant = user.getChoice();
+                    // DECLARE AND IMPLEMENT USER
+                    User user = documentSnapshot.toObject(User.class);
 
-                // IMPLEMENT METHOD COMPARE
-                choiceEqualThisRestaurant(choice_restaurant);
-            }
-        });
+                    // IMPLEMENT CHOICE RESTAURANT
+                    choice_restaurant = user.getChoice();
+
+                    // IMPLEMENT METHOD COMPARE
+                    choiceEqualThisRestaurant(choice_restaurant);
+                }
+            });
+        }
+
+
 
     }
 
@@ -447,66 +466,72 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
         // GET OBJECT USERS FROM CLOUD FIRESTORE
 
-        // GET USERS COLLECTION FROM CLOUD
-        db.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+        // SECURITY DATABASE
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
 
-                        // IF TASK IS SUCCESS FUL GET DATA
-                        if (task.isSuccessful()){
+            // GET USERS COLLECTION FROM CLOUD
+            db.collection("users")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                            // GET DATA FROM DATA BASE
-                            for (QueryDocumentSnapshot document : task.getResult()){
+                            // IF TASK IS SUCCESS FUL GET DATA
+                            if (task.isSuccessful()){
 
-                                // ASK IF CHOICE IS DIFFERENT OF NULL
-                                if (!document.getData().equals(null)) {
+                                // GET DATA FROM DATA BASE
+                                for (QueryDocumentSnapshot document : task.getResult()){
 
-                                    // SPLIT DATA "="
-                                    String currentString = document.getData().toString();
-                                    String[] separated = currentString.split("=");
+                                    // ASK IF CHOICE IS DIFFERENT OF NULL
+                                    if (!document.getData().equals(null)) {
 
-                                    // UID
-                                    String uid = separated[1];
-                                    String[] separated_uid = uid.split(",");
-                                    String uid_final = separated_uid[0];
+                                        // SPLIT DATA "="
+                                        String currentString = document.getData().toString();
+                                        String[] separated = currentString.split("=");
 
-                                    // USERNAME
-                                    String username = separated[2];
-                                    String[] separated_username = username.split(",");
-                                    String username_final = separated_username[0];
+                                        // UID
+                                        String uid = separated[1];
+                                        String[] separated_uid = uid.split(",");
+                                        String uid_final = separated_uid[0];
 
-                                    // URL PHOTO
-                                    String urlPhoto = separated[4];
-                                    String[] separated_url = urlPhoto.split(",");
-                                    String urlPhoto_final = separated_url[0];
+                                        // USERNAME
+                                        String username = separated[2];
+                                        String[] separated_username = username.split(",");
+                                        String username_final = separated_username[0];
 
-                                    // CHOICE WORKMATES
-                                    String choice = separated[5];
-                                    choice = choice.replace("}","");
+                                        // URL PHOTO
+                                        String urlPhoto = separated[4];
+                                        String[] separated_url = urlPhoto.split(",");
+                                        String urlPhoto_final = separated_url[0];
 
-                                    // SELECT WORKMATES
-                                    // IF UID = CURRENT USER DON'T SHOW
-                                    if (!FirebaseAuth.getInstance().getUid().equals(uid_final)){
+                                        // CHOICE WORKMATES
+                                        String choice = separated[5];
+                                        choice = choice.replace("}","");
 
-                                        // ADD IF WORKMATE CHOICE THIS RESTAURANT
-                                        if (choice.equals(id_restaurant)){
+                                        // SELECT WORKMATES
+                                        // IF UID = CURRENT USER DON'T SHOW
+                                        if (!FirebaseAuth.getInstance().getUid().equals(uid_final)){
 
-                                            // IMPLEMENT OBJECT USER LIST
-                                            list_workmate.add(new User(username_final,urlPhoto_final));
+                                            // ADD IF WORKMATE CHOICE THIS RESTAURANT
+                                            if (choice.equals(id_restaurant)){
+
+                                                // IMPLEMENT OBJECT USER LIST
+                                                list_workmate.add(new User(username_final,urlPhoto_final));
+                                            }
                                         }
+
+                                        // IMPLEMENT RECYCLER VIEW
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(ActivityShowRestaurant.this));
+                                        recyclerView.setAdapter(new AdapterShowRestaurant(list_workmate));
+
                                     }
-
-                                    // IMPLEMENT RECYCLER VIEW
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(ActivityShowRestaurant.this));
-                                    recyclerView.setAdapter(new AdapterShowRestaurant(list_workmate));
-
                                 }
                             }
                         }
-                    }
-                });
+                    });
+        }
+
+
     }
 }
 

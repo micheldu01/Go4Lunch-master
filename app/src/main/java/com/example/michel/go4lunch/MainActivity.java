@@ -227,32 +227,37 @@ public class MainActivity extends BaseActivity
 
                 // INTENT OF RESTAURANT CHOICE
 
-                // GET CHOICE CURRENT USER
-                DocumentReference docRef = db.collection("users").document(FirebaseAuth.getInstance().getUid());
-                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                // SECURITY DATABASE
+                if (FirebaseAuth.getInstance().getCurrentUser() != null){
 
-                        // DECLARE AND IMPLEMENT USER
-                        User user = documentSnapshot.toObject(User.class);
+                    // GET CHOICE CURRENT USER
+                    DocumentReference docRef = db.collection("users").document(FirebaseAuth.getInstance().getUid());
+                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                        // GET CHOICE
-                        String choice = user.getChoice();
-                        Log.e("--------", "--- read 3 get name ---- " + user.getChoice());
+                            // DECLARE AND IMPLEMENT USER
+                            User user = documentSnapshot.toObject(User.class);
 
-                        // IF CHOICE EXIST
-                        if (choice!=null){
+                            // GET CHOICE
+                            String choice = user.getChoice();
+                            Log.e("--------", "--- read 3 get name ---- " + user.getChoice());
 
-                            // SAVE CHOICE INTO SHARED
+                            // IF CHOICE EXIST
+                            if (choice!=null){
 
-                            // IMPLEMENT SHARED PREFERENCES
-                            SharedPreferences preferences = getSharedPreferences(MYSHARED, Context.MODE_PRIVATE);
+                                // SAVE CHOICE INTO SHARED
 
-                            // PUT NAME RESTAURANT INTO SHARED
-                            preferences.edit().putString(ID_RESTAURANT, choice).commit();
+                                // IMPLEMENT SHARED PREFERENCES
+                                SharedPreferences preferences = getSharedPreferences(MYSHARED, Context.MODE_PRIVATE);
+
+                                // PUT NAME RESTAURANT INTO SHARED
+                                preferences.edit().putString(ID_RESTAURANT, choice).commit();
+                            }
                         }
-                    }
-                });
+                    });
+
+                }
 
                 // START INTENT
                 startActivity(new Intent(this, ActivityShowRestaurant.class));
@@ -339,50 +344,56 @@ public class MainActivity extends BaseActivity
     // METHOD FOR IMPLEMENT PROFILE INTO MENU DRAWER
     private void profileIntoDrawerMenu(){
 
-        // IMPLEMENT FIRE BASE STORE
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        // SECURITY DATABASE
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
 
-        // IMPLEMENT USER
-        User user = new User();
+            // IMPLEMENT FIRE BASE STORE
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // GET PROFILE FROM FIREBASE INTO USER
-        //db.collection("users").document("user1").set("username");
+            // IMPLEMENT USER
+            User user = new User();
 
-        Log.e("USERS","FAILED" + db.collection("users").document("user1"));
+            // GET PROFILE FROM FIREBASE INTO USER
+            //db.collection("users").document("user1").set("username");
 
-        // IMPLEMENT NAVIGATION VIEW
-        View headerView = navigationView.getHeaderView(0);
+            Log.e("USERS","FAILED" + db.collection("users").document("user1"));
 
-        // IMPLEMENT TEXT VIEW NAME
-        TextView textViewName = (TextView)headerView.findViewById(R.id.drawer_nom);
+            // IMPLEMENT NAVIGATION VIEW
+            View headerView = navigationView.getHeaderView(0);
 
-        // IMPLEMENT TEXT VIEW EMAIL
-        TextView textViewEmail = (TextView) headerView.findViewById(R.id.drawer_email);
+            // IMPLEMENT TEXT VIEW NAME
+            TextView textViewName = (TextView)headerView.findViewById(R.id.drawer_nom);
 
-        // IMPLEMENT IMAGE VIEW
-        ImageView imageView = (ImageView) headerView.findViewById(R.id.drawer_image);
+            // IMPLEMENT TEXT VIEW EMAIL
+            TextView textViewEmail = (TextView) headerView.findViewById(R.id.drawer_email);
 
-        // GET NAME INTO STRING
-        String stringName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+            // IMPLEMENT IMAGE VIEW
+            ImageView imageView = (ImageView) headerView.findViewById(R.id.drawer_image);
 
-        // GET EMAIL INTO STRING
-        String stringEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            // GET NAME INTO STRING
+            String stringName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
 
-        // SHOW NAME
-        textViewName.setText(stringName);
+            // GET EMAIL INTO STRING
+            String stringEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        // SHOW EMAIL
-        textViewEmail.setText(stringEmail);
+            // SHOW NAME
+            textViewName.setText(stringName);
 
-        // ASK IF IMAGE PROFILE IS NOT NULL
-        if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() != null){
+            // SHOW EMAIL
+            textViewEmail.setText(stringEmail);
 
-            // USE GLIDE FOR GET IMAGE PROFILE INTO IMAGE VIEW
-            Glide.with(this)
-                    .load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(imageView);
+            // ASK IF IMAGE PROFILE IS NOT NULL
+            if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() != null){
+
+                // USE GLIDE FOR GET IMAGE PROFILE INTO IMAGE VIEW
+                Glide.with(this)
+                        .load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl())
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(imageView);
+            }
         }
+
+
 
 
 
@@ -416,38 +427,43 @@ public class MainActivity extends BaseActivity
     // SAVE PROFILE INTO FIREBASE
     private void saveProfileFireBase(){
 
+        // SECURITY DATABASE
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
 
-        // TURN URI TO STRING
-        Uri urlPhoto = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
-        String stringUri = urlPhoto.toString();
+            // TURN URI TO STRING
+            Uri urlPhoto = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
+            String stringUri = urlPhoto.toString();
 
-        // ADD DATA
+            // ADD DATA
 
-        // CREATE A NEW USER WITH LAST NAME AND PHOTO
-        Map<String, Object> user = new HashMap<>();
+            // CREATE A NEW USER WITH LAST NAME AND PHOTO
+            Map<String, Object> user = new HashMap<>();
 
-        // PUT DATA
+            // PUT DATA
 
-        //NAME
-        user.put("name", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-        // STRING URL
-        user.put("photo",stringUri);
-        // PUT  UID
-        user.put("uid",FirebaseAuth.getInstance().getCurrentUser().getUid());
+            //NAME
+            user.put("name", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+            // STRING URL
+            user.put("photo",stringUri);
+            // PUT  UID
+            user.put("uid",FirebaseAuth.getInstance().getCurrentUser().getUid());
 
 
-        // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
-        db.collection("users").document(FirebaseAuth.getInstance().getUid())
-                .set(user, SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.e("main activity","------data save profile-----"+
-                                FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                    }
-                });
+            // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
+            db.collection("users").document(FirebaseAuth.getInstance().getUid())
+                    .set(user, SetOptions.merge())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.e("main activity","------data save profile-----"+
+                                    FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                        }
+                    });
 
-    }
+        }
+        }
+
+
 
 
 }

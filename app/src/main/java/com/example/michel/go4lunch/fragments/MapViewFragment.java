@@ -46,6 +46,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -357,7 +358,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         if(client != null){
 
             // REMOVE LOCATION UPDATE
-            LocationServices.FusedLocationApi.removeLocationUpdates(client, this);
+            //LocationServices.FusedLocationApi.removeLocationUpdates(client, this);
             LocationServices.getFusedLocationProviderClient(getActivity());
 
 
@@ -442,8 +443,12 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
 
                             ));
 
-                            // PUT RESTAURANT OBJECT INTO DATA BASE FIRE FORE
-                            db.collection("restaurant").document(objectRestaurantList.get(i).getId()).set(objectRestaurantList.get(i), SetOptions.merge());
+                            // SECURITY DATABASE
+                            if (FirebaseAuth.getInstance().getCurrentUser() != null){
+
+                                // PUT RESTAURANT OBJECT INTO DATA BASE FIRE FORE
+                                db.collection("restaurant").document(objectRestaurantList.get(i).getId()).set(objectRestaurantList.get(i), SetOptions.merge());
+                            }
 
                             // INCREMENT I
                             i++;
@@ -464,33 +469,40 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
     // METHOD TO ASK IF RESTAURANT IS CHOICE
     private void askIfRestaurantChoice(final String id_restaurant, final Float latitude, final Float longitude){
 
-        // ASK DATA BASE, IF ONE USER HAVE CHOICE THIS RESTAURANT
-        db.collection("users")
-                .whereEqualTo("choice",id_restaurant)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                        // IF TASK IS SUCCESS FUL GET DATA
-                        if(task.isSuccessful()){
+        // SECURITY DATABASE
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
 
-                            // GET DATA FROM DATA BASE
-                            for(QueryDocumentSnapshot document : task.getResult()) {
+            // ASK DATA BASE, IF ONE USER HAVE CHOICE THIS RESTAURANT
+            db.collection("users")
+                    .whereEqualTo("choice",id_restaurant)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                                // ASK IF CHOICE IS DIFFERENT OF NULL
-                                if (!document.getData().equals(null)) {
+                            // IF TASK IS SUCCESS FUL GET DATA
+                            if(task.isSuccessful()){
 
-                                    // IMPLEMENT GOOGLE MAP WITH MARKER OPTION ORANGE
-                                    mMap.addMarker(new MarkerOptions()
-                                            .position(new LatLng(latitude,longitude))
-                                            .snippet(id_restaurant)
-                                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_restaurant_vert2)));
+                                // GET DATA FROM DATA BASE
+                                for(QueryDocumentSnapshot document : task.getResult()) {
+
+                                    // ASK IF CHOICE IS DIFFERENT OF NULL
+                                    if (!document.getData().equals(null)) {
+
+                                        // IMPLEMENT GOOGLE MAP WITH MARKER OPTION ORANGE
+                                        mMap.addMarker(new MarkerOptions()
+                                                .position(new LatLng(latitude,longitude))
+                                                .snippet(id_restaurant)
+                                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_restaurant_vert2)));
+                                    }
                                 }
                             }
                         }
-                    }
-                });
+                    });
+        }
+
+
     }
 
     // IMPLEMENT SHARED PREFERENCES

@@ -102,6 +102,9 @@ public class WorkmatesFragment extends Fragment {
 
         // GET OBJECT USERS FROM CLOUD FIRESTORE
 
+        // SECURITY DATABASE
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+
             // GET USERS COLLECTION FROM CLOUD
             db.collection("users")
                     .get()
@@ -162,6 +165,8 @@ public class WorkmatesFragment extends Fragment {
                             }
                         }
                     });
+        }
+
     }
 
 
