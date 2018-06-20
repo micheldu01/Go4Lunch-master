@@ -98,7 +98,7 @@
         android:layout_below="@+id/icon_workmates_recycler_view"
         android:layout_marginRight="5dp"
         android:layout_alignParentRight="true"
-        android:numStars="5"
+        android:numStars="3"
         android:scaleX="0.4"
         android:scaleY="0.4"
         android:theme="@style/RatingBar"

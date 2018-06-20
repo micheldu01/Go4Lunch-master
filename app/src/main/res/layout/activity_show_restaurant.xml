@@ -54,7 +54,7 @@
                 android:layout_below="@+id/image_view_show_restaurant"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/name_restaurant_show_restaurant"
-                android:numStars="5"
+                android:numStars="3"
                 android:scaleX="0.4"
                 android:scaleY="0.4"
                 android:theme="@style/RatingBar"

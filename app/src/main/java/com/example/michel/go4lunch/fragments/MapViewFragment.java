@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +59,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
@@ -126,6 +128,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
 
     // ARRAY LIST ID RESTAURANT CHOICE
     ArrayList<String> list_id = new ArrayList<>();
+
+
 
 
 
@@ -299,6 +303,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         // IMPLEMENT LONGITUDE
         longitude = location.getLongitude();
 
+        //-------------------------------------------------------------------------------
         // SAVE LATITUDE INTO SHARED
 
         // IMPLEMENT LOCATION
@@ -322,7 +327,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
 
         latitude = location.getLatitude();
         Log.e("---test latitude---","--- test latitude ---" + latitude);
-
+        //------------------------------------------------------------------------------
 
         // REMOVE MARKER CURRENT LOCATION IF DIFFERENT OF NULL
         if(currentLocationMarker != null){
@@ -494,6 +499,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         // IMPLEMENT SHARED PREFERENCES
         preferences = getActivity().getSharedPreferences(MYSHARED, Context.MODE_PRIVATE);
     }
+
 }
 
 

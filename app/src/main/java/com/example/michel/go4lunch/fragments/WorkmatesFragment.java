@@ -118,7 +118,6 @@ public class WorkmatesFragment extends Fragment {
                                     // ASK IF CHOICE IS DIFFERENT OF NULL
                                     if (!document.getData().equals(null)) {
 
-
                                         // SPLIT DATA "="
                                         String currentString = document.getData().toString();
                                         String[] separated = currentString.split("=");
@@ -196,8 +195,12 @@ public class WorkmatesFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // SHOW LIST RESTAURANT
 
+                // REMOVE LIST WORKMATE
+                list_workmate.clear();
+
+                // SHOW LIST RESTAURANT
+                showProfileWithChoice();
             }
         });
     }

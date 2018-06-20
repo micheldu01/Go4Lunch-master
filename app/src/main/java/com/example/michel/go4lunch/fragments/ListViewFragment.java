@@ -148,6 +148,9 @@ public class ListViewFragment extends Fragment {
             @Override
             public void onRefresh() {
 
+                // REMOVE RESTAURANT OBJECT LIST
+                restaurantObjectRecyclerList.clear();
+
                 // SHOW LIST RESTAURANT
                 showRestaurantList();
             }
@@ -198,7 +201,6 @@ public class ListViewFragment extends Fragment {
 
 
                                                 // GET PHOTO RESTAURANT
-
 
                                                 try {
                                                     // IF PHOTO IS NOT NULL GET PHOTO
@@ -257,7 +259,6 @@ public class ListViewFragment extends Fragment {
 
                                                     }
 
-
                                                     // GET NUMBER WORKMATES
                                                     int size_number_workmates = number_workmates.size();
 
@@ -277,27 +278,21 @@ public class ListViewFragment extends Fragment {
                                                         // COMPARE CHOICE WORKMATES WITH ID RESTAURANT
                                                         if (number_workmates.get(i).equals(objectRestaurant.getId())){
 
-                                                            Log.e("-- list workmates --", "-- get size --" + number_workmates.get(0));
-
-
+                                                            // INCREMENT NUMBER
                                                             number++;
                                                         }
-
                                                     }
-
-
-
+                                                     // GET RATING
+                                                     double rating = objectRestaurant.getRating()-2;
 
 
                                                     // ADD DATA INTO OBJECT LIST
-                                                    restaurantObjectRecyclerList.add(new RestaurantObjectRecycler(objectRestaurant.getNameRestaurant(),street,village,time, "", objectRestaurant.getRating(),number,150, url_restaurant));
+                                                    restaurantObjectRecyclerList.add(new RestaurantObjectRecycler(objectRestaurant.getNameRestaurant(),street,village,time, "", rating,number,150, url_restaurant));
 
 
                                                     // IMPLEMENT RECYCLER VIEW
                                                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                                     recyclerView.setAdapter(new AdapterListView(restaurantObjectRecyclerList));
-
-
 
 
                                             }
@@ -308,9 +303,6 @@ public class ListViewFragment extends Fragment {
                                             public void onComplete() {
                                             }
                                         });
-
-
-
                             }
                         }
                     }
@@ -336,6 +328,7 @@ public class ListViewFragment extends Fragment {
                                 // DECLARE AND IMPLEMENT USER
                                 User user = document.toObject(User.class);
 
+                                // IMPLEMENT NUMBER WORKMATES WITH CHOICE
                                 number_workmates.add(user.getChoice());
 
                             }
