@@ -1,24 +1,20 @@
 package com.example.michel.go4lunch;
 
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -31,13 +27,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.michel.go4lunch.adapter.PageAdapter;
-import com.example.michel.go4lunch.base.BaseActivity;
 import com.example.michel.go4lunch.models.User;
 import com.example.michel.go4lunch.notification.ActivityNoticationShow;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -57,7 +50,7 @@ import static com.example.michel.go4lunch.shared.Shared.ID_RESTAURANT;
 import static com.example.michel.go4lunch.shared.Shared.MYSHARED;
 
 
-public class MainActivity extends BaseActivity
+public class MainActivity extends AppCompatActivity
         implements
         NavigationView.OnNavigationItemSelectedListener{
 
@@ -241,7 +234,6 @@ public class MainActivity extends BaseActivity
 
                             // GET CHOICE
                             String choice = user.getChoice();
-                            Log.e("--------", "--- read 3 get name ---- " + user.getChoice());
 
                             // IF CHOICE EXIST
                             if (choice!=null){
@@ -266,6 +258,10 @@ public class MainActivity extends BaseActivity
                 // ASK SETTING
             case R.id.activity_main_drawer_settings:
                 startActivity(new Intent(this, ActivityNoticationShow.class));
+                break;
+
+            case R.id.activity_main_drawer_chat:
+                Toast.makeText(MainActivity.this,"c'est ok",Toast.LENGTH_SHORT).show();
                 break;
 
                 // ASK LOGOUT

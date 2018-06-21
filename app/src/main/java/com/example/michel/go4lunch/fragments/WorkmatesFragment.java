@@ -183,12 +183,12 @@ public class WorkmatesFragment extends Fragment {
                             preferences = getActivity().getSharedPreferences(MYSHARED, Context.MODE_PRIVATE);
 
                             // SAVE CHOICE INTO SHARED
-                            preferences.edit().putString(ID_RESTAURANT,"").commit();
+                            preferences.edit().putString(ID_RESTAURANT,list_workmate.get(position).getChoice()).commit();
 
                             // ON CLICK INTENT
                             startActivity(new Intent(getContext(),ActivityShowRestaurant.class));
-
                         }
+
                     }
                 });
     }

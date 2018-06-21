@@ -1,7 +1,9 @@
 package com.example.michel.go4lunch.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -48,6 +50,9 @@ import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
+import static com.example.michel.go4lunch.shared.Shared.ID_RESTAURANT;
+import static com.example.michel.go4lunch.shared.Shared.MYSHARED;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,8 +87,14 @@ public class ListViewFragment extends Fragment {
     // DECLARE BOOLEAN IS OPEN
     private boolean is_open;
 
-    // DECLARE ARRAY LIST NUMBER WORKMATES
-    private ArrayList<String> number_workmates = new ArrayList<>();
+    // DECLARE DOUBLE RATING
+    private double rating;
+
+    // DECLARE INT WORKMATES
+    private int number;
+
+    // DECLARE SHARED PREFERENCES
+    private SharedPreferences preferences;
 
 
 
@@ -113,10 +124,6 @@ public class ListViewFragment extends Fragment {
         // DECLARE THE ONCLICK FOR USE IT FOR SHOW VIEW RESTAUARANT LIST
         this.configureOnClickRecyclerView();
 
-
-        // CALL METHOD FOR GET RESTAURANT CHOICE WORKMATES
-        getNumberWorkmates();
-
         // SHOW RESTAURANT LIST
         this.showRestaurantList();
 
@@ -126,20 +133,7 @@ public class ListViewFragment extends Fragment {
     }
 
 
-    // MEHTOD CLICK ON RECYCLER VIEW
-    private void configureOnClickRecyclerView() {
-        ItemClickSupport.addTo(recyclerView, R.layout.fragment_list_view)
-                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
-                        // ON CLICK INTENT
-                        startActivity(new Intent(getContext(),ActivityShowRestaurant.class));
-
-                    }
-                });
-
-    }
 
 
     // SWIPE REFRESH METHOD
@@ -172,10 +166,11 @@ public class ListViewFragment extends Fragment {
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
                         @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        public void onComplete(@NonNull final Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (final DocumentSnapshot document : task.getResult()) {
                                     final ObjectRestaurant objectRestaurant = document.toObject(ObjectRestaurant.class);
+
 
                                     // SPLIT ADDRESS
                                     String currentString = objectRestaurant.getAddress();
@@ -194,6 +189,18 @@ public class ListViewFragment extends Fragment {
                                         // IMPLEMENT VILLAGE
                                         village = separated[1];
                                     }
+
+                                    // NUMBER WORKMATES PER RESTAURANT
+                                    try {
+                                        // GET NUMBER WORMATES PER RESTAURANT
+                                        number = objectRestaurant.getWormates();
+
+                                        Log.e("--workmates--","-- number -- " + objectRestaurant.getWormates());
+
+                                    }catch (Exception e){
+                                        number = 0;
+                                    }
+
 
                                     // GET DATA RESTAURANT FROM GOOGLE API
 
@@ -216,7 +223,6 @@ public class ListViewFragment extends Fragment {
 
                                                         url_restaurant = null;
                                                     }
-
 
 
                                                     // GET CURRENT DAY
@@ -258,46 +264,28 @@ public class ListViewFragment extends Fragment {
                                                             // IMPLEMENT TIME
                                                             time = "close";
                                                         }
-
                                                     }catch (Exception e){
-
                                                     }
 
-                                                    // GET NUMBER WORKMATES
-                                                    int size_number_workmates = number_workmates.size();
+                                                    // GET LATITUDE LONGITUDE
+                                                    try {
 
-                                                    // DECLARE NUMBER
-                                                    int number = 0;
-
-                                                    Log.e("-- list workmates --", "-- get size --" + number_workmates.size());
-
-                                                    // GET NUMBER WORKMATES IN EACH RESTAURANT
-
-                                                    // IMPLEMENT I
-                                                    int i = 0;
-
-                                                    // USE WHILE TO GET NUMBER WORKMATES
-                                                    while (size_number_workmates<= i){
-
-                                                        // COMPARE CHOICE WORKMATES WITH ID RESTAURANT
-                                                        if (number_workmates.get(i).equals(objectRestaurant.getId())){
-
-                                                            // INCREMENT NUMBER
-                                                            number++;
-                                                        }
+                                                        // GET LATITUDE
+                                                        la
                                                     }
+
+
                                                     // GET RATING
                                                     double rating = objectRestaurant.getRating()-2;
 
 
                                                     // ADD DATA INTO OBJECT LIST
-                                                    restaurantObjectRecyclerList.add(new RestaurantObjectRecycler(objectRestaurant.getNameRestaurant(),street,village,time, "", rating,number,150, url_restaurant));
+                                                    restaurantObjectRecyclerList.add(new RestaurantObjectRecycler(objectRestaurant.getNameRestaurant(),street,village,time, "", rating,number,150, url_restaurant,objectRestaurant.getId()));
 
 
                                                     // IMPLEMENT RECYCLER VIEW
                                                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                                     recyclerView.setAdapter(new AdapterListView(restaurantObjectRecyclerList));
-
 
                                                 }
                                                 @Override
@@ -307,45 +295,40 @@ public class ListViewFragment extends Fragment {
                                                 public void onComplete() {
                                                 }
                                             });
-                                }
-                            }
-                        }
-                    });
-        }
-
-
-
-
-    }
-
-    // METHOD FOR GET IMPLEMENT RECYCLER VIEW
-    private void getNumberWorkmates(){
-
-        // SECURITY DATABASE
-        if (FirebaseAuth.getInstance().getCurrentUser() != null){
-
-            // GET USERS COLLECTION FROM CLOUD
-            db.collection("users")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (DocumentSnapshot document : task.getResult()) {
-
-                                    // DECLARE AND IMPLEMENT USER
-                                    User user = document.toObject(User.class);
-
-                                    // IMPLEMENT NUMBER WORKMATES WITH CHOICE
-                                    number_workmates.add(user.getChoice());
 
                                 }
                             }
                         }
                     });
+
         }
 
+
     }
+
+    // MEHTOD CLICK ON RECYCLER VIEW
+    private void configureOnClickRecyclerView() {
+        ItemClickSupport.addTo(recyclerView, R.layout.fragment_list_view)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+
+                        // DECLARE SHARED
+                        preferences = getActivity().getSharedPreferences(MYSHARED, Context.MODE_PRIVATE);
+
+                        // SAVE ID RESTAURANT INTO SHARED
+                        preferences.edit().putString(ID_RESTAURANT, restaurantObjectRecyclerList.get(position).getId()).commit();
+
+                        // ON CLICK INTENT
+                        startActivity(new Intent(getContext(), ActivityShowRestaurant.class));
+
+                    }
+
+                });
+
+    }
+
+
 }
 
 

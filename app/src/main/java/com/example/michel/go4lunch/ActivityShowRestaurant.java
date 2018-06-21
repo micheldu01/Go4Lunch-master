@@ -379,7 +379,7 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                     @Override
                     public void onNext(GoogleAPIplaceId googleAPIplaceId) {
 
-                            // IMPLEMENT NUMBER PHONE
+                        // IMPLEMENT NUMBER PHONE
                             number_phone = googleAPIplaceId.getResultsAPI().getPhone();
                             Log.e("--get phone--", "--result--" + number_phone);
 

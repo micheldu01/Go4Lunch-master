@@ -62,6 +62,10 @@ public class ObjectRestaurant {
     @Nullable
     private double rating;
 
+    // DECLARE NUMBER WORKMATES
+    @Nullable
+    private int workmates;
+
 
 
 
@@ -70,7 +74,7 @@ public class ObjectRestaurant {
 
 
 
-    // CONSTRUCTOR WITHOUT TIME CLOSE AND TIME
+    // CONSTRUCTOR FOR MAP VIEW FRAGMENT
     public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id, double rating) {
         this.nameRestaurant = nameRestaurant;
         this.id = id;
@@ -79,6 +83,20 @@ public class ObjectRestaurant {
         this.longitude = longitude;
         this.place_id = place_id;
         this.rating = rating;
+    }
+
+
+
+    // CONSTRUCTOR WITHOUT TIME CLOSE AND TIME
+    public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id, double rating, int workmates) {
+        this.nameRestaurant = nameRestaurant;
+        this.id = id;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.place_id = place_id;
+        this.rating = rating;
+        this.workmates = workmates;
     }
 
 
@@ -214,6 +232,10 @@ public class ObjectRestaurant {
         this.rating = rating;
     }
 
+    @Nullable
+    public int getWormates() { return workmates; }
+
+    public void setWormates(@Nullable int wormates) { this.workmates = wormates; }
 }
 
 

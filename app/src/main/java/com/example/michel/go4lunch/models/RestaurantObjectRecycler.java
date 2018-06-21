@@ -23,14 +23,23 @@ public class RestaurantObjectRecycler implements Comparable<RestaurantObjectRecy
     // TYPE FOOD
     private String type;
 
-    // INT START
+    // STAR
     private double star;
 
-    private int workMates;
+    // WORKMATES
+    private int workmates;
 
+    // DISTANCE
     private int distance;
 
+    // URL PHOTO
     private String urlPhoto;
+
+    // ID RESTAURANT
+    private String id;
+
+
+
 
 
     // CONSTRUCTOR EMPTY
@@ -40,16 +49,17 @@ public class RestaurantObjectRecycler implements Comparable<RestaurantObjectRecy
 
 
     // CONSTRUCTOR FULL VALUE
-    public RestaurantObjectRecycler(String name, String address, String village, String heuresOuverture, String type, double star, int workMates, int distance, String urlPhoto) {
+    public RestaurantObjectRecycler(String name, String address, String village, String heuresOuverture, String type, double star, int workMates, int distance, String urlPhoto, String id) {
         this.name = name;
         this.address = address;
         this.village = village;
         this.heuresOuverture = heuresOuverture;
         this.type = type;
         this.star = star;
-        this.workMates = workMates;
+        this.workmates = workmates;
         this.distance = distance;
         this.urlPhoto = urlPhoto;
+        this.id = id;
     }
 
 
@@ -103,11 +113,11 @@ public class RestaurantObjectRecycler implements Comparable<RestaurantObjectRecy
     }
 
     public int getWorkMates() {
-        return workMates;
+        return workmates;
     }
 
     public void setWorkMates(int workMates) {
-        this.workMates = workMates;
+        this.workmates = workMates;
     }
 
     public int getDistance() {
@@ -125,6 +135,10 @@ public class RestaurantObjectRecycler implements Comparable<RestaurantObjectRecy
     public void setUrlPhoto(String urlPhoto) {
         this.urlPhoto = urlPhoto;
     }
+
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id; }
 
     // ADD METHOD FOR SORT DISTANCE
     @Override
