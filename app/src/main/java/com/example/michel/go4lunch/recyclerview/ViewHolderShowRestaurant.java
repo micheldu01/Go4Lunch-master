@@ -42,9 +42,9 @@ public class ViewHolderShowRestaurant extends RecyclerView.ViewHolder {
     public void restaurantShowRecyclerView(User user){
 
         // SET NAME
-        name.setText(user.getUsername()+" ");
+        name.setText(user.getName()+" ");
         // SET IMAGE
-        Glide.with(itemView.getContext()).load(user.getUrlPicture()).apply(RequestOptions.circleCropTransform()).into(imageView);
+        Glide.with(itemView.getContext()).load(user.getPhoto()).apply(RequestOptions.circleCropTransform()).into(imageView);
 
     }
 

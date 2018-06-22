@@ -16,16 +16,11 @@ public class ObjectRestaurant {
     // DECLARE STRING  ADDRESS
     private String address;
 
-    // DECLARE STRING TIME OPEN
-    @Nullable
-    private boolean time_open;
-
     // DECLARE DOUBLE LATITUDE
     private Float latitude;
 
     // DECLARE DOUBLE LONGITUDE
     private Float longitude;
-
 
     // DECLARE STRING PLACE ID
     private String place_id;
@@ -66,6 +61,12 @@ public class ObjectRestaurant {
     @Nullable
     private int workmates;
 
+    // DECLARE OPEN BOOLEAN
+    @Nullable
+    private boolean is_open;
+
+
+
 
 
 
@@ -87,8 +88,8 @@ public class ObjectRestaurant {
 
 
 
-    // CONSTRUCTOR WITHOUT TIME CLOSE AND TIME
-    public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id, double rating, int workmates) {
+    // CONSTRUCTOR FULL
+    public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id, double rating, String url_photo, String time_close) {
         this.nameRestaurant = nameRestaurant;
         this.id = id;
         this.address = address;
@@ -96,7 +97,8 @@ public class ObjectRestaurant {
         this.longitude = longitude;
         this.place_id = place_id;
         this.rating = rating;
-        this.workmates = workmates;
+        this.url_photo = url_photo;
+        this.time_close = time_close;
     }
 
 
@@ -125,15 +127,6 @@ public class ObjectRestaurant {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    @Nullable
-    public boolean isTime_open() {
-        return time_open;
-    }
-
-    public void setTime_open(@Nullable boolean time_open) {
-        this.time_open = time_open;
     }
 
     public Float getLatitude() {
@@ -233,9 +226,33 @@ public class ObjectRestaurant {
     }
 
     @Nullable
-    public int getWormates() { return workmates; }
+    public int getWormates() {
+        return workmates;
+    }
 
-    public void setWormates(@Nullable int wormates) { this.workmates = wormates; }
+    @Nullable
+    public int getWorkmates() {
+        return workmates;
+    }
+
+    public void setWorkmates(@Nullable int workmates) {
+        this.workmates = workmates;
+    }
+
+    @Nullable
+    public boolean isIs_open() {
+        return is_open;
+    }
+
+
+    public void setIs_open(@Nullable boolean is_open) {
+        this.is_open = is_open;
+    }
+
+
+    public void setWormates(@Nullable int wormates) {
+        this.workmates = wormates;
+    }
 }
 
 

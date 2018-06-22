@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +25,15 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.michel.go4lunch.APIMaps.MapStreams;
+import com.example.michel.go4lunch.APIMaps.apiPlaceId.GoogleAPIplaceId;
 import com.example.michel.go4lunch.ActivityShowRestaurant;
 import com.example.michel.go4lunch.models.ObjectRestaurant;
 import com.example.michel.go4lunch.APIMaps.apiNearby.GoogleApiA;
 import com.example.michel.go4lunch.BuildConfig;
 import com.example.michel.go4lunch.R;
+import com.example.michel.go4lunch.models.RestaurantObjectRecycler;
 import com.example.michel.go4lunch.models.User;
+import com.example.michel.go4lunch.recyclerview.adapter.AdapterListView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -129,6 +133,18 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
 
     // ARRAY LIST ID RESTAURANT CHOICE
     ArrayList<String> list_id = new ArrayList<>();
+
+    // DECLARE DAY
+    private int day_count = 0;
+
+    // DECLARE URL RESTAURANT
+    private String url_restaurant;
+
+    // DECLARE TIME
+    private String time;
+
+    // DECLARE IS OPEN
+    private boolean is_open;
 
 
 
@@ -423,25 +439,104 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                     @Override
                     public void onNext(final GoogleApiA googleAPI) {
 
+
                         // DECLARE VALUE INT
                         i = 0;
                         // CREATE WHILE FOR PUT DATA INTO OBJECT RESTAURANT
                         while (i <= googleAPI.getResults().size()-1){
 
-                        // GET KEY PLACE FOR USE GoogleAPIplaceId
-                        idPlaceAPI = googleAPI.getResults().get(i).getPlace_id();
+                            // GET KEY PLACE FOR USE GoogleAPIplaceId
+                            idPlaceAPI = googleAPI.getResults().get(i).getPlace_id();
 
-                            // PUT DATA INTO RESTAURANT OBJECT LIST
-                            objectRestaurantList.add(new ObjectRestaurant(
-                                    googleAPI.getResults().get(i).getName(),
-                                    googleAPI.getResults().get(i).getId(),
-                                    googleAPI.getResults().get(i).getVicinity(),
-                                    googleAPI.getResults().get(i).getGeometry().getLocation().getLatitude(),
-                                    googleAPI.getResults().get(i).getGeometry().getLocation().getLongitude(),
-                                    googleAPI.getResults().get(i).getPlace_id(),
-                                    googleAPI.getResults().get(i).getRating()
 
-                            ));
+
+
+                            // GET DATA RESTAURANT FROM GOOGLE API
+
+                            // DECLARE DISPOSABLE WITH STREAM GOOGLE API PLACE ID
+                            Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, idPlaceAPI)
+                                    .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
+                                        @Override
+                                        public void onNext(GoogleAPIplaceId googleAPIplaceId) {
+
+
+                                            // GET PHOTO RESTAURANT
+                                            try {
+                                                // IF PHOTO IS NOT NULL GET PHOTO
+                                                if (googleAPIplaceId.getResultsAPI().getPhotos() != null) {
+                                                    url_restaurant = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
+                                                            + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference() + "&key=" + BuildConfig.KEY_GOOGLE_MAP;
+                                                }
+                                            }catch (Exception e){
+
+                                                url_restaurant = null;
+                                            }
+
+                                            // GET CURRENT DAY
+                                            Calendar c = Calendar.getInstance();
+
+                                            // IMPLEMENT DAY
+                                            day_count = c.get(Calendar.DAY_OF_WEEK);
+
+                                            // MAKE SAME CURRENT DAY WITH GOOGLE API
+                                            if(day_count<2){
+                                                day_count = day_count+5;
+                                            }else{
+                                                day_count = day_count-2;
+                                            }
+
+                                            // USE TRY CATCH FOR GET CLOSE TIME RESTAURANT
+                                            try {
+
+                                                // IMPLEMENT TIME CLOSE RESTAURANT
+                                                time = googleAPIplaceId.getResultsAPI().getOpening_hours().getPeriods().get(day_count).getClose().getTime();
+
+                                            }catch (Exception e){
+
+                                                // IF TIME CLOSE DO NOT EXIST IMPLEMENT TIME
+                                                time = "----";
+
+                                            }
+
+                                            // USE TRY CATCH FOR KNOW IF RESTAURANT IS OPEN NOW
+                                            try {
+
+                                                // ASK IF RESTAURANT IS OPEN NOW AND IMPLEMENT ANSWER
+                                                is_open = googleAPIplaceId.getResultsAPI().getOpening_hours().isOpen_now();
+
+                                                // IF RESTAURANT IS CLOSE
+                                                if (is_open==false) {
+
+                                                    // IMPLEMENT TIME
+                                                    time = "close";
+                                                }
+                                            }catch (Exception e){
+                                            }
+
+
+
+                                            // PUT DATA INTO RESTAURANT OBJECT LIST
+                                            objectRestaurantList.add(new ObjectRestaurant(
+                                                    googleAPI.getResults().get(i).getName(),
+                                                    googleAPI.getResults().get(i).getId(),
+                                                    googleAPI.getResults().get(i).getVicinity(),
+                                                    googleAPI.getResults().get(i).getGeometry().getLocation().getLatitude(),
+                                                    googleAPI.getResults().get(i).getGeometry().getLocation().getLongitude(),
+                                                    googleAPI.getResults().get(i).getPlace_id(),
+                                                    googleAPI.getResults().get(i).getRating(),
+                                                    url_restaurant,
+                                                    time
+                                            ));
+
+                                        }
+                                        @Override
+                                        public void onError(Throwable e) {
+                                        }
+                                        @Override
+                                        public void onComplete() {
+                                        }
+                                    });
+
 
                             // SECURITY DATABASE
                             if (FirebaseAuth.getInstance().getCurrentUser() != null){

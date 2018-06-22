@@ -81,17 +81,17 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
         village.setText(restaurantObjectRecycler.getVillage());
 
         // IF RESTAURANT CLOSE RED COLOR
-        if(restaurantObjectRecycler.getHeuresOuverture().equals("close")){
+        //if(restaurantObjectRecycler.getHeuresOuverture().equals("close")){
 
             // SET HOUR AND COLOR RED
             hour.setText(restaurantObjectRecycler.getHeuresOuverture());
             hour.setTextColor(Color.RED);
-        }
-        else {
+        //}
+        //else {
             // SET HOUR AND ITALIC STYLE
             hour.setText(restaurantObjectRecycler.getHeuresOuverture());
             hour.setTypeface(null, Typeface.ITALIC);
-        }
+        //}
 
         // SET DISTANCE
         distance.setText(String.valueOf(restaurantObjectRecycler.getDistance())+"m");

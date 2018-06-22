@@ -96,6 +96,12 @@ public class ListViewFragment extends Fragment {
     // DECLARE SHARED PREFERENCES
     private SharedPreferences preferences;
 
+    // DECLARE LATITUDE
+    private Float latitude;
+
+    // DECLARE LONGITUDE
+    private Float longitude;
+
 
 
 
@@ -201,100 +207,22 @@ public class ListViewFragment extends Fragment {
                                         number = 0;
                                     }
 
+                                    // GET LATITUDE
+                                    latitude = objectRestaurant.getLatitude();
 
-                                    // GET DATA RESTAURANT FROM GOOGLE API
-
-                                    // DECLARE DISPOSABLE WITH STREAM GOOGLE API PLACE ID
-                                    Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, objectRestaurant.getPlace_id())
-                                            .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
-                                                @Override
-                                                public void onNext(GoogleAPIplaceId googleAPIplaceId) {
+                                    // GET LONGITUDE
+                                    longitude = objectRestaurant.getLongitude();
 
 
-                                                    // GET PHOTO RESTAURANT
 
-                                                    try {
-                                                        // IF PHOTO IS NOT NULL GET PHOTO
-                                                        if (googleAPIplaceId.getResultsAPI().getPhotos() != null) {
-                                                            url_restaurant = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
-                                                                    + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference() + "&key=" + BuildConfig.KEY_GOOGLE_MAP;
-                                                        }
-                                                    }catch (Exception e){
-
-                                                        url_restaurant = null;
-                                                    }
+                                    // ADD DATA INTO OBJECT LIST
+                                    restaurantObjectRecyclerList.add(new RestaurantObjectRecycler(objectRestaurant.getNameRestaurant(),street,village,objectRestaurant.getTime_close(), "", objectRestaurant.getRating(),objectRestaurant.getWorkmates(),150, objectRestaurant.getUrl_photo(),objectRestaurant.getId()));
 
 
-                                                    // GET CURRENT DAY
-                                                    Calendar c = Calendar.getInstance();
+                                    // IMPLEMENT RECYCLER VIEW
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                    recyclerView.setAdapter(new AdapterListView(restaurantObjectRecyclerList));
 
-                                                    // IMPLEMENT DAY
-                                                    day = c.get(Calendar.DAY_OF_WEEK);
-
-                                                    // MAKE SAME CURRENT DAY WITH GOOGLE API
-                                                    if(day<2){
-                                                        day = day+5;
-                                                    }else{
-                                                        day = day-2;
-                                                    }
-
-                                                    // USE TRY CATCH FOR GET CLOSE TIME RESTAURANT
-                                                    try {
-
-                                                        // IMPLEMENT TIME CLOSE RESTAURANT
-                                                        time = googleAPIplaceId.getResultsAPI().getOpening_hours().getPeriods().get(day).getClose().getTime();
-
-
-                                                    }catch (Exception e){
-
-                                                        // IF TIME CLOSE DO NOT EXIST IMPLEMENT TIME
-                                                        time = "----";
-
-                                                    }
-
-                                                    // USE TRY CATCH FOR KNOW IF RESTAURANT IS OPEN NOW
-                                                    try {
-
-                                                        // ASK IF RESTAURANT IS OPEN NOW AND IMPLEMENT ANSWER
-                                                        is_open = googleAPIplaceId.getResultsAPI().getOpening_hours().isOpen_now();
-
-                                                        // IF RESTAURANT IS CLOSE
-                                                        if (is_open==false) {
-
-                                                            // IMPLEMENT TIME
-                                                            time = "close";
-                                                        }
-                                                    }catch (Exception e){
-                                                    }
-
-                                                    // GET LATITUDE LONGITUDE
-                                                    try {
-
-                                                        // GET LATITUDE
-                                                        la
-                                                    }
-
-
-                                                    // GET RATING
-                                                    double rating = objectRestaurant.getRating()-2;
-
-
-                                                    // ADD DATA INTO OBJECT LIST
-                                                    restaurantObjectRecyclerList.add(new RestaurantObjectRecycler(objectRestaurant.getNameRestaurant(),street,village,time, "", rating,number,150, url_restaurant,objectRestaurant.getId()));
-
-
-                                                    // IMPLEMENT RECYCLER VIEW
-                                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                                    recyclerView.setAdapter(new AdapterListView(restaurantObjectRecyclerList));
-
-                                                }
-                                                @Override
-                                                public void onError(Throwable e) {
-                                                }
-                                                @Override
-                                                public void onComplete() {
-                                                }
-                                            });
 
                                 }
                             }

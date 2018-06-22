@@ -131,6 +131,9 @@ public class ActivityShowRestaurant extends AppCompatActivity {
     // DECLARE LIST RESTAURANT OBJECT
     private ArrayList<User> list_workmate = new ArrayList<>();
 
+    // DECLARE NUMBER WORKMATES
+    private int number_wormates;
+
 
 
 
@@ -272,6 +275,41 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         }
 
 
+        // GET NUMBER WORkMATES INTO RESTAURANT
+        DocumentReference docRef = db.collection("restaurant").document(id_restaurant);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                ObjectRestaurant objectRestaurant = documentSnapshot.toObject(ObjectRestaurant.class);
+
+
+                Log.e("---- restaurant ----", "--- workmates ---- " + objectRestaurant.getWormates());
+
+                // GET NUMBER WORKMATES
+                number_wormates = objectRestaurant.getWormates();
+            }
+        });
+
+
+        // INCREMENT NUMBER WORKMATES
+        number_wormates = number_wormates--;
+
+        // WRITE IN RESTAURANT DATABASE
+        Map<String, Object> worker = new HashMap<>();
+
+        // ADD NUMBER WORKMATES
+        worker.put("workmates", number_wormates);
+
+        // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
+        db.collection("restaurant").document(id_restaurant)
+                .set(worker, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                });
+
 
         // TOAST IF CLICK
         Toast.makeText(this, "-----DELETE CHOICE RESTAURANT----", Toast.LENGTH_SHORT).show();
@@ -305,6 +343,43 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
                         }
                     });
+
+
+            // GET NUMBER WORkMATES INTO RESTAURANT
+            DocumentReference docRef = db.collection("restaurant").document(id_restaurant);
+            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    ObjectRestaurant objectRestaurant = documentSnapshot.toObject(ObjectRestaurant.class);
+
+
+                    Log.e("---- restaurant ----", "--- workmates ---- " + objectRestaurant.getWormates());
+
+                    // GET NUMBER WORKMATES
+                    number_wormates = objectRestaurant.getWormates();
+                }
+            });
+
+
+            // INCREMENT NUMBER WORKMATES
+            number_wormates = number_wormates++;
+
+            // WRITE IN RESTAURANT DATABASE
+            Map<String, Object> worker = new HashMap<>();
+
+            // ADD NUMBER WORKMATES
+            worker.put("workmates", number_wormates);
+
+            // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
+            db.collection("restaurant").document(id_restaurant)
+                    .set(worker, SetOptions.merge())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                        }
+                    });
+
 
         }
 

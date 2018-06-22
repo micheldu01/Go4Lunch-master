@@ -2,14 +2,16 @@ package com.example.michel.go4lunch.models;
 
 import android.support.annotation.Nullable;
 
+
+
 public class User {
 
     // DECLARE UID
     private String uid;
     // DECLARE USERNAME
-    private String username;
+    private String name;
     // DECLARE URL PICTURE
-    @Nullable private String urlPicture;
+    @Nullable private String photo;
     // DECLARE CHOICE
     @Nullable private String choice;
     // DECLARE NAME RESTAURANT
@@ -21,32 +23,31 @@ public class User {
 
 
     // CONSTRUCTOR
-    public User(String uid, String username, String urlPicture, String choice, String name_restaurant) {
+    public User(String uid, String name, String photo, String choice, String name_restaurant) {
         this.uid = uid;
-        this.username = username;
-        this.urlPicture = urlPicture;
+        this.name = name;
+        this.photo = photo;
         this.choice = choice;
         this.name_restaurant = name_restaurant;
     }
 
     // CONSTRUCTOR WITHOUT UID
-    public User(String choice, String username, String urlPicture, String name_restaurant) {
+    public User(String choice, String name, String photo, String name_restaurant) {
         this.choice = choice;
-        this.username = username;
-        this.urlPicture = urlPicture;
+        this.name = name;
+        this.photo = photo;
         this.name_restaurant = name_restaurant;
     }
 
     // CONSTRUCTOR FOR ACTIVITY SHOW RESTAURANT
-    public User(String username, String urlPicture) {
-        this.username = username;
-        this.urlPicture = urlPicture;
+    public User(String name, String photo) {
+        this.name = name;
+        this.photo = photo;
     }
 
 
     // GETTER AN SETTER
 
-    public String getChoice() {return choice;}
 
     public String getUid() {
         return uid;
@@ -56,26 +57,74 @@ public class User {
         this.uid = uid;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setChoice(String choice) {this.choice = choice;}
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Nullable
-    public String getUrlPicture() {
-        return urlPicture;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setUrlPicture(@Nullable String urlPicture) {
-        this.urlPicture = urlPicture;
+    public void setPhoto(@Nullable String photo) {
+        this.photo = photo;
     }
 
-    public String getName_restaurant() { return name_restaurant; }
+    @Nullable
+    public String getChoice() {
+        return choice;
+    }
 
-    public void setName_restaurant(String name_restaurant) { this.name_restaurant = name_restaurant; }
+    public void setChoice(@Nullable String choice) {
+        this.choice = choice;
+    }
+
+    public String getName_restaurant() {
+        return name_restaurant;
+    }
+
+    public void setName_restaurant(String name_restaurant) {
+        this.name_restaurant = name_restaurant;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

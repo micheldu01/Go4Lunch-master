@@ -140,6 +140,8 @@ public class RestaurantObjectRecycler implements Comparable<RestaurantObjectRecy
 
     public void setId(String id) { this.id = id; }
 
+
+
     // ADD METHOD FOR SORT DISTANCE
     @Override
     public int compareTo(@NonNull RestaurantObjectRecycler otherRestaurant) {

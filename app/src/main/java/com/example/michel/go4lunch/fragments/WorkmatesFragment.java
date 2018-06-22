@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.example.michel.go4lunch.ActivityShowRestaurant;
 import com.example.michel.go4lunch.R;
+import com.example.michel.go4lunch.models.ObjectRestaurant;
 import com.example.michel.go4lunch.models.User;
 import com.example.michel.go4lunch.recyclerview.adapter.AdapterWorkmates;
 import com.example.michel.go4lunch.recyclerview.ItemClickSupport;
@@ -32,6 +33,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -61,7 +63,22 @@ public class WorkmatesFragment extends Fragment {
     FirebaseFirestore db= FirebaseFirestore.getInstance();
 
     // DECLARE SHARED PREFERENCES
-    SharedPreferences preferences;
+    private SharedPreferences preferences;
+
+    // STRING CHOICE
+    private String choice;
+
+    // DECLARE NAME RESTAURANT
+    private String name_restaurant;
+
+    // DECLARE USERNAME WORKMATES
+    private String username;
+
+    // DECLARE URL PHOTO
+    private String url_photo;
+
+    // DECLARE UID
+    private String uid;
 
 
 
@@ -112,57 +129,64 @@ public class WorkmatesFragment extends Fragment {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
                             // IF TASK IS SUCCESS FUL GET DATA
-                            if (task.isSuccessful()){
+                            if (task.isSuccessful()) {
 
                                 // GET DATA FROM DATA BASE
-                                for (QueryDocumentSnapshot document : task.getResult()){
-
-                                    // ASK IF CHOICE IS DIFFERENT OF NULL
-                                    if (!document.getData().equals(null)) {
-
-                                        // SPLIT DATA "="
-                                        String currentString = document.getData().toString();
-                                        String[] separated = currentString.split("=");
-
-                                        // UID
-                                        String uid = separated[1];
-                                        String[] separated_uid = uid.split(",");
-                                        String uid_final = separated_uid[0];
-
-                                        // USERNAME
-                                        String username = separated[2];
-                                        String[] separated_username = username.split(",");
-                                        String username_final = separated_username[0];
-
-                                        // NAME RESTAURANT
-                                        String name_restaurant = separated[3];
-                                        String[] separated_name_restaurant = name_restaurant.split(",");
-                                        String name_restaurant_final = separated_name_restaurant[0];
-
-                                        // URL PHOTO
-                                        String urlPhoto = separated[4];
-                                        String[] separated_url = urlPhoto.split(",");
-                                        String urlPhoto_final = separated_url[0];
-
-                                        // CHOICE
-                                        String choice = separated[5];
-                                        choice = choice.replace("}","");
+                                //for (QueryDocumentSnapshot document : task.getResult()){
+                                for (DocumentSnapshot document : task.getResult()) {
+                                    final User user = document.toObject(User.class);
 
 
-                                        // DON'T ADD CURRENT WORKMATE
-                                        if (!FirebaseAuth.getInstance().getUid().equals(uid_final)){
 
-                                            // IMPLEMENT OBJECT USER LIST
-                                            list_workmate.add(new User(choice,username_final,urlPhoto_final,name_restaurant_final));
-                                        }
+                                    // IMPLEMENT USERNAME
+                                    username = user.getName();
 
-                                        // IMPLEMENT RECYCLER VIEW
-                                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                        recyclerView.setAdapter(new AdapterWorkmates(list_workmate));
+                                    Log.e("--test workmates --", "-- uid --" + user.getUid());
+                                    Log.e("--test workmates --", "-- username --" + user.getName());
+                                    Log.e("--test workmates --", "-- choice --" + user.getChoice());
+                                    Log.e("--test workmates --", "-- url_picture --" + user.getPhoto());
+                                    Log.e("--test workmates --", "-- name_restaurant --" + user.getName_restaurant());
+
+
+
+                                    // IMPLEMENT NAME RESTAURANT
+                                    name_restaurant = user.getName_restaurant();
+
+                                    // IMPLEMENT URL PHOTO
+                                    url_photo = user.getPhoto();
+
+                                    // IMPLEMENT CHOICE
+                                    choice = user.getChoice();
+
+                                    // GET UID
+                                    uid = user.getUid();
+
+
+                                    // DON'T ADD CURRENT WORKMATE
+                                    if (!FirebaseAuth.getInstance().getUid().equals(uid)) {
+
+                                        // IMPLEMENT OBJECT USER LIST
+                                        list_workmate.add(new User(choice, username, url_photo, name_restaurant));
                                     }
+
+                                    // SORT NAME RESTAURANT
+                                    Collections.sort(list_workmate, new Comparator<User>() {
+                                        @Override
+                                        public int compare(User user, User t1) {
+
+                                            // COMPARE TO NAME RESTAURANT
+                                            return user.getName_restaurant().compareTo(t1.getName_restaurant());
+                                        }
+                                    });
+
+
+                                    // IMPLEMENT RECYCLER VIEW
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                    recyclerView.setAdapter(new AdapterWorkmates(list_workmate));
                                 }
                             }
                         }
+
                     });
         }
 

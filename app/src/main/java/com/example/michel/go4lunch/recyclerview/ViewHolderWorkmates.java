@@ -60,10 +60,10 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
         if(user.getChoice()!=null){
 
             // SET NAME
-            nameProfile.setText(user.getUsername()+" ");
+            nameProfile.setText(user.getName()+" ");
 
             // SET IMAGE PROFILE
-            Glide.with(itemView.getContext()).load(user.getUrlPicture()).apply(RequestOptions.circleCropTransform()).into(imageProfile);
+            Glide.with(itemView.getContext()).load(user.getPhoto()).apply(RequestOptions.circleCropTransform()).into(imageProfile);
 
             // SET NAME RESTAURANT
             nameRestaurant.setText(" : "+ user.getName_restaurant());
@@ -71,7 +71,7 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
         }else{
 
             // SET NAME PROFILE
-            nameProfile.setText(user.getUsername()+" ");
+            nameProfile.setText(user.getName()+" ");
 
             // ITALIC
             nameProfile.setTypeface(null, Typeface.ITALIC);
@@ -89,13 +89,11 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
             eating.setTextColor(Color.parseColor("#D3D3D3"));
 
             // SET IMAGE PROFILE
-            Glide.with(itemView.getContext()).load(user.getUrlPicture()).apply(RequestOptions.circleCropTransform()).into(imageProfile);
+            Glide.with(itemView.getContext()).load(user.getPhoto()).apply(RequestOptions.circleCropTransform()).into(imageProfile);
 
         }
 
 
-
     }
-
 
 }
