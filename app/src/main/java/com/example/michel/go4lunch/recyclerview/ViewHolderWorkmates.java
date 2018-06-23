@@ -57,7 +57,7 @@ public class ViewHolderWorkmates extends RecyclerView.ViewHolder {
 
 
         // IF CHOICE RESTAURANT
-        if(user.getChoice()!=null){
+        if(!user.getChoice().equals("void")){
 
             // SET NAME
             nameProfile.setText(user.getName()+" ");

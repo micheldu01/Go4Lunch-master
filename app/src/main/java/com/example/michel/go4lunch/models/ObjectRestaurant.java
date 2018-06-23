@@ -65,6 +65,9 @@ public class ObjectRestaurant {
     @Nullable
     private boolean is_open;
 
+    // DECLARE DISTANCE
+    private int distance;
+
 
 
 
@@ -73,7 +76,14 @@ public class ObjectRestaurant {
     // CONSTRUCTOR EMPTY
     public ObjectRestaurant() {}
 
-
+    public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id) {
+        this.nameRestaurant = nameRestaurant;
+        this.id = id;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.place_id = place_id;
+    }
 
     // CONSTRUCTOR FOR MAP VIEW FRAGMENT
     public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id, double rating) {
@@ -87,9 +97,8 @@ public class ObjectRestaurant {
     }
 
 
-
     // CONSTRUCTOR FULL
-    public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id, double rating, String url_photo, String time_close) {
+    public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id, double rating, String url_photo, String time_close, int distance) {
         this.nameRestaurant = nameRestaurant;
         this.id = id;
         this.address = address;
@@ -99,6 +108,7 @@ public class ObjectRestaurant {
         this.rating = rating;
         this.url_photo = url_photo;
         this.time_close = time_close;
+        this.distance = distance;
     }
 
 

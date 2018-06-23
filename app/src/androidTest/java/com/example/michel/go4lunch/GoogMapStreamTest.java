@@ -20,7 +20,7 @@ public class GoogMapStreamTest {
         // 1 - Get the stream
         //     Recupération de la stream
         io.reactivex.Observable<GoogleApiA> observableGoogleAPI =
-                MapStreams.streamGoogleApi(BuildConfig.KEY_GOOGLE_MAP);
+                MapStreams.streamGoogleApi(BuildConfig.KEY_GOOGLE_MAP_1);
 
         // - 2 Create a new TestObserver
         //     Création d'un nouveau TestObserver

@@ -66,7 +66,7 @@ public class WorkmatesFragment extends Fragment {
     private SharedPreferences preferences;
 
     // STRING CHOICE
-    private String choice;
+    private String choice = null;
 
     // DECLARE NAME RESTAURANT
     private String name_restaurant;
@@ -137,17 +137,8 @@ public class WorkmatesFragment extends Fragment {
                                     final User user = document.toObject(User.class);
 
 
-
                                     // IMPLEMENT USERNAME
                                     username = user.getName();
-
-                                    Log.e("--test workmates --", "-- uid --" + user.getUid());
-                                    Log.e("--test workmates --", "-- username --" + user.getName());
-                                    Log.e("--test workmates --", "-- choice --" + user.getChoice());
-                                    Log.e("--test workmates --", "-- url_picture --" + user.getPhoto());
-                                    Log.e("--test workmates --", "-- name_restaurant --" + user.getName_restaurant());
-
-
 
                                     // IMPLEMENT NAME RESTAURANT
                                     name_restaurant = user.getName_restaurant();
@@ -156,11 +147,14 @@ public class WorkmatesFragment extends Fragment {
                                     url_photo = user.getPhoto();
 
                                     // IMPLEMENT CHOICE
-                                    choice = user.getChoice();
+                                    if (!user.getChoice().isEmpty()){
+                                        choice = user.getChoice();
+                                    }else{
+                                        choice = "void";
+                                    }
 
                                     // GET UID
                                     uid = user.getUid();
-
 
                                     // DON'T ADD CURRENT WORKMATE
                                     if (!FirebaseAuth.getInstance().getUid().equals(uid)) {
@@ -171,11 +165,12 @@ public class WorkmatesFragment extends Fragment {
 
                                     // SORT NAME RESTAURANT
                                     Collections.sort(list_workmate, new Comparator<User>() {
+
                                         @Override
                                         public int compare(User user, User t1) {
 
                                             // COMPARE TO NAME RESTAURANT
-                                            return user.getName_restaurant().compareTo(t1.getName_restaurant());
+                                            return t1.getName_restaurant().compareTo(user.getName_restaurant());
                                         }
                                     });
 

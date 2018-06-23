@@ -16,8 +16,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,9 +29,6 @@ import com.example.michel.go4lunch.models.ObjectRestaurant;
 import com.example.michel.go4lunch.APIMaps.apiNearby.GoogleApiA;
 import com.example.michel.go4lunch.BuildConfig;
 import com.example.michel.go4lunch.R;
-import com.example.michel.go4lunch.models.RestaurantObjectRecycler;
-import com.example.michel.go4lunch.models.User;
-import com.example.michel.go4lunch.recyclerview.adapter.AdapterListView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -48,29 +43,21 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
-import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
 import static com.example.michel.go4lunch.shared.Shared.ID_RESTAURANT;
-import static com.example.michel.go4lunch.shared.Shared.LATITUDE;
-import static com.example.michel.go4lunch.shared.Shared.LONGITUDE;
 import static com.example.michel.go4lunch.shared.Shared.MYSHARED;
 
 
@@ -145,6 +132,18 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
 
     // DECLARE IS OPEN
     private boolean is_open;
+
+    // DECLARE RATING
+    private double rating;
+
+    // DECLARE DISTANCE
+    private int distance;
+
+
+
+
+
+
 
 
 
@@ -320,31 +319,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
         // IMPLEMENT LONGITUDE
         longitude = location.getLongitude();
 
-        //-------------------------------------------------------------------------------
-        // SAVE LATITUDE INTO SHARED
-
-        // IMPLEMENT LOCATION
-
-        // TURN DOUBLE TO LONG LATITUDE
-        double latitude_double = latitude;
-        long latitude_long = (new Double(latitude_double)).longValue();
-
-        // TURN DOUBLE TO LONG LONGITUDE
-        double longitude_double = longitude;
-        long longitude_long = (new Double(longitude_double)).longValue();
-
-        // SAVE LATITUDE INTO SHARED
-        preferences.edit().putLong(String.valueOf(LATITUDE), latitude_long).commit();
-
-        // SAVE LATITUDE INTO SHARED
-        preferences.edit().putLong(String.valueOf(LONGITUDE), longitude_long).commit();
-
-        // TEST GET DATA LATITUDE FROM SHARED
-        long test_long = preferences.getLong(String.valueOf(LATITUDE), 0);
-
-        latitude = location.getLatitude();
-        Log.e("---test latitude---","--- test latitude ---" + latitude);
-        //------------------------------------------------------------------------------
 
         // REMOVE MARKER CURRENT LOCATION IF DIFFERENT OF NULL
         if(currentLocationMarker != null){
@@ -425,130 +399,150 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
     // AND PUT DATA INTO FIRE BASE
     private void getDataFromGooglePlace(){
 
-        // GET CALENDAR
-        Calendar calendar = Calendar.getInstance();
-        // GET NUMBER OF DAY OF WEEK
-        final int day = calendar.get(Calendar.DAY_OF_WEEK);
-
-
         // IMPLEMENT DISPOSABLE WITH GoogleApiA
-        disposable = MapStreams.streamGoogleApi(BuildConfig.KEY_GOOGLE_MAP)
+        disposable = MapStreams.streamGoogleApi(BuildConfig.KEY_GOOGLE_MAP_1)
                 .subscribeWith(new DisposableObserver<GoogleApiA>() {
+
 
                     // GET DATA FROM STREAM IN ON NEXT METHOD
                     @Override
                     public void onNext(final GoogleApiA googleAPI) {
 
 
-                        // DECLARE VALUE INT
-                        i = 0;
-                        // CREATE WHILE FOR PUT DATA INTO OBJECT RESTAURANT
-                        while (i <= googleAPI.getResults().size()-1){
 
-                            // GET KEY PLACE FOR USE GoogleAPIplaceId
-                            idPlaceAPI = googleAPI.getResults().get(i).getPlace_id();
+                            // CREATE WHILE FOR PUT DATA INTO OBJECT RESTAURANT
+                            //while (i <= googleAPI.getResults().size() - 1) {
+                            for(i = 0; i < googleAPI.getResults().size(); i++){
 
 
+                                // GET KEY PLACE FOR USE GoogleAPIplaceId
+                                idPlaceAPI = googleAPI.getResults().get(i).getPlace_id();
 
 
-                            // GET DATA RESTAURANT FROM GOOGLE API
+                                // GET RATING STAR
+                                try{
+                                    // IMPLEMENT RATING
+                                    rating = googleAPI.getResults().get(i).getRating();
 
-                            // DECLARE DISPOSABLE WITH STREAM GOOGLE API PLACE ID
-                            Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, idPlaceAPI)
-                                    .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
-                                        @Override
-                                        public void onNext(GoogleAPIplaceId googleAPIplaceId) {
+                                    Log.e("--  map --","-- rating --" + rating);
+
+                                }catch (Exception e){
+
+                                    // IMPLEMENT 0 IF RATING NOT EXIST
+                                    rating = 0;
+                                }
 
 
-                                            // GET PHOTO RESTAURANT
-                                            try {
-                                                // IF PHOTO IS NOT NULL GET PHOTO
-                                                if (googleAPIplaceId.getResultsAPI().getPhotos() != null) {
-                                                    url_restaurant = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
-                                                            + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference() + "&key=" + BuildConfig.KEY_GOOGLE_MAP;
+                                // GET DISTANCE BETWEEN 2 LOCATIONS
+                                float dist[] = new float[10];
+                                Location.distanceBetween(46.05, 5.3333, googleAPI.getResults().get(i).getGeometry().getLocation().getLatitude(), googleAPI.getResults().get(i).getGeometry().getLocation().getLongitude(), dist);
+
+                                turnMilesIntoMeter(dist[0]);
+
+                                Log.e("-- map --","-- distance -- " + distance);
+
+
+                                // GET DATA RESTAURANT FROM GOOGLE API
+
+                                // DECLARE DISPOSABLE WITH STREAM GOOGLE API PLACE ID
+                                Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, idPlaceAPI)
+                                        .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
+                                            @Override
+                                            public void onNext(GoogleAPIplaceId googleAPIplaceId) {
+
+
+                                                // GET PHOTO RESTAURANT
+                                                try {
+                                                    // IF PHOTO IS NOT NULL GET PHOTO
+                                                    if (googleAPIplaceId.getResultsAPI().getPhotos() != null) {
+                                                        url_restaurant = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
+                                                                + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference() + "&key=" + BuildConfig.KEY_GOOGLE_MAP;
+                                                    }
+                                                } catch (Exception e) {
+
+                                                    url_restaurant = null;
                                                 }
-                                            }catch (Exception e){
 
-                                                url_restaurant = null;
-                                            }
+                                                // GET CURRENT DAY
+                                                Calendar c = Calendar.getInstance();
 
-                                            // GET CURRENT DAY
-                                            Calendar c = Calendar.getInstance();
+                                                // IMPLEMENT DAY
+                                                day_count = c.get(Calendar.DAY_OF_WEEK);
 
-                                            // IMPLEMENT DAY
-                                            day_count = c.get(Calendar.DAY_OF_WEEK);
 
-                                            // MAKE SAME CURRENT DAY WITH GOOGLE API
-                                            if(day_count<2){
-                                                day_count = day_count+5;
-                                            }else{
-                                                day_count = day_count-2;
-                                            }
-
-                                            // USE TRY CATCH FOR GET CLOSE TIME RESTAURANT
-                                            try {
-
-                                                // IMPLEMENT TIME CLOSE RESTAURANT
-                                                time = googleAPIplaceId.getResultsAPI().getOpening_hours().getPeriods().get(day_count).getClose().getTime();
-
-                                            }catch (Exception e){
-
-                                                // IF TIME CLOSE DO NOT EXIST IMPLEMENT TIME
-                                                time = "----";
-
-                                            }
-
-                                            // USE TRY CATCH FOR KNOW IF RESTAURANT IS OPEN NOW
-                                            try {
-
-                                                // ASK IF RESTAURANT IS OPEN NOW AND IMPLEMENT ANSWER
-                                                is_open = googleAPIplaceId.getResultsAPI().getOpening_hours().isOpen_now();
-
-                                                // IF RESTAURANT IS CLOSE
-                                                if (is_open==false) {
-
-                                                    // IMPLEMENT TIME
-                                                    time = "close";
+                                                // MAKE SAME CURRENT DAY WITH GOOGLE API
+                                                if (day_count < 2) {
+                                                    day_count = day_count + 5;
+                                                } else {
+                                                    day_count = day_count - 2;
                                                 }
-                                            }catch (Exception e){
+
+                                                // USE TRY CATCH FOR GET CLOSE TIME RESTAURANT
+                                                try {
+
+                                                    // IMPLEMENT TIME CLOSE RESTAURANT
+                                                    time = googleAPIplaceId.getResultsAPI().getOpening_hours().getPeriods().get(day_count).getClose().getTime();
+
+
+                                                } catch (Exception e) {
+
+                                                    // IF TIME CLOSE DO NOT EXIST IMPLEMENT TIME
+                                                    time = "----";
+                                                }
+
+
+                                                // USE TRY CATCH FOR KNOW IF RESTAURANT IS OPEN NOW
+                                                try {
+
+                                                    // ASK IF RESTAURANT IS OPEN NOW AND IMPLEMENT ANSWER
+                                                    is_open = googleAPIplaceId.getResultsAPI().getOpening_hours().isOpen_now();
+
+                                                    // IF RESTAURANT IS CLOSE
+
+                                                    if (is_open == true) {
+                                                    } else {
+
+                                                        // IMPLEMENT TIME
+                                                        time = "close";
+                                                    }
+                                                } catch (Exception e) {
+                                                }
+
+
+                                            }
+                                            @Override
+                                            public void onError(Throwable e) {
                                             }
 
+                                            @Override
+                                            public void onComplete() {
+                                            }
+                                        });
 
+                                // PUT DATA INTO RESTAURANT OBJECT LIST
+                                objectRestaurantList.add(new ObjectRestaurant(
+                                        googleAPI.getResults().get(i).getName(),
+                                        googleAPI.getResults().get(i).getId(),
+                                        googleAPI.getResults().get(i).getVicinity(),
+                                        googleAPI.getResults().get(i).getGeometry().getLocation().getLatitude(),
+                                        googleAPI.getResults().get(i).getGeometry().getLocation().getLongitude(),
+                                        googleAPI.getResults().get(i).getPlace_id(),
+                                        rating,
+                                        url_restaurant,
+                                        time,
+                                        distance
 
-                                            // PUT DATA INTO RESTAURANT OBJECT LIST
-                                            objectRestaurantList.add(new ObjectRestaurant(
-                                                    googleAPI.getResults().get(i).getName(),
-                                                    googleAPI.getResults().get(i).getId(),
-                                                    googleAPI.getResults().get(i).getVicinity(),
-                                                    googleAPI.getResults().get(i).getGeometry().getLocation().getLatitude(),
-                                                    googleAPI.getResults().get(i).getGeometry().getLocation().getLongitude(),
-                                                    googleAPI.getResults().get(i).getPlace_id(),
-                                                    googleAPI.getResults().get(i).getRating(),
-                                                    url_restaurant,
-                                                    time
-                                            ));
+                                ));
 
-                                        }
-                                        @Override
-                                        public void onError(Throwable e) {
-                                        }
-                                        @Override
-                                        public void onComplete() {
-                                        }
-                                    });
+                                // SECURITY DATABASE
+                                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
-
-                            // SECURITY DATABASE
-                            if (FirebaseAuth.getInstance().getCurrentUser() != null){
-
-                                // PUT RESTAURANT OBJECT INTO DATA BASE FIRE FORE
-                                db.collection("restaurant").document(objectRestaurantList.get(i).getId()).set(objectRestaurantList.get(i), SetOptions.merge());
+                                    // PUT RESTAURANT OBJECT INTO DATA BASE FIRE FORE
+                                    db.collection("restaurant").document(objectRestaurantList.get(i).getId()).set(objectRestaurantList.get(i), SetOptions.merge());
+                                }
                             }
-
-                            // INCREMENT I
-                            i++;
-                        }
                     }
+
                     @Override
                     public void onError(Throwable e) {
                         Log.e("TAG","On Error"+Log.getStackTraceString(e));
@@ -558,7 +552,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                     }
                 });
     }
-
 
 
     // METHOD TO ASK IF RESTAURANT IS CHOICE
@@ -605,6 +598,13 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
 
         // IMPLEMENT SHARED PREFERENCES
         preferences = getActivity().getSharedPreferences(MYSHARED, Context.MODE_PRIVATE);
+    }
+
+    // METHOD TURN MILES INTO METER
+    private void turnMilesIntoMeter(float miles){
+
+        // GET MILES
+        distance = (int)Math.round(miles);
     }
 
 }
