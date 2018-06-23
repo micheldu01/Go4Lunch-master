@@ -263,6 +263,15 @@ public class ObjectRestaurant {
     public void setWormates(@Nullable int wormates) {
         this.workmates = wormates;
     }
+
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
 }
 
 

@@ -38,9 +38,6 @@ public class RestaurantObjectRecycler implements Comparable<RestaurantObjectRecy
     // ID RESTAURANT
     private String id;
 
-    //-----------------
-    private Float latitude;
-    private Float longitude;
 
 
 
@@ -56,13 +53,11 @@ public class RestaurantObjectRecycler implements Comparable<RestaurantObjectRecy
     // CONSTRUCTOR FULL VALUE
 
 
-    public RestaurantObjectRecycler(String name, String address, int distance, String id, Float latitude, Float longitude) {
+    public RestaurantObjectRecycler(String name, String address, int distance, String id) {
         this.name = name;
         this.address = address;
         this.distance = distance;
         this.id = id;
-        this.latitude = latitude;
-        this.longitude = longitude;
     }
 
     // CONSTRUCTOR FULL VALUE

@@ -37,6 +37,12 @@ public class ResultAPI {
     @Nullable
     public List<Photo> photos = null;
 
+    // DECLARE ID
+    @SerializedName("id")
+    @Expose
+    public String id;
+
+
 
     // CONTRUCTOR WITHOUT OPENING HOURS
 
@@ -49,12 +55,13 @@ public class ResultAPI {
     }
 
     // CONSTRUCTOR
-    public ResultAPI(List<AddressComponent> addressComponents, String website, String phone, OpeningHours opening_hours, List<Photo> photos) {
+    public ResultAPI(List<AddressComponent> addressComponents, String website, String phone, OpeningHours opening_hours, List<Photo> photos, String id) {
         this.addressComponents = addressComponents;
         this.website = website;
         this.phone = phone;
         this.opening_hours = opening_hours;
         this.photos = photos;
+        this.id = id;
     }
 
 
@@ -98,5 +105,13 @@ public class ResultAPI {
 
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -52,7 +53,9 @@ import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
@@ -110,22 +113,17 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
     int i = 0;
     int num = 0;
 
-    int ressource_icon = R.drawable.icon_restaurant_orange2;
-
     // DECLARE DATA BASE
     FirebaseFirestore db= FirebaseFirestore.getInstance();
 
     // SHARED PREFERENCES
     private SharedPreferences preferences;
 
-    // ARRAY LIST ID RESTAURANT CHOICE
-    ArrayList<String> list_id = new ArrayList<>();
-
     // DECLARE DAY
     private int day_count = 0;
 
     // DECLARE URL RESTAURANT
-    private String url_restaurant;
+    private String url_photo;
 
     // DECLARE TIME
     private String time;
@@ -422,12 +420,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                                 // GET RATING STAR
                                 try{
                                     // IMPLEMENT RATING
-                                    rating = googleAPI.getResults().get(i).getRating();
-
-                                    Log.e("--  map --","-- rating --" + rating);
+                                    rating = googleAPI.getResults().get(i).getRating()-2;
 
                                 }catch (Exception e){
-
                                     // IMPLEMENT 0 IF RATING NOT EXIST
                                     rating = 0;
                                 }
@@ -437,15 +432,14 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                                 float dist[] = new float[10];
                                 Location.distanceBetween(46.05, 5.3333, googleAPI.getResults().get(i).getGeometry().getLocation().getLatitude(), googleAPI.getResults().get(i).getGeometry().getLocation().getLongitude(), dist);
 
+                                // TURN MILES INTO METER
                                 turnMilesIntoMeter(dist[0]);
-
-                                Log.e("-- map --","-- distance -- " + distance);
 
 
                                 // GET DATA RESTAURANT FROM GOOGLE API
 
                                 // DECLARE DISPOSABLE WITH STREAM GOOGLE API PLACE ID
-                                Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, idPlaceAPI)
+                                Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP_1, idPlaceAPI)
                                         .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
                                             @Override
                                             public void onNext(GoogleAPIplaceId googleAPIplaceId) {
@@ -454,14 +448,14 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                                                 // GET PHOTO RESTAURANT
                                                 try {
                                                     // IF PHOTO IS NOT NULL GET PHOTO
-                                                    if (googleAPIplaceId.getResultsAPI().getPhotos() != null) {
-                                                        url_restaurant = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
-                                                                + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference() + "&key=" + BuildConfig.KEY_GOOGLE_MAP;
-                                                    }
-                                                } catch (Exception e) {
+                                                        url_photo = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
+                                                                + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference() + "&key=" + BuildConfig.KEY_GOOGLE_MAP_1;
 
-                                                    url_restaurant = null;
+                                                } catch (Exception e) {
+                                                    // IMPLEMENT URL RESTAURANT
+                                                    url_photo = null;
                                                 }
+
 
                                                 // GET CURRENT DAY
                                                 Calendar c = Calendar.getInstance();
@@ -508,6 +502,20 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                                                 } catch (Exception e) {
                                                 }
 
+                                                // ADD URL AND TIME INTO DATABASE
+
+                                                // SECURITY DATABASE
+                                                if (FirebaseAuth.getInstance().getCurrentUser() != null){
+
+                                                    // IMPLEMENT DATABASE
+                                                    CollectionReference restaurant = db.collection("restaurant");
+
+                                                    Map<String, Object> data = new HashMap<>();
+                                                    data.put("url_photo",url_photo);
+                                                    data.put("time_close",time);
+                                                    restaurant.document(googleAPIplaceId.getResultsAPI().getId()).set(data, SetOptions.merge());
+                                                }
+
 
                                             }
                                             @Override
@@ -519,6 +527,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                                             }
                                         });
 
+
                                 // PUT DATA INTO RESTAURANT OBJECT LIST
                                 objectRestaurantList.add(new ObjectRestaurant(
                                         googleAPI.getResults().get(i).getName(),
@@ -528,11 +537,15 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                                         googleAPI.getResults().get(i).getGeometry().getLocation().getLongitude(),
                                         googleAPI.getResults().get(i).getPlace_id(),
                                         rating,
-                                        url_restaurant,
+                                        url_photo,
                                         time,
                                         distance
 
                                 ));
+
+
+
+
 
                                 // SECURITY DATABASE
                                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {

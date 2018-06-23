@@ -43,6 +43,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -72,36 +73,14 @@ public class ListViewFragment extends Fragment {
     // DECLARE DATA BASE
     FirebaseFirestore db= FirebaseFirestore.getInstance();
 
-    // CREATE ARRAAY LIST WORKMATES
-    final ArrayList<String> workmates = new ArrayList<>();
-
-    // URL PHOTO RESTAURANT
-    private String url_restaurant;
-
     // DECLARE CURRENT DAY
     private int day = 0;
-
-    // DECLARE STRING TIME
-    private String time;
-
-    // DECLARE BOOLEAN IS OPEN
-    private boolean is_open;
-
-    // DECLARE DOUBLE RATING
-    private double rating;
 
     // DECLARE INT WORKMATES
     private int number;
 
     // DECLARE SHARED PREFERENCES
     private SharedPreferences preferences;
-
-    // DECLARE LATITUDE
-    private Float latitude;
-
-    // DECLARE LONGITUDE
-    private Float longitude;
-
 
 
 
@@ -182,12 +161,15 @@ public class ListViewFragment extends Fragment {
                                     String currentString = objectRestaurant.getAddress();
                                     String[] separated = currentString.split(",");
 
+
                                     // STREET AND VILLAGE
                                     final String street = separated[0];
                                     final String village;
 
+
                                     // IF ADDRESS CANT TO BE SEPARATED
                                     if (separated.length<2){
+
 
                                         // ADD VALUE NULL INTO STRING VILLAGE
                                         village = null;
@@ -195,6 +177,7 @@ public class ListViewFragment extends Fragment {
                                         // IMPLEMENT VILLAGE
                                         village = separated[1];
                                     }
+
 
                                     // NUMBER WORKMATES PER RESTAURANT
                                     try {
@@ -207,23 +190,36 @@ public class ListViewFragment extends Fragment {
                                         number = 0;
                                     }
 
-                                    // GET LATITUDE
-                                    latitude = objectRestaurant.getLatitude();
-
-                                    // GET LONGITUDE
-                                    longitude = objectRestaurant.getLongitude();
-
-
 
                                     // ADD DATA INTO OBJECT LIST
-                                    restaurantObjectRecyclerList.add(new RestaurantObjectRecycler(objectRestaurant.getNameRestaurant(),street,village,objectRestaurant.getTime_close(), "", objectRestaurant.getRating(),objectRestaurant.getWorkmates(),150, objectRestaurant.getUrl_photo(),objectRestaurant.getId()));
+                                    restaurantObjectRecyclerList.add(new RestaurantObjectRecycler(
+                                            objectRestaurant.getNameRestaurant(),
+                                            street,
+                                            village,
+                                            objectRestaurant.getTime_close(),
+                                            "",
+                                            objectRestaurant.getRating(),
+                                            objectRestaurant.getWorkmates(),
+                                            objectRestaurant.getDistance(),
+                                            objectRestaurant.getUrl_photo(),
+                                            objectRestaurant.getId()));
+
+
+                                    // SORT NAME RESTAURANT
+                                    Collections.sort(restaurantObjectRecyclerList, new Comparator<RestaurantObjectRecycler>() {
+
+                                        @Override
+                                        public int compare(RestaurantObjectRecycler restaurantObjectRecycler, RestaurantObjectRecycler t1) {
+
+                                            // COMPARE TO NAME RESTAURANT
+                                            return Integer.compare(restaurantObjectRecycler.getDistance(),t1.getDistance());
+                                        }
+                                    });
 
 
                                     // IMPLEMENT RECYCLER VIEW
                                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                     recyclerView.setAdapter(new AdapterListView(restaurantObjectRecyclerList));
-
-
                                 }
                             }
                         }
