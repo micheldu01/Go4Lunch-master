@@ -18,7 +18,7 @@ public class UserTest {
         userArrayList.add(new User("michel","url_picture1"));
         userArrayList.add(new User("laurent","url_picture2"));
 
-        assertEquals("laurent",userArrayList.get(1).getUsername());
+        assertEquals("laurent",userArrayList.get(1).getName());
 
     }
 
@@ -28,7 +28,7 @@ public class UserTest {
         userArrayList.add(new User("michel","url_picture1"));
         userArrayList.add(new User("laurent","url_picture2"));
 
-        assertEquals("michel",userArrayList.get(0).getUsername());
+        assertEquals("michel",userArrayList.get(0).getName());
 
     }
 

@@ -106,6 +106,9 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
 
+    implementation 'com.google.firebase:firebase-messaging:11.8.0'
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'

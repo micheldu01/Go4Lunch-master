@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -27,21 +29,31 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.michel.go4lunch.adapter.PageAdapter;
+import com.example.michel.go4lunch.models.ObjectRestaurant;
 import com.example.michel.go4lunch.models.User;
 import com.example.michel.go4lunch.notification.ActivityNoticationShow;
+import com.example.michel.go4lunch.recyclerview.adapter.AdapterWorkmates;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledExecutorService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -127,6 +139,7 @@ public class MainActivity extends AppCompatActivity
 
         // PUSH DATA PROFILE INTO FIREBASE
         this.saveProfileFireBase();
+
 
 
 
@@ -389,10 +402,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-
-
-
-
     }
 
 
@@ -419,6 +428,7 @@ public class MainActivity extends AppCompatActivity
                 .build(),
                 RC_SIGN_IN);
     }
+
 
     // SAVE PROFILE INTO FIREBASE
     private void saveProfileFireBase(){
@@ -457,10 +467,8 @@ public class MainActivity extends AppCompatActivity
                     });
 
         }
+
         }
-
-
-
 
 }
 

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -81,23 +82,24 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
         village.setText(restaurantObjectRecycler.getVillage());
 
         // IF RESTAURANT CLOSE RED COLOR
-        //if(restaurantObjectRecycler.getHeuresOuverture().equals("close")){
+        if(restaurantObjectRecycler.getHeuresOuverture().equals("close")){
 
             // SET HOUR AND COLOR RED
             hour.setText(restaurantObjectRecycler.getHeuresOuverture());
             hour.setTextColor(Color.RED);
-        //}
-        //else {
+        }
+        else {
             // SET HOUR AND ITALIC STYLE
             hour.setText(restaurantObjectRecycler.getHeuresOuverture());
+            hour.setTextColor(Color.BLACK);
             hour.setTypeface(null, Typeface.ITALIC);
-        //}
+        }
 
         // SET DISTANCE
         distance.setText(String.valueOf(restaurantObjectRecycler.getDistance())+"m");
 
         // SET NUMBER WORKMATES AND HIDE IF 0 WITH ICON
-        if(restaurantObjectRecycler.getWorkMates()==0){
+        if(restaurantObjectRecycler.getWorkmates()==0){
 
             // MAKE WORKMATES INVISIBLE
             workMates.setVisibility(View.INVISIBLE);
@@ -106,8 +108,13 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
             icon_workmates.setVisibility(View.INVISIBLE);
         }
 
+        Log.e("--workmates IF --","-- number -- " + restaurantObjectRecycler.getWorkmates());
+
+
         // IMPLEMENT NUMBER WORKMATES
-        workMates.setText("("+String.valueOf(restaurantObjectRecycler.getWorkMates())+")");
+        workMates.setText("("+String.valueOf(restaurantObjectRecycler.getWorkmates())+")");
+
+
 
         // SHOW RATING BAR
         ratingBar.setRating((float) restaurantObjectRecycler.getStar());
@@ -124,10 +131,6 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
             // IMPLEMENT PHOTO RESTAURANT INTO IMAGE VIEW
             Glide.with(itemView.getContext()).load(R.drawable.sign_no_camera2).into(image);
         }
-
-
-
-
     }
 
 }

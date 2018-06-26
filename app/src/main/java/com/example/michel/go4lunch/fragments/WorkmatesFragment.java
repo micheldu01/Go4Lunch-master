@@ -132,10 +132,8 @@ public class WorkmatesFragment extends Fragment {
                             if (task.isSuccessful()) {
 
                                 // GET DATA FROM DATA BASE
-                                //for (QueryDocumentSnapshot document : task.getResult()){
                                 for (DocumentSnapshot document : task.getResult()) {
                                     final User user = document.toObject(User.class);
-
 
                                     // IMPLEMENT USERNAME
                                     username = user.getName();
@@ -219,11 +217,16 @@ public class WorkmatesFragment extends Fragment {
             @Override
             public void onRefresh() {
 
+                Log.e("-- log -- ","-- refresh -- ");
+
                 // REMOVE LIST WORKMATE
                 list_workmate.clear();
 
                 // SHOW LIST RESTAURANT
                 showProfileWithChoice();
+
+
+
             }
         });
     }

@@ -73,16 +73,13 @@ public class ObjectRestaurant {
 
 
 
-    // CONSTRUCTOR EMPTY
+    // CONSTRUCTOR FOR MAP ICON
     public ObjectRestaurant() {}
 
-    public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id) {
-        this.nameRestaurant = nameRestaurant;
+    public ObjectRestaurant(String id,Float latitude, Float longitude) {
         this.id = id;
-        this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.place_id = place_id;
     }
 
     // CONSTRUCTOR FOR MAP VIEW FRAGMENT
@@ -98,7 +95,8 @@ public class ObjectRestaurant {
 
 
     // CONSTRUCTOR FULL
-    public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude, String place_id, double rating, String url_photo, String time_close, int distance) {
+    public ObjectRestaurant(String nameRestaurant, String id, String address, Float latitude, Float longitude,
+                            String place_id, double rating, int distance) {
         this.nameRestaurant = nameRestaurant;
         this.id = id;
         this.address = address;
@@ -106,9 +104,8 @@ public class ObjectRestaurant {
         this.longitude = longitude;
         this.place_id = place_id;
         this.rating = rating;
-        this.url_photo = url_photo;
-        this.time_close = time_close;
         this.distance = distance;
+
     }
 
 

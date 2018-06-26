@@ -61,7 +61,7 @@ public class RestaurantObjectRecycler implements Comparable<RestaurantObjectRecy
     }
 
     // CONSTRUCTOR FULL VALUE
-    public RestaurantObjectRecycler(String name, String address, String village, String heuresOuverture, String type, double star, int workMates, int distance, String urlPhoto, String id) {
+    public RestaurantObjectRecycler(String name, String address, String village, String heuresOuverture, String type, double star, int workmates, int distance, String urlPhoto, String id) {
         this.name = name;
         this.address = address;
         this.village = village;
@@ -124,12 +124,12 @@ public class RestaurantObjectRecycler implements Comparable<RestaurantObjectRecy
         this.star = star;
     }
 
-    public int getWorkMates() {
+    public int getWorkmates() {
         return workmates;
     }
 
-    public void setWorkMates(int workMates) {
-        this.workmates = workMates;
+    public void setWorkmates(int workmates) {
+        this.workmates = workmates;
     }
 
     public int getDistance() {

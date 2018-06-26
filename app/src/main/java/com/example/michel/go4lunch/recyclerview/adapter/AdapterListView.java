@@ -3,6 +3,7 @@ package com.example.michel.go4lunch.recyclerview.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,12 +44,12 @@ public class AdapterListView extends RecyclerView.Adapter<ViewHolderListView>{
     }
 
 
+
     // METHOD FOR GIVE POSITION
     @Override
     public void onBindViewHolder(@NonNull ViewHolderListView holder, int position) {
         RestaurantObjectRecycler restaurantObjectRecycler = restaurantObjectRecyclerList.get(position);
         holder.restaurantHolderView(restaurantObjectRecycler);
-
     }
 
 

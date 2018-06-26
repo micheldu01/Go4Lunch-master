@@ -184,8 +184,6 @@ public class ListViewFragment extends Fragment {
                                         // GET NUMBER WORMATES PER RESTAURANT
                                         number = objectRestaurant.getWormates();
 
-                                        Log.e("--workmates--","-- number -- " + objectRestaurant.getWormates());
-
                                     }catch (Exception e){
                                         number = 0;
                                     }
@@ -204,18 +202,22 @@ public class ListViewFragment extends Fragment {
                                             objectRestaurant.getUrl_photo(),
                                             objectRestaurant.getId()));
 
+                                    Log.e("--workmates--","-- number -- " + objectRestaurant.getWormates());
 
+
+/*
                                     // SORT NAME RESTAURANT
                                     Collections.sort(restaurantObjectRecyclerList, new Comparator<RestaurantObjectRecycler>() {
 
                                         @Override
-                                        public int compare(RestaurantObjectRecycler restaurantObjectRecycler, RestaurantObjectRecycler t1) {
+                                        public int compareTo(RestaurantObjectRecycler restaurantObjectRecycler, RestaurantObjectRecycler t1) {
 
-                                            // COMPARE TO NAME RESTAURANT
-                                            return Integer.compare(restaurantObjectRecycler.getDistance(),t1.getDistance());
+                                            // COMPARE TO DISTANCE
+                                            return compareTo(restaurantObjectRecycler.getName(),t1.getName());
                                         }
                                     });
 
+*/
 
                                     // IMPLEMENT RECYCLER VIEW
                                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

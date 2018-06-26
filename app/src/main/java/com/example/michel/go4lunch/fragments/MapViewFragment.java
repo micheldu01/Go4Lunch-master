@@ -149,6 +149,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
 
 
 
+
     public MapViewFragment() {
     }
 
@@ -398,7 +399,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
     private void getDataFromGooglePlace(){
 
         // IMPLEMENT DISPOSABLE WITH GoogleApiA
-        disposable = MapStreams.streamGoogleApi(BuildConfig.KEY_GOOGLE_MAP_1)
+        disposable = MapStreams.streamGoogleApi(BuildConfig.KEY_GOOGLE_MAP)
                 .subscribeWith(new DisposableObserver<GoogleApiA>() {
 
 
@@ -439,7 +440,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                                 // GET DATA RESTAURANT FROM GOOGLE API
 
                                 // DECLARE DISPOSABLE WITH STREAM GOOGLE API PLACE ID
-                                Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP_1, idPlaceAPI)
+                                Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, idPlaceAPI)
                                         .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
                                             @Override
                                             public void onNext(GoogleAPIplaceId googleAPIplaceId) {
@@ -491,18 +492,22 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                                                     // ASK IF RESTAURANT IS OPEN NOW AND IMPLEMENT ANSWER
                                                     is_open = googleAPIplaceId.getResultsAPI().getOpening_hours().isOpen_now();
 
+
+
                                                     // IF RESTAURANT IS CLOSE
 
-                                                    if (is_open == true) {
-                                                    } else {
+                                                    if (is_open == false) {
 
                                                         // IMPLEMENT TIME
                                                         time = "close";
                                                     }
                                                 } catch (Exception e) {
+
+                                                    time = "---";
                                                 }
 
                                                 // ADD URL AND TIME INTO DATABASE
+
 
                                                 // SECURITY DATABASE
                                                 if (FirebaseAuth.getInstance().getCurrentUser() != null){
@@ -513,6 +518,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                                                     Map<String, Object> data = new HashMap<>();
                                                     data.put("url_photo",url_photo);
                                                     data.put("time_close",time);
+                                                    //data.put("open_now",googleAPIplaceId.getResultsAPI().getOpening_hours().isOpen_now());
                                                     restaurant.document(googleAPIplaceId.getResultsAPI().getId()).set(data, SetOptions.merge());
                                                 }
 
@@ -528,31 +534,53 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                                         });
 
 
+
+                                // SECURITY DATABASE
+                                if (FirebaseAuth.getInstance().getCurrentUser() != null){
+
+                                    // IMPLEMENT DATABASE
+                                    CollectionReference restaurant = db.collection("restaurant");
+
+                                    // USE HASH MAP FOR PUT DATA
+                                    Map<String, Object> data = new HashMap<>();
+
+                                    // NAME RESTAURANT
+                                    data.put("nameRestaurant",googleAPI.getResults().get(i).getName());
+
+                                    // ID
+                                    data.put("id",googleAPI.getResults().get(i).getId());
+
+                                    // ADDRESS
+                                    data.put("address",googleAPI.getResults().get(i).getVicinity());
+
+                                    // LATITUDE
+                                    data.put("latitude",googleAPI.getResults().get(i).getGeometry().getLocation().getLatitude());
+
+                                    // LONGITUDE
+                                    data.put("longitude",googleAPI.getResults().get(i).getGeometry().getLocation().getLongitude());
+
+                                    // PLACE ID
+                                    data.put("place_id",googleAPI.getResults().get(i).getPlace_id());
+
+                                    // RATING
+                                    data.put("rating",rating);
+
+                                    // DISTANCE
+                                    data.put("distance",distance);
+
+                                    // PUT DATA IN DATABASE
+                                    restaurant.document(googleAPI.getResults().get(i).getId()).set(data, SetOptions.merge());
+                                }
+
+
                                 // PUT DATA INTO RESTAURANT OBJECT LIST
                                 objectRestaurantList.add(new ObjectRestaurant(
-                                        googleAPI.getResults().get(i).getName(),
                                         googleAPI.getResults().get(i).getId(),
-                                        googleAPI.getResults().get(i).getVicinity(),
                                         googleAPI.getResults().get(i).getGeometry().getLocation().getLatitude(),
-                                        googleAPI.getResults().get(i).getGeometry().getLocation().getLongitude(),
-                                        googleAPI.getResults().get(i).getPlace_id(),
-                                        rating,
-                                        url_photo,
-                                        time,
-                                        distance
-
+                                        googleAPI.getResults().get(i).getGeometry().getLocation().getLongitude()
                                 ));
 
 
-
-
-
-                                // SECURITY DATABASE
-                                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-
-                                    // PUT RESTAURANT OBJECT INTO DATA BASE FIRE FORE
-                                    db.collection("restaurant").document(objectRestaurantList.get(i).getId()).set(objectRestaurantList.get(i), SetOptions.merge());
-                                }
                             }
                     }
 
