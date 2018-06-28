@@ -33,8 +33,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -78,6 +80,9 @@ public class ListViewFragment extends Fragment {
 
     // DECLARE INT WORKMATES
     private int number;
+
+    // DECLARE ARRAY NUMBER WORKMATES
+    private ArrayList<String> number_workmates = new ArrayList<>();
 
     // DECLARE SHARED PREFERENCES
     private SharedPreferences preferences;
@@ -178,6 +183,8 @@ public class ListViewFragment extends Fragment {
                                         village = separated[1];
                                     }
 
+                                    // IMPLEMENT NUMBER
+                                    number = 0;
 
                                     // NUMBER WORKMATES PER RESTAURANT
                                     try {
@@ -187,7 +194,6 @@ public class ListViewFragment extends Fragment {
                                     }catch (Exception e){
                                         number = 0;
                                     }
-
 
                                     // ADD DATA INTO OBJECT LIST
                                     restaurantObjectRecyclerList.add(new RestaurantObjectRecycler(
@@ -205,19 +211,16 @@ public class ListViewFragment extends Fragment {
                                     Log.e("--workmates--","-- number -- " + objectRestaurant.getWormates());
 
 
-/*
                                     // SORT NAME RESTAURANT
                                     Collections.sort(restaurantObjectRecyclerList, new Comparator<RestaurantObjectRecycler>() {
 
                                         @Override
-                                        public int compareTo(RestaurantObjectRecycler restaurantObjectRecycler, RestaurantObjectRecycler t1) {
-
-                                            // COMPARE TO DISTANCE
-                                            return compareTo(restaurantObjectRecycler.getName(),t1.getName());
+                                        public int compare(RestaurantObjectRecycler restaurantObjectRecycler, RestaurantObjectRecycler t1) {
+                                            return restaurantObjectRecycler.getName().compareTo(t1.getName());
                                         }
                                     });
 
-*/
+
 
                                     // IMPLEMENT RECYCLER VIEW
                                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

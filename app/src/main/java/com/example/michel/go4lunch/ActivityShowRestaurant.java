@@ -300,6 +300,9 @@ public class ActivityShowRestaurant extends AppCompatActivity {
         // ADD NUMBER WORKMATES
         worker.put("workmates", number_wormates);
 
+        Log.e("---- restaurant ----", "--- number workmates ---- " + number_wormates);
+
+
         // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
         db.collection("restaurant").document(id_restaurant)
                 .set(worker, SetOptions.merge())
@@ -362,13 +365,15 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
 
             // INCREMENT NUMBER WORKMATES
-            number_wormates = number_wormates++;
+            number_wormates = number_wormates+1;
 
             // WRITE IN RESTAURANT DATABASE
             Map<String, Object> worker = new HashMap<>();
 
             // ADD NUMBER WORKMATES
             worker.put("workmates", number_wormates);
+
+            Log.e("---- restaurant ----", "--- number workmates 2 ---- " + number_wormates);
 
             // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
             db.collection("restaurant").document(id_restaurant)

@@ -3,7 +3,7 @@ package com.example.michel.go4lunch.models;
 
 import android.support.annotation.NonNull;
 
-public class RestaurantObjectRecycler implements Comparable<RestaurantObjectRecycler> {
+public class RestaurantObjectRecycler  {
 
 
     // CREATE VALUE
@@ -152,14 +152,6 @@ public class RestaurantObjectRecycler implements Comparable<RestaurantObjectRecy
 
     public void setId(String id) { this.id = id; }
 
-
-
-    // ADD METHOD FOR SORT DISTANCE
-    @Override
-    public int compareTo(@NonNull RestaurantObjectRecycler otherRestaurant) {
-        // INTEGER ARGUMENT FOR COMPARE
-        return Integer.compare(distance,  otherRestaurant.getDistance());
-    }
 }
 
 

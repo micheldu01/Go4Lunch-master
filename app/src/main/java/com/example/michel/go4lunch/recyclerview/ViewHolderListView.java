@@ -98,6 +98,7 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
         // SET DISTANCE
         distance.setText(String.valueOf(restaurantObjectRecycler.getDistance())+"m");
 
+
         // SET NUMBER WORKMATES AND HIDE IF 0 WITH ICON
         if(restaurantObjectRecycler.getWorkmates()==0){
 
@@ -110,10 +111,8 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
 
         Log.e("--workmates IF --","-- number -- " + restaurantObjectRecycler.getWorkmates());
 
-
         // IMPLEMENT NUMBER WORKMATES
         workMates.setText("("+String.valueOf(restaurantObjectRecycler.getWorkmates())+")");
-
 
 
         // SHOW RATING BAR
