@@ -137,6 +137,12 @@ public class ListViewFragment extends Fragment {
 
                 // SHOW LIST RESTAURANT
                 showRestaurantList();
+
+                // STOP REFRESH AFTER USE IT
+                if (refreshLayout.isRefreshing()) {
+                    refreshLayout.setRefreshing(false);
+                }
+
             }
         });
     }
@@ -207,9 +213,6 @@ public class ListViewFragment extends Fragment {
                                             objectRestaurant.getDistance(),
                                             objectRestaurant.getUrl_photo(),
                                             objectRestaurant.getId()));
-
-                                    Log.e("--workmates--","-- number -- " + objectRestaurant.getWormates());
-
 
                                     // SORT NAME RESTAURANT
                                     Collections.sort(restaurantObjectRecyclerList, new Comparator<RestaurantObjectRecycler>() {

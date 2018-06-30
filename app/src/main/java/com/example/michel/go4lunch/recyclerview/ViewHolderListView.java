@@ -109,8 +109,6 @@ public class ViewHolderListView extends RecyclerView.ViewHolder {
             icon_workmates.setVisibility(View.INVISIBLE);
         }
 
-        Log.e("--workmates IF --","-- number -- " + restaurantObjectRecycler.getWorkmates());
-
         // IMPLEMENT NUMBER WORKMATES
         workMates.setText("("+String.valueOf(restaurantObjectRecycler.getWorkmates())+")");
 

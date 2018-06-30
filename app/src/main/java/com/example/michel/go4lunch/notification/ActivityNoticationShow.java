@@ -31,7 +31,7 @@ public class ActivityNoticationShow extends AppCompatActivity {
 
     // value for de hour of the notification
     private int hour_of_day = 11;
-    private int minute = 11;
+    private int minute = 43;
     private int second = 0;
 
 
@@ -64,8 +64,6 @@ public class ActivityNoticationShow extends AppCompatActivity {
                     //get a Toast for ask to choice a check box
                     Toast.makeText(ActivityNoticationShow.this, "Notification is activate", Toast.LENGTH_LONG).show();
 
-                    // TEST LOG
-                    Log.e("----switch--------","-----ok---------");
                 }
             }
         });

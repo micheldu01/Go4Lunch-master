@@ -269,7 +269,6 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Log.e("main activity", "------data save url restaurant-----");
                         }
                     });
         }
@@ -283,35 +282,36 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                 ObjectRestaurant objectRestaurant = documentSnapshot.toObject(ObjectRestaurant.class);
 
 
-                Log.e("---- restaurant ----", "--- workmates ---- " + objectRestaurant.getWormates());
-
                 // GET NUMBER WORKMATES
                 number_wormates = objectRestaurant.getWormates();
+
+                // INCREMENT NUMBER WORKMATES
+                number_wormates = number_wormates-1;
+
+
+                // WRITE IN RESTAURANT DATABASE
+                Map<String, Object> worker = new HashMap<>();
+
+                // ADD NUMBER WORKMATES
+                worker.put("workmates", number_wormates);
+
+                // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
+                db.collection("restaurant").document(id_restaurant)
+                        .set(worker, SetOptions.merge())
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                                Log.e("---- restaurant ----", "--- workmates show restaurant ---- " + number_wormates);
+
+                            }
+                        });
             }
         });
 
 
-        // INCREMENT NUMBER WORKMATES
-        number_wormates = number_wormates--;
-
-        // WRITE IN RESTAURANT DATABASE
-        Map<String, Object> worker = new HashMap<>();
-
-        // ADD NUMBER WORKMATES
-        worker.put("workmates", number_wormates);
-
-        Log.e("---- restaurant ----", "--- number workmates ---- " + number_wormates);
 
 
-        // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
-        db.collection("restaurant").document(id_restaurant)
-                .set(worker, SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                    }
-                });
 
 
         // TOAST IF CLICK
@@ -356,34 +356,34 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                     ObjectRestaurant objectRestaurant = documentSnapshot.toObject(ObjectRestaurant.class);
 
 
-                    Log.e("---- restaurant ----", "--- workmates ---- " + objectRestaurant.getWormates());
+                    //Log.e("---- restaurant ----", "--- workmates ---- " + objectRestaurant.getWormates());
 
                     // GET NUMBER WORKMATES
                     number_wormates = objectRestaurant.getWormates();
+
+                    // INCREMENT NUMBER WORKMATES
+                    number_wormates = number_wormates+1;
+
+                    // WRITE IN RESTAURANT DATABASE
+                    Map<String, Object> worker = new HashMap<>();
+
+                    // ADD NUMBER WORKMATES
+                    worker.put("workmates", number_wormates);
+
+                    //Log.e("---- restaurant ----", "--- number workmates 2 ---- " + number_wormates);
+
+                    // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
+                    db.collection("restaurant").document(id_restaurant)
+                            .set(worker, SetOptions.merge())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+
+                                }
+                            });
                 }
             });
 
-
-            // INCREMENT NUMBER WORKMATES
-            number_wormates = number_wormates+1;
-
-            // WRITE IN RESTAURANT DATABASE
-            Map<String, Object> worker = new HashMap<>();
-
-            // ADD NUMBER WORKMATES
-            worker.put("workmates", number_wormates);
-
-            Log.e("---- restaurant ----", "--- number workmates 2 ---- " + number_wormates);
-
-            // CREATE DOCUMENT USERS WITH ID PROFILE AUTH
-            db.collection("restaurant").document(id_restaurant)
-                    .set(worker, SetOptions.merge())
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-
-                        }
-                    });
 
 
         }
@@ -433,14 +433,9 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
                     // IMPLEMENT RATING RESTAURANT
                     rating = objectRestaurant.getRating()-2;
-                    Log.e("---TAG---", "--rating --" + objectRestaurant.getRating());
 
                     // SHOW RATING BAR
                     ratingBar.setRating((float) rating);
-
-
-
-
                 }
             });
         }
@@ -454,18 +449,18 @@ public class ActivityShowRestaurant extends AppCompatActivity {
 
 
         // DECLARE DISPOSABLE WITH STREAM GOOGLE API PLACE ID
-        Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, id_place)
+        Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP_1, id_place)
                 .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
                     @Override
                     public void onNext(GoogleAPIplaceId googleAPIplaceId) {
 
                         // IMPLEMENT NUMBER PHONE
                             number_phone = googleAPIplaceId.getResultsAPI().getPhone();
-                            Log.e("--get phone--", "--result--" + number_phone);
+
+                            Log.e("--number phone--","-- number phone -- = " + number_phone);
 
                             // IMPLEMENT WEB SITE
                             web_site = googleAPIplaceId.getResultsAPI().getWebsite();
-                            Log.e("--get web site--", "--result--" + web_site);
 
 
                         // GET PHOTO RESTAURANT
@@ -473,9 +468,7 @@ public class ActivityShowRestaurant extends AppCompatActivity {
                         // IF PHOTO IS NOT NULL GET PHOTO
                         if(googleAPIplaceId.getResultsAPI().getPhotos()!=null){
                             photo_retaurant = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
-                                    + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference()+"&key=" + BuildConfig.KEY_GOOGLE_MAP;
-                            Log.e("--photo restaurant--", "--result--" + photo_retaurant);
-
+                                    + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference()+"&key=" + BuildConfig.KEY_GOOGLE_MAP_1;
                         }
 
 

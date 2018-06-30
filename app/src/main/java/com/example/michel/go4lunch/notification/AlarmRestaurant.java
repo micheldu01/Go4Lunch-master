@@ -14,10 +14,6 @@ public class AlarmRestaurant extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        // TEST
-        Toast.makeText(context,"--- c'est mon alarm ---", Toast.LENGTH_LONG).show();
-        Log.e("-- alarm --","-- c'est ok --");
-
 
         // add intent for go  the NotificationService class
         Intent service_intent = new Intent(context, NotificationRestaurant.class);

@@ -141,15 +141,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
 
 
 
-
-
-
-
-
-
-
-
-
     public MapViewFragment() {
     }
 
@@ -399,7 +390,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
     private void getDataFromGooglePlace(){
 
         // IMPLEMENT DISPOSABLE WITH GoogleApiA
-        disposable = MapStreams.streamGoogleApi(BuildConfig.KEY_GOOGLE_MAP)
+        disposable = MapStreams.streamGoogleApi(BuildConfig.KEY_GOOGLE_MAP_1)
                 .subscribeWith(new DisposableObserver<GoogleApiA>() {
 
 
@@ -440,7 +431,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                                 // GET DATA RESTAURANT FROM GOOGLE API
 
                                 // DECLARE DISPOSABLE WITH STREAM GOOGLE API PLACE ID
-                                Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP, idPlaceAPI)
+                                Disposable disposable = MapStreams.streamGoogleAPIplaceId(BuildConfig.KEY_GOOGLE_MAP_1, idPlaceAPI)
                                         .subscribeWith(new DisposableObserver<GoogleAPIplaceId>() {
                                             @Override
                                             public void onNext(GoogleAPIplaceId googleAPIplaceId) {
@@ -451,6 +442,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback,
                                                     // IF PHOTO IS NOT NULL GET PHOTO
                                                         url_photo = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="
                                                                 + googleAPIplaceId.getResultsAPI().getPhotos().get(0).getPhotoReference() + "&key=" + BuildConfig.KEY_GOOGLE_MAP_1;
+
+                                                        Log.e("-- test url --","-- get url photo --" + url_photo);
 
                                                 } catch (Exception e) {
                                                     // IMPLEMENT URL RESTAURANT

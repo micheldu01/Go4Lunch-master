@@ -225,6 +225,12 @@ public class WorkmatesFragment extends Fragment {
                 // SHOW LIST RESTAURANT
                 showProfileWithChoice();
 
+                // STOP REFRESH AFTER USE IT
+                if (refreshLayout.isRefreshing()) {
+                    refreshLayout.setRefreshing(false);
+                }
+
+
 
 
             }

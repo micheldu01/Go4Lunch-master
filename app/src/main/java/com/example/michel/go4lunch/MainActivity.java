@@ -1,12 +1,15 @@
 package com.example.michel.go4lunch;
 
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -34,6 +37,13 @@ import com.example.michel.go4lunch.models.User;
 import com.example.michel.go4lunch.notification.ActivityNoticationShow;
 import com.example.michel.go4lunch.recyclerview.adapter.AdapterWorkmates;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -108,6 +118,10 @@ public class MainActivity extends AppCompatActivity
     // FIRE BASE USER
     private FirebaseUser firebaseUser;
 
+    // AUTOCOMPLETE
+    int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+
+
 
 
     @Override
@@ -140,6 +154,9 @@ public class MainActivity extends AppCompatActivity
         // PUSH DATA PROFILE INTO FIREBASE
         this.saveProfileFireBase();
 
+
+        // test autocomplete
+        testAutocomplete();
 
 
 
@@ -210,8 +227,11 @@ public class MainActivity extends AppCompatActivity
         //3 - Handle actions on menu items
         switch (item.getItemId()) {
             case R.id.menu_activity_main_search:
-                //add toast for click response
-                Toast.makeText(this, "Recherche indisponible, demandez plutôt l'avis de Google, c'est mieux et plus rapide.", Toast.LENGTH_LONG).show();
+
+                // START METHOD AUTOCOMPLETE
+                //autocompleteIntent();
+
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -461,14 +481,54 @@ public class MainActivity extends AppCompatActivity
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Log.e("main activity","------data save profile-----"+
-                                    FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                         }
                     });
 
         }
 
         }
+
+
+    // METHOD AUTOCOMPLETE WITH INTENT
+    private void autocompleteIntent(){
+
+        try {
+            Intent intent =
+                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                            .build(this);
+            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (GooglePlayServicesRepairableException e) {
+            // TODO: Handle the error.
+        } catch (GooglePlayServicesNotAvailableException e) {
+            // TODO: Handle the error.
+        }
+    }
+
+    // TEST AUTOCOMPLETE
+    private void testAutocomplete(){
+
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                //Log.i(TAG, "Place: " + place.getName());
+
+                String placeName = place.getName().toString();
+
+                Toast.makeText(MainActivity.this,""+placeName, Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                //Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+    }
 
 }
 
